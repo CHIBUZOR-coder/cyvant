@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p ../cyvant-tmp)",
+      "Bash(mv \"CYVANT Website PRD.pdf\" ../cyvant-tmp/)",
+      "Bash(mv PROGRESS.md ../cyvant-tmp/)",
+      "Bash(mv \"cyvant_prd.pdf\" ../cyvant-tmp/)",
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --yes)"
+    ]
+  }
+}
