@@ -5,7 +5,20 @@
       "Bash(mv \"CYVANT Website PRD.pdf\" ../cyvant-tmp/)",
       "Bash(mv PROGRESS.md ../cyvant-tmp/)",
       "Bash(mv \"cyvant_prd.pdf\" ../cyvant-tmp/)",
-      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --yes)"
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --yes)",
+      "Bash(mv \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant-tmp\\\\cyvant_prd.pdf\" \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant/\")",
+      "Bash(mv \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant-tmp\\\\PROGRESS.md\" \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant/\")",
+      "Bash(rmdir \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant-tmp\")",
+      "Bash(npm install *)",
+      "Bash(npm test *)",
+      "Bash(npm run *)",
+      "Bash(ls \"c:\\\\Users\\\\HomePC\\\\.claude\\\\projects\\\\c--Users-HomePC-Desktop-cyvant\\\\memory\" 2>/dev/null || echo \"does not exist\")",
+      "Read(//c/Users/HomePC/.claude/projects/c--Users-HomePC-Desktop-cyvant/**)",
+      "Bash(mkdir -p \"C:\\\\Users\\\\HomePC\\\\.claude\\\\projects\\\\c--Users-HomePC-Desktop-cyvant\\\\memory\" && echo done)",
+      "Bash(npx jest *)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\HomePC\\.claude\\projects\\c--Users-HomePC-Desktop-cyvant"
     ]
   }
 }
