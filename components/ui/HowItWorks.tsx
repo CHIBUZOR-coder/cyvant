@@ -14,10 +14,10 @@ const STEPS = [
 
 export default function HowItWorks() {
   return (
-    <section className="bg-white border-b border-gray-100 py-20 px-6 lg:px-8">
+    <section className="bg-white dark:bg-slate-950 border-b border-gray-100 dark:border-gray-800 py-20 px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <motion.p
-          className="text-center text-xs font-semibold uppercase tracking-widest text-blue-700 mb-12"
+          className="text-center text-xs font-semibold uppercase tracking-widest text-blue-700 dark:text-blue-400 mb-12"
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -47,12 +47,12 @@ export default function HowItWorks() {
                   {index + 1}
                 </motion.div>
                 {index < STEPS.length - 1 && (
-                  <div className="w-px flex-1 min-h-10 bg-blue-200 my-1" aria-hidden="true" />
+                  <div className="w-px flex-1 min-h-10 bg-blue-200 dark:bg-blue-800 my-1" aria-hidden="true" />
                 )}
               </div>
               <div className="pb-5 pt-1">
-                <p className="text-sm font-semibold text-slate-800">{step.label}</p>
-                <p className="text-xs text-slate-400 mt-0.5">{step.desc}</p>
+                <p className="text-sm font-semibold text-slate-800 dark:text-white">{step.label}</p>
+                <p className="text-xs text-slate-400 dark:text-gray-500 mt-0.5">{step.desc}</p>
               </div>
             </motion.li>
           ))}
@@ -77,11 +77,11 @@ export default function HowItWorks() {
                 >
                   {index + 1}
                 </motion.div>
-                <p className="mt-2 text-sm font-semibold text-slate-800">{step.label}</p>
-                <p className="text-xs text-slate-400 mt-0.5">{step.desc}</p>
+                <p className="mt-2 text-sm font-semibold text-slate-800 dark:text-white">{step.label}</p>
+                <p className="text-xs text-slate-400 dark:text-gray-500 mt-0.5">{step.desc}</p>
               </motion.div>
               {index < STEPS.length - 1 && (
-                <div className="w-6 h-px bg-blue-200 mx-1 mb-6" aria-hidden="true" />
+                <div className="w-6 h-px bg-blue-200 dark:bg-blue-800 mx-1 mb-6" aria-hidden="true" />
               )}
             </li>
           ))}

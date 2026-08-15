@@ -44,7 +44,8 @@ describe("POST /api/forms/webinar", () => {
 
     expect(upsertContact).toHaveBeenCalledTimes(1);
     expect(upsertContact).toHaveBeenCalledWith(
-      expect.objectContaining({ email: "ada@example.com", firstname: "Ada Obi" })
+      expect.objectContaining({ email: "ada@example.com", firstname: "Ada Obi" }),
+      1
     );
     expect(addNote).toHaveBeenCalledTimes(1);
     expect(sendConfirmation).toHaveBeenCalledTimes(1);

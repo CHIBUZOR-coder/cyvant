@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
@@ -11,6 +12,7 @@ const NAV_LINKS = [
   { href: "/courses", label: "Courses" },
   { href: "/testimonials", label: "Testimonials" },
   { href: "/faq", label: "FAQ" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export default function Navbar() {
@@ -18,23 +20,23 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white shadow-sm">
+    <header className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-slate-950 shadow-sm dark:shadow-none">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center font-bold text-xl tracking-tight">
-          <span className="text-slate-900">CY</span><span className="text-blue-700">VANT</span>
+          <span className="text-slate-900 dark:text-white">CY</span><span className="text-blue-700">VANT</span>
         </Link>
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
-          {NAV_LINKS.map(({ href, label }) => (
+          {NAV_LINKS.filter(({ href }) => href !== "/contact").map(({ href, label }) => (
             <Link
               key={href}
               href={href}
               className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
                 pathname === href
-                  ? "text-blue-700 bg-blue-50"
-                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                  ? "text-blue-700 bg-blue-50 dark:text-blue-400 dark:bg-blue-900/20"
+                  : "text-slate-600 dark:text-gray-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800"
               }`}
               aria-current={pathname === href ? "page" : undefined}
             >
@@ -43,7 +45,16 @@ export default function Navbar() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+
+          {/* Secondary CTA */}
+          <Link
+            href="/contact"
+            className="hidden sm:inline-flex rounded-lg border border-gray-200 dark:border-gray-700 px-4 py-2 text-sm font-medium text-slate-600 dark:text-gray-300 hover:border-blue-300 hover:text-blue-700 dark:hover:border-blue-500 dark:hover:text-blue-400 transition-colors"
+          >
+            Book a Call
+          </Link>
           {/* Primary CTA */}
           <Link
             href="/courses"
@@ -55,7 +66,7 @@ export default function Navbar() {
           {/* Hamburger */}
           <button
             type="button"
-            className="md:hidden rounded-md p-2 text-slate-500 hover:bg-slate-100 hover:text-slate-900"
+            className="md:hidden rounded-md p-2 text-slate-500 dark:text-gray-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((prev) => !prev)}
@@ -77,7 +88,7 @@ export default function Navbar() {
       {/* Mobile menu */}
       {menuOpen && (
         <nav
-          className="md:hidden border-t border-gray-100 bg-white px-4 pb-4 pt-2"
+          className="md:hidden border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-slate-950 px-4 pb-4 pt-2"
           aria-label="Mobile navigation"
         >
           {NAV_LINKS.map(({ href, label }) => (
@@ -86,8 +97,8 @@ export default function Navbar() {
               href={href}
               className={`block py-2.5 px-3 rounded-md text-sm font-medium transition-colors ${
                 pathname === href
-                  ? "text-blue-700 bg-blue-50"
-                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                  ? "text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20"
+                  : "text-slate-600 dark:text-gray-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800"
               }`}
               aria-current={pathname === href ? "page" : undefined}
               onClick={() => setMenuOpen(false)}
@@ -95,6 +106,15 @@ export default function Navbar() {
               {label}
             </Link>
           ))}
+          <div className="mt-3 pt-3 border-t border-gray-100 dark:border-gray-800">
+            <Link
+              href="/contact"
+              className="block w-full rounded-lg border border-gray-200 dark:border-gray-700 px-4 py-2.5 text-center text-sm font-medium text-slate-600 dark:text-gray-300 hover:border-blue-300 hover:text-blue-700 dark:hover:border-blue-500 dark:hover:text-blue-400 transition-colors"
+              onClick={() => setMenuOpen(false)}
+            >
+              Book a Call
+            </Link>
+          </div>
         </nav>
       )}
     </header>

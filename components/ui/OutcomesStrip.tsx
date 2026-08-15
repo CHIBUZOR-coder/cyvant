@@ -15,10 +15,10 @@ export default function OutcomesStrip({ outcomes }: Props) {
   }
 
   return (
-    <section className="bg-gray-50 py-16 px-6 lg:px-8">
+    <section className="bg-gray-50 dark:bg-slate-900 py-16 px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <motion.h2
-          className="text-center text-sm font-semibold uppercase tracking-widest text-gray-500 mb-10"
+          className="text-center text-sm font-semibold uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-10"
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -30,15 +30,15 @@ export default function OutcomesStrip({ outcomes }: Props) {
           {verified.map((outcome, index) => (
             <motion.li
               key={outcome.id}
-              className="flex flex-col items-center text-center bg-white rounded-lg px-4 py-4 shadow-sm border border-gray-100"
+              className="flex flex-col items-center text-center bg-white dark:bg-slate-800 rounded-lg px-4 py-4 shadow-sm border border-gray-100 dark:border-gray-700"
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.35, delay: index * 0.07 }}
             >
-              <p className="font-semibold text-gray-900 text-sm">{outcome.name}</p>
-              <p className="text-blue-700 text-xs mt-1">{outcome.role}</p>
-              <p className="text-gray-500 text-xs">{outcome.company}</p>
+              <p className="font-semibold text-gray-900 dark:text-white text-sm">{outcome.name}</p>
+              <p className="text-blue-700 dark:text-blue-400 text-xs mt-1">{outcome.role}</p>
+              <p className="text-gray-500 dark:text-gray-400 text-xs">{outcome.company}</p>
             </motion.li>
           ))}
         </ul>

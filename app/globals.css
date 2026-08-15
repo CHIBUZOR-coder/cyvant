@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Class-based dark mode — driven by next-themes adding .dark to <html> */
+@variant dark (&:where(.dark, .dark *));
+
 @theme {
   /* Brand tokens */
   --color-brand-primary: #ffffff;
@@ -14,6 +17,13 @@
 :root {
   --background: #ffffff;
   --foreground: #0f172a;
+  color-scheme: light;
+}
+
+.dark {
+  --background: #020817;
+  --foreground: #f8fafc;
+  color-scheme: dark;
 }
 
 body {
@@ -49,3 +59,19 @@ html {
   outline: 2px solid #1d4ed8;
   outline-offset: 2px;
 }
+
+.scrollbar-modal {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
+}
+.scrollbar-modal::-webkit-scrollbar { width: 6px; }
+.scrollbar-modal::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 3px; }
+.scrollbar-modal::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+.scrollbar-modal::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+.dark .scrollbar-modal {
+  scrollbar-color: #475569 #1e293b;
+}
+.dark .scrollbar-modal::-webkit-scrollbar-track { background: #1e293b; }
+.dark .scrollbar-modal::-webkit-scrollbar-thumb { background: #475569; }
+.dark .scrollbar-modal::-webkit-scrollbar-thumb:hover { background: #64748b; }

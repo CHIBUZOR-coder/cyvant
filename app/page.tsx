@@ -1,4 +1,5 @@
 import HeroSection from "@/components/ui/HeroSection";
+import TrustedBy from "@/components/ui/TrustedBy";
 import HowItWorks from "@/components/ui/HowItWorks";
 import OutcomesStrip from "@/components/ui/OutcomesStrip";
 import WebinarBanner from "@/components/ui/WebinarBanner";
@@ -9,6 +10,7 @@ export default function HomePage() {
     <>
       <WebinarBanner />
       <HeroSection />
+      <TrustedBy />
       <HowItWorks />
       <OutcomesStrip outcomes={graduateOutcomes} />
     </>

@@ -30,12 +30,16 @@ export interface Course {
   id: string;
   title: string;
   academy: "cybersecurity" | "ai";
-  level: "Foundations" | "Professional" | "Engineering";
+  level: "Beginner" | "Intermediate" | "Advanced";
   duration: string;
   format: string;
   startingPrice: number;
   isStartHere?: boolean;
+  featured?: boolean;
   slug: string;
+  description?: string;
+  prerequisites?: string[];
+  whatYouLearn?: string[];
 }
 
 export interface FormPayload {

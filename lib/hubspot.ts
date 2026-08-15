@@ -4,6 +4,9 @@ interface ContactProperties {
   email: string;
   firstname?: string;
   phone?: string;
+  company?: string;
+  lead_source?: string;
+  course_interest?: string;
   [key: string]: string | undefined;
 }
 
@@ -33,31 +36,44 @@ async function hubspotRequest(path: string, body: object) {
   return res.json();
 }
 
-export async function upsertContact(properties: ContactProperties): Promise<{ id: string }> {
-  return hubspotRequest("/crm/v3/objects/contacts/search", {
+export async function upsertContact(
+  properties: ContactProperties,
+  scoreIncrement = 0
+): Promise<{ id: string }> {
+  const searchRes = await hubspotRequest("/crm/v3/objects/contacts/search", {
     filterGroups: [
       {
         filters: [{ propertyName: "email", operator: "EQ", value: properties.email }],
       },
     ],
-  }).then(async (searchRes) => {
-    const existing = searchRes.results?.[0];
-    if (existing) {
-      // Update existing contact
-      await fetch(`${HUBSPOT_API}/crm/v3/objects/contacts/${existing.id}`, {
-        method: "PATCH",
-        headers: {
-          Authorization: `Bearer ${process.env.HUBSPOT_ACCESS_TOKEN}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ properties }),
-      });
-      return { id: existing.id as string };
-    }
-    // Create new contact
-    const created = await hubspotRequest("/crm/v3/objects/contacts", { properties });
-    return { id: created.id as string };
+    properties: ["cyvant_lead_score"],
   });
+
+  const existing = searchRes.results?.[0];
+
+  if (existing) {
+    const currentScore = parseInt(existing.properties?.cyvant_lead_score ?? "0", 10);
+    const newScore = currentScore + scoreIncrement;
+
+    await fetch(`${HUBSPOT_API}/crm/v3/objects/contacts/${existing.id}`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${process.env.HUBSPOT_ACCESS_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        properties: { ...properties, cyvant_lead_score: String(newScore) },
+      }),
+    });
+
+    return { id: existing.id as string };
+  }
+
+  const created = await hubspotRequest("/crm/v3/objects/contacts", {
+    properties: { ...properties, cyvant_lead_score: String(scoreIncrement) },
+  });
+
+  return { id: created.id as string };
 }
 
 export async function addNote(note: HubSpotNote) {

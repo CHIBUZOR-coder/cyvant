@@ -37,9 +37,9 @@ export default function GeneralContactForm() {
 
   if (status === "success") {
     return (
-      <div role="status" className="rounded-lg bg-green-50 border border-green-200 p-6 text-center">
-        <p className="font-semibold text-green-800 text-lg">Message received!</p>
-        <p className="mt-2 text-green-700 text-sm">We&apos;ll get back to you soon.</p>
+      <div role="status" className="rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 p-6 text-center">
+        <p className="font-semibold text-green-800 dark:text-green-300 text-lg">Message received!</p>
+        <p className="mt-2 text-green-700 dark:text-green-400 text-sm">We&apos;ll get back to you soon.</p>
       </div>
     );
   }

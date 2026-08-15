@@ -15,10 +15,15 @@
       "Bash(ls \"c:\\\\Users\\\\HomePC\\\\.claude\\\\projects\\\\c--Users-HomePC-Desktop-cyvant\\\\memory\" 2>/dev/null || echo \"does not exist\")",
       "Read(//c/Users/HomePC/.claude/projects/c--Users-HomePC-Desktop-cyvant/**)",
       "Bash(mkdir -p \"C:\\\\Users\\\\HomePC\\\\.claude\\\\projects\\\\c--Users-HomePC-Desktop-cyvant\\\\memory\" && echo done)",
-      "Bash(npx jest *)"
+      "Bash(npx jest *)",
+      "Bash(npm --version)",
+      "PowerShell(New-Item -ItemType Directory -Path \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant\\\\public\\\\images\" -Force)",
+      "WebSearch",
+      "WebFetch(domain:unsplash.com)"
     ],
     "additionalDirectories": [
-      "C:\\Users\\HomePC\\.claude\\projects\\c--Users-HomePC-Desktop-cyvant"
+      "C:\\Users\\HomePC\\.claude\\projects\\c--Users-HomePC-Desktop-cyvant",
+      "c:\\Users\\HomePC\\Desktop"
     ]
   }
 }

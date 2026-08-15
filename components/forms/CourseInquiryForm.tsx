@@ -8,12 +8,16 @@ import { validateContactFields, type ValidationErrors } from "@/lib/validation";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
-export default function CourseInquiryForm() {
+interface Props {
+  initialCourse?: string;
+}
+
+export default function CourseInquiryForm({ initialCourse }: Props) {
   const params = useSearchParams();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [course, setCourse] = useState(params.get("course") ?? "");
+  const [course, setCourse] = useState(initialCourse ?? params.get("course") ?? "");
   const [consent, setConsent] = useState(false);
   const [errors, setErrors] = useState<ValidationErrors>({});
   const [status, setStatus] = useState<Status>("idle");

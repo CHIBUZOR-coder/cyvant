@@ -20,14 +20,14 @@ export default function FormField({
   placeholder,
 }: Props) {
   const baseClass =
-    "block w-full rounded-md border px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-colors";
+    "block w-full rounded-md border px-3 py-2 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-colors";
   const stateClass = error
-    ? "border-red-400 bg-red-50"
-    : "border-gray-300 bg-white";
+    ? "border-red-400 bg-red-50 dark:bg-red-900/20 dark:border-red-600"
+    : "border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800";
 
   return (
     <div>
-      <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-1">
+      <label htmlFor={id} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
         {label}
         {required && <span className="text-red-500 ml-0.5" aria-hidden="true">*</span>}
       </label>
@@ -59,7 +59,7 @@ export default function FormField({
         />
       )}
       {error && (
-        <p id={`${id}-error`} role="alert" className="mt-1 text-xs text-red-600">
+        <p id={`${id}-error`} role="alert" className="mt-1 text-xs text-red-600 dark:text-red-400">
           {error}
         </p>
       )}

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import FaqAccordion from "@/components/ui/FaqAccordion";
 import FadeIn from "@/components/ui/FadeIn";
+import DarkSection from "@/components/ui/DarkSection";
 
 export const metadata: Metadata = {
   title: "FAQ",
@@ -37,9 +38,9 @@ const FAQ_ITEMS = [
 
 export default function FaqPage() {
   return (
-    <div className="bg-white">
+    <div className="bg-white dark:bg-slate-950">
       {/* Hero */}
-      <section className="bg-slate-900 px-6 py-24 lg:px-8">
+      <DarkSection className="px-6 py-24 lg:px-8">
         <div className="mx-auto max-w-3xl">
           <FadeIn delay={0}>
             <p className="text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4">FAQ</p>
@@ -59,7 +60,7 @@ export default function FaqPage() {
             </p>
           </FadeIn>
         </div>
-      </section>
+      </DarkSection>
 
       <section className="mx-auto max-w-3xl px-6 py-20 lg:px-8">
         <FadeIn>

@@ -40,7 +40,8 @@ describe("POST /api/forms/course-inquiry", () => {
     expect(res.status).toBe(200);
 
     expect(upsertContact).toHaveBeenCalledWith(
-      expect.objectContaining({ email: "emeka@example.com" })
+      expect.objectContaining({ email: "emeka@example.com" }),
+      2
     );
     expect(addNote).toHaveBeenCalledWith(
       expect.objectContaining({

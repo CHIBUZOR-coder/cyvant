@@ -19,7 +19,8 @@ export async function POST(req: NextRequest) {
       company: company ?? "",
       hs_lead_status: "NEW",
       lifecyclestage: "lead",
-    });
+      lead_source: "service_inquiry",
+    }, 1);
 
     await addNote({
       body: `Services lead\nService of interest: ${serviceInterest ?? "Not specified"}\nCompany: ${company ?? "N/A"}`,

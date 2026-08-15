@@ -19,7 +19,9 @@ export async function POST(req: NextRequest) {
       phone,
       hs_lead_status: "NEW",
       lifecyclestage: "lead",
-    });
+      lead_source: "course_inquiry",
+      course_interest: courseInterest ?? "",
+    }, 2);
 
     await addNote({
       body: `Course inquiry\nCourse of interest: ${courseInterest ?? "Not specified"}`,

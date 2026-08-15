@@ -19,6 +19,7 @@ export async function POST(req: NextRequest) {
       firstname: name,
       hs_lead_status: "NEW",
       lifecyclestage: "lead",
+      lead_source: "general_contact",
     });
 
     await addNote({
