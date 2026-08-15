@@ -3,7 +3,7 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 import { validateContactFields } from "@/lib/validation";
-import { upsertContact, addNote } from "@/lib/hubspot";
+import { upsertLead, addLeadNote } from "@/lib/leads";
 import { sendConfirmation, notifyMarketer } from "@/lib/email";
 
 export async function POST(req: NextRequest) {
@@ -16,19 +16,14 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const contact = await upsertContact({
+    const lead = await upsertLead({
+      name,
       email,
-      firstname: name,
       phone,
-      hs_lead_status: "IN_PROGRESS",
-      lifecyclestage: "lead",
-      lead_source: "discovery_call",
+      leadSource: "discovery_call",
     }, 3);
 
-    await addNote({
-      body: `Discovery call request via website`,
-      associations: { contactId: Number(contact.id) },
-    });
+    await addLeadNote(lead.id, "Discovery call request via website");
 
     const calendlyUrl = process.env.NEXT_PUBLIC_CALENDLY_URL ?? "";
 

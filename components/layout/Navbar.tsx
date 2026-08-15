@@ -2,22 +2,54 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 
 const NAV_LINKS = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/services", label: "Services" },
-  { href: "/courses", label: "Courses" },
-  { href: "/testimonials", label: "Testimonials" },
-  { href: "/faq", label: "FAQ" },
-  { href: "/contact", label: "Contact" },
+  { href: "/", label: "Home", sectionId: "home" },
+  { href: "/#about", label: "About", sectionId: "about" },
+  { href: "/#services", label: "Services", sectionId: "services" },
+  { href: "/#courses", label: "Courses", sectionId: "courses" },
+  { href: "/#testimonials", label: "Testimonials", sectionId: "testimonials" },
+  { href: "/#faq", label: "FAQ", sectionId: "faq" },
+  { href: "/contact", label: "Contact", sectionId: null },
 ];
+
+const SECTION_IDS = NAV_LINKS.map((l) => l.sectionId).filter(Boolean) as string[];
 
 export default function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
+
+  useEffect(() => {
+    if (pathname !== "/") return;
+
+    const handleScroll = () => {
+      const navHeight = 80;
+      let current = "home";
+
+      for (const id of SECTION_IDS) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        if (el.getBoundingClientRect().top <= navHeight) {
+          current = id;
+        }
+      }
+
+      setActiveSection(current);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [pathname]);
+
+  const isLinkActive = (href: string, sectionId: string | null) => {
+    if (pathname !== "/") return pathname === href;
+    if (sectionId === null) return false;
+    return activeSection === sectionId;
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-slate-950 shadow-sm dark:shadow-none">
@@ -29,20 +61,23 @@ export default function Navbar() {
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
-          {NAV_LINKS.filter(({ href }) => href !== "/contact").map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
-              className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                pathname === href
-                  ? "text-blue-700 bg-blue-50 dark:text-blue-400 dark:bg-blue-900/20"
-                  : "text-slate-600 dark:text-gray-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800"
-              }`}
-              aria-current={pathname === href ? "page" : undefined}
-            >
-              {label}
-            </Link>
-          ))}
+          {NAV_LINKS.filter(({ href }) => href !== "/contact").map(({ href, label, sectionId }) => {
+            const active = isLinkActive(href, sectionId);
+            return (
+              <Link
+                key={href}
+                href={href}
+                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                  active
+                    ? "text-blue-700 bg-blue-50 dark:text-blue-400 dark:bg-blue-900/20"
+                    : "text-slate-600 dark:text-gray-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800"
+                }`}
+                aria-current={active ? "page" : undefined}
+              >
+                {label}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="flex items-center gap-2">
@@ -57,7 +92,7 @@ export default function Navbar() {
           </Link>
           {/* Primary CTA */}
           <Link
-            href="/courses"
+            href="/#courses"
             className="rounded-lg bg-blue-700 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-800 transition-colors shadow-sm"
           >
             Explore Courses
@@ -91,21 +126,24 @@ export default function Navbar() {
           className="md:hidden border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-slate-950 px-4 pb-4 pt-2"
           aria-label="Mobile navigation"
         >
-          {NAV_LINKS.map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
-              className={`block py-2.5 px-3 rounded-md text-sm font-medium transition-colors ${
-                pathname === href
-                  ? "text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20"
-                  : "text-slate-600 dark:text-gray-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800"
-              }`}
-              aria-current={pathname === href ? "page" : undefined}
-              onClick={() => setMenuOpen(false)}
-            >
-              {label}
-            </Link>
-          ))}
+          {NAV_LINKS.map(({ href, label, sectionId }) => {
+            const active = isLinkActive(href, sectionId);
+            return (
+              <Link
+                key={href}
+                href={href}
+                className={`block py-2.5 px-3 rounded-md text-sm font-medium transition-colors ${
+                  active
+                    ? "text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20"
+                    : "text-slate-600 dark:text-gray-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800"
+                }`}
+                aria-current={active ? "page" : undefined}
+                onClick={() => setMenuOpen(false)}
+              >
+                {label}
+              </Link>
+            );
+          })}
           <div className="mt-3 pt-3 border-t border-gray-100 dark:border-gray-800">
             <Link
               href="/contact"

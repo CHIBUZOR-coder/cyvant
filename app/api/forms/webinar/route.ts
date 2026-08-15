@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isValidEmail, validateContactFields } from "@/lib/validation";
-import { upsertContact, addNote } from "@/lib/hubspot";
+import { upsertLead, addLeadNote } from "@/lib/leads";
 import { sendConfirmation, notifyMarketer } from "@/lib/email";
 
 export async function POST(req: NextRequest) {
@@ -18,19 +18,15 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const contact = await upsertContact({
+    const lead = await upsertLead({
+      name,
       email,
-      firstname: name,
       phone,
-      hs_lead_status: "NEW",
-      lifecyclestage: "lead",
-      lead_source: "webinar_registration",
+      leadSource: "webinar_registration",
+      qualifyingAnswer,
     }, 1);
 
-    await addNote({
-      body: `Webinar registration\nQualifying answer: ${qualifyingAnswer}`,
-      associations: { contactId: Number(contact.id) },
-    });
+    await addLeadNote(lead.id, `Webinar registration — Qualifying answer: ${qualifyingAnswer}`);
 
     await Promise.all([
       sendConfirmation({

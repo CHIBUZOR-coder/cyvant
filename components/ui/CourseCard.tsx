@@ -204,7 +204,7 @@ export default function CourseCard({ course, index = 0 }: { course: Course; inde
                   href={`/courses/${course.slug}/inquire`}
                   className="mt-7 block w-full rounded-xl bg-blue-600 px-6 py-3.5 text-center text-sm font-semibold text-white hover:bg-blue-700 transition-colors shadow-lg shadow-blue-900/20"
                 >
-                  Enroll Now
+                  Apply Now — Our team will be in touch
                 </Link>
               </div>
 

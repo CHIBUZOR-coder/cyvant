@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${geistSans.variable} h-full`} suppressHydrationWarning>
-      <body className="min-h-full flex flex-col bg-white dark:bg-slate-950 text-gray-900 dark:text-white antialiased">
+      <body className="min-h-full flex flex-col bg-white dark:bg-slate-950 text-gray-900 dark:text-white antialiased" suppressHydrationWarning>
         <ThemeProvider>
           <MouseFollower />
           <Navbar />

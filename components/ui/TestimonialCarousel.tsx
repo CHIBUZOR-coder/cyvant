@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
@@ -69,6 +69,10 @@ function TestimonialCard({ t }: { t: Testimonial }) {
 
 export default function TestimonialCarousel({ testimonials }: { testimonials: Testimonial[] }) {
   const swiperRef = useRef<SwiperType | null>(null);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return <div className="w-full h-64" />;
 
   return (
     <div className="w-full">

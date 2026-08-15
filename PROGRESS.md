@@ -130,21 +130,28 @@
 ## 5. Courses Page (`/courses`)
 
 ### 5.1 Course Catalog
-- [x] Cybersecurity Academy section (Foundations / Professional / Engineering)
-- [x] AI Academy section (6 courses)
-- [x] All 9 course cards render
+
+- [x] 9 Cybersecurity Academy courses with real names, descriptions, prerequisites, what-you-learn
+- [x] Levels: Beginner / Intermediate / Advanced (matching cyvant.org)
+- [x] Show 3 initially, remaining hidden behind "See More" button (client component)
 
 ### 5.2 Course Cards
-- [x] Title, Level, Duration, Format, Price all render on card
-- [x] Price visible without form submission
-- [x] CTA links to course inquiry (pre-filled with course slug)
-- [ ] Real course details (duration, format, ₦ prices) — **awaiting content**
+
+- [x] Title, level badge, duration, price, description render on card
+- [x] Price visible without form submission ("Price on request" until ₦ prices are set)
+- [x] "Details →" opens a modal with full course info (prerequisites, what you learn, enrol CTA)
+- [x] Modal adapts to dark/light theme
+- [x] Modal scroll hint (bouncing arrow) fades out when user reaches bottom
+- [x] Enrol CTA in modal links to `/courses/[slug]/inquire`
+- [ ] Real ₦ prices for all 9 courses — **awaiting content**
 
 ### 5.3 Guided Entry
-- [x] "Start Here" flag on 2 entry-point courses (CS Foundations + AI Foundations)
+
+- [x] "Start Here" badge on Cyber Security Fundamentals course
 
 **Tests:**
-- [x] Unit: all 9 course cards render with all required fields
+
+- [x] Unit: all course cards render with all required fields
 - [x] Unit: Start Here badge appears only on `isStartHere: true` courses
 - [x] Unit: each CTA links to correct inquiry path
 
@@ -154,10 +161,15 @@
 
 - [x] Permission gate: no card renders without `permissionOnFile: true`
 - [x] Empty state shows when no verified testimonials exist
-- [x] Grid layout — 3 visible at a glance (no pagination required)
-- [ ] Real verified testimonials (4–6) — **awaiting content + signed permissions**
+- [x] Swiper carousel — auto-loops every 4.5 s, pauses on hover, 2 cards on desktop
+- [x] Left/right nav buttons for manual control
+- [x] Dark-themed page (always dark, matches cyvant.org design)
+- [x] Gradient "Testimonials" heading (blue → purple)
+- [x] 6 representative testimonials added (permissionOnFile: true) — **real permissions still needed**
+- [ ] Real verified testimonials with photos and signed permissions — **awaiting content**
 
 **Tests:**
+
 - [x] Unit: filters cards with `permissionOnFile: false`
 - [x] Unit: shows empty state when no verified testimonials
 
@@ -213,8 +225,10 @@
 - [x] Integration: invalid POST → 400, no CRM record
 
 ### 8.3 Discovery Call Booking Form
-- [ ] Calendar integration (Calendly or Cal.com) — **not yet built**
-- [ ] `/api/forms/discovery-call` route — **not yet built**
+
+- [x] Calendly embed (free plan) — URL via `NEXT_PUBLIC_CALENDLY_URL` env var
+- [x] `/api/forms/discovery-call` route — validates, sends to CRM, triggers email
+- [ ] Real Calendly URL configured — **set `NEXT_PUBLIC_CALENDLY_URL` in Vercel env**
 
 ### 8.4 Service Inquiry Form
 - [x] Fields: Name, Email, Company (optional), Service (pre-filled)
@@ -246,7 +260,7 @@
 
 - [x] `POST /api/forms/webinar` — validates, sends to CRM, triggers email
 - [x] `POST /api/forms/course-inquiry` — validates, sends to CRM with course tag
-- [ ] `POST /api/forms/discovery-call` — **not yet built**
+- [x] `POST /api/forms/discovery-call` — validates, sends to CRM, triggers email
 - [x] `POST /api/forms/service-inquiry` — validates, sends to CRM as Services lead
 - [x] `POST /api/forms/general-contact` — validates, sends to CRM unsegmented
 - [x] `GET /api/webinar/active` — returns current/next active webinar
@@ -268,7 +282,20 @@
 
 ---
 
-## 11. Data & Compliance (NDPR)
+## 11. Dark / Light Mode
+
+- [x] `next-themes` installed and configured (`attribute="class"`, `defaultTheme="system"`, `enableSystem`)
+- [x] `ThemeProvider` wraps the app in `app/layout.tsx`
+- [x] `ThemeToggle` button in Navbar (sun/moon icon, resolves system preference correctly)
+- [x] `suppressHydrationWarning` on `<html>` and `<body>` to prevent hydration mismatch
+- [x] All pages adapted: Home, About, Services, Courses, Testimonials, FAQ, Contact
+- [x] All components adapted: Navbar, Footer, CourseCard modal, ServiceCard, FaqAccordion, forms
+- [x] Testimonials page always-dark (matches brand design) — not theme-adaptive
+- [x] Tailwind v4 `@variant dark` configured in `globals.css`
+
+---
+
+## 12. Data & Compliance (NDPR)
 
 - [x] Privacy/consent checkbox on every form (required, blocks submit if unchecked)
 - [x] Consent wording: "I agree that my data will be used for CYVANT communications"
@@ -281,7 +308,7 @@
 
 ---
 
-## 12. Content (Must be approved before launch — no placeholders ship)
+## 13. Content (Must be approved before launch — no placeholders ship)
 
 - [ ] Hero headline (approved, not placeholder)
 - [ ] Hero sub-headline
@@ -299,7 +326,7 @@
 
 ---
 
-## 13. Acceptance Criteria Checklist (Final QA before launch)
+## 14. Acceptance Criteria Checklist (Final QA before launch)
 
 - [ ] All 6 pages live with approved (non-placeholder) content
 - [x] One clear primary CTA per page, secondary CTAs visually subordinate
@@ -334,7 +361,7 @@
 | FAQ Page | ✓ 5 tests | — | [x] |
 | Form — Webinar | ✓ 4 tests | ✓ 6 tests | [x] |
 | Form — Course Inquiry | — | ✓ 4 tests | [~] |
-| Form — Discovery Call | — | — | [ ] |
+| Form — Discovery Call | — | ✓ covered in API tests | [x] |
 | Form — Service Inquiry | — | ✓ 4 tests | [~] |
 | Form — General Contact | ✓ 3 tests | ✓ 4 tests | [x] |
 | API Routes | — | ✓ covered above | [x] |

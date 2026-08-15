@@ -19,11 +19,21 @@
       "Bash(npm --version)",
       "PowerShell(New-Item -ItemType Directory -Path \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant\\\\public\\\\images\" -Force)",
       "WebSearch",
-      "WebFetch(domain:unsplash.com)"
+      "WebFetch(domain:unsplash.com)",
+      "Bash(findstr /i \"prisma\\\\|next-auth\\\\|bcrypt\")",
+      "Bash(npx prisma *)",
+      "Bash(New-Item -ItemType Directory -Force -Path \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant\\\\app\\\\api\\\\auth\\\\[...nextauth]\")",
+      "Bash(del prisma.config.ts)",
+      "Bash(node -e \"const p = require\\('@prisma/client/package.json'\\); console.log\\(p.version\\)\")",
+      "Bash(node -e \"console.log\\(require\\('crypto'\\).randomBytes\\(32\\).toString\\('base64'\\)\\)\")",
+      "Bash(node -e ' *)",
+      "Bash(npx tsc *)"
     ],
     "additionalDirectories": [
       "C:\\Users\\HomePC\\.claude\\projects\\c--Users-HomePC-Desktop-cyvant",
-      "c:\\Users\\HomePC\\Desktop"
+      "c:\\Users\\HomePC\\Desktop",
+      "c:\\Users\\HomePC\\Desktop\\cyvant\\app\\api\\admin\\leads",
+      "c:\\Users\\HomePC\\Desktop\\cyvant\\app\\admin\\leads"
     ]
   }
 }

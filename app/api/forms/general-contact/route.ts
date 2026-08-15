@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { validateContactFields } from "@/lib/validation";
-import { upsertContact, addNote } from "@/lib/hubspot";
+import { upsertLead, addLeadNote } from "@/lib/leads";
 import { sendConfirmation, notifyMarketer } from "@/lib/email";
 
 export async function POST(req: NextRequest) {
@@ -14,18 +14,14 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const contact = await upsertContact({
+    const lead = await upsertLead({
+      name,
       email,
-      firstname: name,
-      hs_lead_status: "NEW",
-      lifecyclestage: "lead",
-      lead_source: "general_contact",
+      leadSource: "general_contact",
+      message,
     });
 
-    await addNote({
-      body: `General contact message:\n${message}`,
-      associations: { contactId: Number(contact.id) },
-    });
+    await addLeadNote(lead.id, `General contact message: ${message}`);
 
     await Promise.all([
       sendConfirmation({

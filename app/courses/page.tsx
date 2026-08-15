@@ -15,7 +15,7 @@ export default function CoursesPage() {
         <div className="mx-auto max-w-3xl">
           <p className="text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4">Our Courses</p>
           <h1 className="text-3xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
-            Two academies. Every level.
+            Cybersecurity courses. Every level.
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-300 max-w-2xl">
             Built to take you from no background to job-ready. Look for the{" "}
