@@ -23,8 +23,28 @@ model Lead {
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
   notes            Note[]
+  student          Student?
 
   @@map("leads")
+}
+
+model Student {
+  id            String    @id @default(cuid())
+  leadId        String    @unique
+  lead          Lead      @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  name          String
+  email         String    @unique
+  phone         String?
+  courseName    String
+  cohort        String?
+  startDate     DateTime?
+  paymentStatus String    @default("pending")
+  amountPaid    Int       @default(0)
+  notes         String?
+  enrolledAt    DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("students")
 }
 
 model Note {

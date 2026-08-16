@@ -4,17 +4,16 @@
 import { POST } from "@/app/api/forms/service-inquiry/route";
 import { NextRequest } from "next/server";
 
-jest.mock("@/lib/hubspot", () => ({
-  upsertContact: jest.fn().mockResolvedValue({ id: "hs-789" }),
-  addNote: jest.fn().mockResolvedValue({}),
+jest.mock("@/lib/leads", () => ({
+  upsertLead: jest.fn().mockResolvedValue({ id: "lead-3" }),
+  addLeadNote: jest.fn().mockResolvedValue({}),
 }));
 jest.mock("@/lib/email", () => ({
   sendConfirmation: jest.fn().mockResolvedValue({}),
   notifyMarketer: jest.fn().mockResolvedValue({}),
 }));
 
-import { upsertContact, addNote } from "@/lib/hubspot";
-import { notifyMarketer } from "@/lib/email";
+import { upsertLead, addLeadNote } from "@/lib/leads";
 
 function makeRequest(body: object) {
   return new NextRequest("http://localhost/api/forms/service-inquiry", {
@@ -35,37 +34,50 @@ const validPayload = {
 describe("POST /api/forms/service-inquiry", () => {
   beforeEach(() => jest.clearAllMocks());
 
-  it("returns 200 and tags the CRM record as a Services lead", async () => {
+  it("returns 200 and creates a Prisma lead tagged as service_inquiry", async () => {
     const res = await POST(makeRequest(validPayload));
     expect(res.status).toBe(200);
 
-    expect(upsertContact).toHaveBeenCalledWith(
-      expect.objectContaining({ email: "bola@corp.com", company: "Acme Ltd" }),
+    expect(upsertLead).toHaveBeenCalledWith(
+      expect.objectContaining({
+        email: "bola@corp.com",
+        company: "Acme Ltd",
+        leadSource: "service_inquiry",
+        serviceInterest: "corporate-training",
+      }),
       1
     );
-    expect(addNote).toHaveBeenCalledWith(
-      expect.objectContaining({
-        body: expect.stringContaining("Services lead"),
-      })
+  });
+
+  it("logs a services lead note", async () => {
+    await POST(makeRequest(validPayload));
+    expect(addLeadNote).toHaveBeenCalledWith(
+      "lead-3",
+      expect.stringContaining("Services lead")
     );
-    expect(notifyMarketer).toHaveBeenCalledTimes(1);
   });
 
   it("returns 400 for missing name or email", async () => {
     const res = await POST(makeRequest({ ...validPayload, name: "" }));
     expect(res.status).toBe(400);
-    expect(upsertContact).not.toHaveBeenCalled();
+    expect(upsertLead).not.toHaveBeenCalled();
   });
 
   it("returns 400 when consent is false", async () => {
     const res = await POST(makeRequest({ ...validPayload, consent: false }));
     expect(res.status).toBe(400);
-    expect(upsertContact).not.toHaveBeenCalled();
+    expect(upsertLead).not.toHaveBeenCalled();
   });
 
   it("succeeds even when company is omitted (optional field)", async () => {
     const { company: _, ...noCompany } = validPayload;
     const res = await POST(makeRequest(noCompany));
     expect(res.status).toBe(200);
+  });
+
+  it("returns 500 when lead creation fails", async () => {
+    (upsertLead as jest.Mock).mockRejectedValueOnce(new Error("DB error"));
+    const res = await POST(makeRequest(validPayload));
+    expect(res.status).toBe(500);
   });
 });

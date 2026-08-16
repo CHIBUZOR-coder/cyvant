@@ -3,6 +3,7 @@ import LeadDetail from "@/components/admin/LeadDetail";
 
 export const metadata: Metadata = { title: "Lead Detail" };
 
-export default function LeadDetailPage({ params }: { params: { id: string } }) {
-  return <LeadDetail id={params.id} />;
+export default async function LeadDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  return <LeadDetail id={id} />;
 }

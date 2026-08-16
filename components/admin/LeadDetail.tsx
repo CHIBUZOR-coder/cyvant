@@ -9,6 +9,7 @@ type Lead = {
   company: string | null; leadSource: string; courseInterest: string | null;
   serviceInterest: string | null; qualifyingAnswer: string | null; message: string | null;
   leadScore: number; status: string; createdAt: string; notes: Note[];
+  student?: { id: string } | null;
 };
 
 const STATUS_OPTIONS = ["new", "contacted", "enrolled", "closed"] as const;
@@ -138,20 +139,40 @@ export default function LeadDetail({ id }: { id: string }) {
 
             <div>
               <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-2">Status</p>
-              <div className="flex flex-wrap gap-2">
-                {STATUS_OPTIONS.map((s) => (
-                  <button
-                    key={s}
-                    onClick={() => handleStatusChange(s)}
-                    disabled={statusSaving || lead.status === s}
-                    className={`rounded-full border px-3 py-1 text-xs font-semibold capitalize transition-opacity ${STATUS_STYLES[s]} ${lead.status === s ? "opacity-100" : "opacity-40 hover:opacity-70"}`}
-                  >
-                    {s}
-                  </button>
-                ))}
-              </div>
+              {lead.student ? (
+                <span className={`inline-flex rounded-full border px-3 py-1 text-xs font-semibold capitalize ${STATUS_STYLES[lead.status]}`}>
+                  {lead.status}
+                </span>
+              ) : (
+                <div className="flex flex-wrap gap-2">
+                  {STATUS_OPTIONS.map((s) => (
+                    <button
+                      key={s}
+                      onClick={() => handleStatusChange(s)}
+                      disabled={statusSaving || lead.status === s}
+                      className={`rounded-full border px-3 py-1 text-xs font-semibold capitalize transition-opacity ${STATUS_STYLES[s]} ${lead.status === s ? "opacity-100" : "opacity-40 hover:opacity-70"}`}
+                    >
+                      {s}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
+
+          {/* Converted banner */}
+          {lead.student && (
+            <div className="rounded-2xl bg-emerald-500/10 border border-emerald-500/20 p-4 text-sm text-emerald-400">
+              <p className="font-semibold mb-1">Converted to student</p>
+              <p className="text-emerald-500/80 text-xs mb-3">This lead is no longer active. Manage their enrollment and payment from the student profile.</p>
+              <Link
+                href={`/admin/students/${lead.student.id}`}
+                className="inline-block rounded-lg bg-emerald-600/20 border border-emerald-500/30 px-4 py-2 text-xs font-semibold text-emerald-400 hover:bg-emerald-600/30 transition-colors"
+              >
+                View Student Profile →
+              </Link>
+            </div>
+          )}
 
           {/* Interest */}
           {(lead.courseInterest || lead.serviceInterest || lead.qualifyingAnswer || lead.message) && (
@@ -186,42 +207,44 @@ export default function LeadDetail({ id }: { id: string }) {
 
         {/* Right — Notes timeline */}
         <div className="lg:col-span-2 space-y-4">
-          {/* Add note */}
-          <div className="rounded-2xl bg-gray-900 border border-white/5 p-6">
-            <p className="text-sm font-semibold text-white mb-4">Log an interaction</p>
-            <form onSubmit={handleAddNote} className="space-y-3">
-              <div className="flex gap-2">
-                {NOTE_TYPES.map(({ value, label }) => (
-                  <button
-                    key={value}
-                    type="button"
-                    onClick={() => setNoteType(value)}
-                    className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors border ${
-                      noteType === value
-                        ? "bg-blue-600/20 text-blue-400 border-blue-500/40"
-                        : "bg-gray-800 text-gray-400 border-gray-700 hover:text-white"
-                    }`}
-                  >
-                    {NOTE_ICON[value]} {label}
-                  </button>
-                ))}
-              </div>
-              <textarea
-                value={noteContent}
-                onChange={(e) => setNoteContent(e.target.value)}
-                rows={3}
-                placeholder={noteType === "call" ? "What did you discuss?" : noteType === "email" ? "What email did you send?" : "Add a note…"}
-                className="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 resize-none"
-              />
-              <button
-                type="submit"
-                disabled={saving || !noteContent.trim()}
-                className="rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-40 px-5 py-2 text-sm font-semibold text-white transition-colors"
-              >
-                {saving ? "Saving…" : "Save"}
-              </button>
-            </form>
-          </div>
+          {/* Add note — hidden once converted to student */}
+          {!lead.student && (
+            <div className="rounded-2xl bg-gray-900 border border-white/5 p-6">
+              <p className="text-sm font-semibold text-white mb-4">Log an interaction</p>
+              <form onSubmit={handleAddNote} className="space-y-3">
+                <div className="flex gap-2">
+                  {NOTE_TYPES.map(({ value, label }) => (
+                    <button
+                      key={value}
+                      type="button"
+                      onClick={() => setNoteType(value)}
+                      className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors border ${
+                        noteType === value
+                          ? "bg-blue-600/20 text-blue-400 border-blue-500/40"
+                          : "bg-gray-800 text-gray-400 border-gray-700 hover:text-white"
+                      }`}
+                    >
+                      {NOTE_ICON[value]} {label}
+                    </button>
+                  ))}
+                </div>
+                <textarea
+                  value={noteContent}
+                  onChange={(e) => setNoteContent(e.target.value)}
+                  rows={3}
+                  placeholder={noteType === "call" ? "What did you discuss?" : noteType === "email" ? "What email did you send?" : "Add a note…"}
+                  className="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 resize-none"
+                />
+                <button
+                  type="submit"
+                  disabled={saving || !noteContent.trim()}
+                  className="rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-40 px-5 py-2 text-sm font-semibold text-white transition-colors"
+                >
+                  {saving ? "Saving…" : "Save"}
+                </button>
+              </form>
+            </div>
+          )}
 
           {/* Notes list */}
           <div className="rounded-2xl bg-gray-900 border border-white/5 overflow-hidden">

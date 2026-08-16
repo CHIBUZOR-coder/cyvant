@@ -160,7 +160,7 @@ export default function HeroSection() {
               transition={{ duration: 0.55, ease, delay: 0.2 }}
               className="mt-3 sm:mt-4 text-sm sm:text-base text-gray-300 leading-7 max-w-md"
             >
-              Through real-world labs and mentorship that gets you hired.
+              Practical technology training designed to take you from learning to building, demonstrating, and becoming industry-ready.
             </motion.p>
 
             <motion.div
@@ -187,9 +187,11 @@ export default function HeroSection() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="mt-5 sm:mt-7 text-xs sm:text-sm text-blue-400 font-semibold tracking-wide"
+              className="mt-5 sm:mt-7 text-xs sm:text-sm text-gray-400 font-medium"
             >
-              Learn Locally. Compete Globally.
+              Programs starting from{" "}
+              <span className="text-blue-400 font-semibold">₦100,000</span>
+              {" "}· Learn Locally. Compete Globally.
             </motion.p>
           </div>
 
@@ -218,7 +220,7 @@ export default function HeroSection() {
                 >
                   {slide.custom
                     ? slide.custom
-                    : !imgErrors[slide.id] && (
+                    : !imgErrors[slide.id] && slide.src && (
                         <Image
                           src={slide.src}
                           alt={slide.alt}

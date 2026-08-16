@@ -27,7 +27,12 @@
       "Bash(node -e \"const p = require\\('@prisma/client/package.json'\\); console.log\\(p.version\\)\")",
       "Bash(node -e \"console.log\\(require\\('crypto'\\).randomBytes\\(32\\).toString\\('base64'\\)\\)\")",
       "Bash(node -e ' *)",
-      "Bash(npx tsc *)"
+      "Bash(npx tsc *)",
+      "Bash(npx ts-node *)",
+      "Bash(mkdir -p \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant\\\\public\\\\images\\\\testimonials\")",
+      "Bash(mv \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant\\\\2.svg\" \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant\\\\public\\\\images\\\\testimonials\\\\testimonial-1.svg\")",
+      "Bash(mv \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant\\\\3.svg\" \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant\\\\public\\\\images\\\\testimonials\\\\testimonial-2.svg\")",
+      "Bash(mv \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant\\\\4.svg\" \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant\\\\public\\\\images\\\\testimonials\\\\testimonial-3.svg\")"
     ],
     "additionalDirectories": [
       "C:\\Users\\HomePC\\.claude\\projects\\c--Users-HomePC-Desktop-cyvant",

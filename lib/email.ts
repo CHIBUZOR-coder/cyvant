@@ -7,7 +7,10 @@ interface ConfirmationEmail {
 
 async function resendRequest(path: string, body: object) {
   const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) throw new Error("RESEND_API_KEY is not configured");
+  if (!apiKey) {
+    console.warn("[email] RESEND_API_KEY not configured — skipping email");
+    return;
+  }
 
   const res = await fetch(`https://api.resend.com${path}`, {
     method: "POST",

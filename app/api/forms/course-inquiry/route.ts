@@ -22,23 +22,23 @@ export async function POST(req: NextRequest) {
     }, 2);
 
     await addLeadNote(lead.id, `Course inquiry — Course of interest: ${courseInterest ?? "Not specified"}`);
-
-    await Promise.all([
-      sendConfirmation({
-        to: email,
-        name,
-        subject: "CYVANT — We received your course inquiry",
-        bodyHtml: `<p>Hi ${name},</p><p>Thanks for your interest in <strong>${courseInterest ?? "our courses"}</strong>. We'll be in touch within 24 hours.</p><p>— The CYVANT Team</p>`,
-      }),
-      notifyMarketer(
-        `New course inquiry: ${name}`,
-        `<p><strong>${name}</strong> (${email}) inquired about: ${courseInterest ?? "unspecified"}</p>`
-      ),
-    ]);
-
-    return NextResponse.json({ success: true }, { status: 200 });
   } catch (err) {
     console.error("[api/forms/course-inquiry]", err);
     return NextResponse.json({ error: "Server error." }, { status: 500 });
   }
+
+  Promise.all([
+    sendConfirmation({
+      to: email,
+      name,
+      subject: "CYVANT — We received your course inquiry",
+      bodyHtml: `<p>Hi ${name},</p><p>Thanks for your interest in <strong>${courseInterest ?? "our courses"}</strong>. We'll be in touch within 24 hours.</p><p>— The CYVANT Team</p>`,
+    }),
+    notifyMarketer(
+      `New course inquiry: ${name}`,
+      `<p><strong>${name}</strong> (${email}) inquired about: ${courseInterest ?? "unspecified"}</p>`
+    ),
+  ]).catch((err) => console.error("[api/forms/course-inquiry] email", err));
+
+  return NextResponse.json({ success: true }, { status: 200 });
 }

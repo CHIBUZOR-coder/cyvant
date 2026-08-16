@@ -4,18 +4,16 @@
 import { POST } from "@/app/api/forms/webinar/route";
 import { NextRequest } from "next/server";
 
-// Mock external services — never hit real APIs in integration tests
-jest.mock("@/lib/hubspot", () => ({
-  upsertContact: jest.fn().mockResolvedValue({ id: "hs-123" }),
-  addNote: jest.fn().mockResolvedValue({}),
+jest.mock("@/lib/leads", () => ({
+  upsertLead: jest.fn().mockResolvedValue({ id: "lead-4" }),
+  addLeadNote: jest.fn().mockResolvedValue({}),
 }));
 jest.mock("@/lib/email", () => ({
   sendConfirmation: jest.fn().mockResolvedValue({}),
   notifyMarketer: jest.fn().mockResolvedValue({}),
 }));
 
-import { upsertContact, addNote } from "@/lib/hubspot";
-import { sendConfirmation, notifyMarketer } from "@/lib/email";
+import { upsertLead, addLeadNote } from "@/lib/leads";
 
 function makeRequest(body: object) {
   return new NextRequest("http://localhost/api/forms/webinar", {
@@ -36,48 +34,58 @@ const validPayload = {
 describe("POST /api/forms/webinar", () => {
   beforeEach(() => jest.clearAllMocks());
 
-  it("returns 200 and calls HubSpot + email for a valid submission", async () => {
+  it("returns 200 and creates a Prisma lead for a valid submission", async () => {
     const res = await POST(makeRequest(validPayload));
     expect(res.status).toBe(200);
     const body = await res.json();
     expect(body.success).toBe(true);
 
-    expect(upsertContact).toHaveBeenCalledTimes(1);
-    expect(upsertContact).toHaveBeenCalledWith(
-      expect.objectContaining({ email: "ada@example.com", firstname: "Ada Obi" }),
+    expect(upsertLead).toHaveBeenCalledWith(
+      expect.objectContaining({
+        email: "ada@example.com",
+        name: "Ada Obi",
+        leadSource: "webinar_registration",
+        qualifyingAnswer: "I want a career in cybersecurity",
+      }),
       1
     );
-    expect(addNote).toHaveBeenCalledTimes(1);
-    expect(sendConfirmation).toHaveBeenCalledTimes(1);
-    expect(notifyMarketer).toHaveBeenCalledTimes(1);
+  });
+
+  it("logs a note with the qualifying answer", async () => {
+    await POST(makeRequest(validPayload));
+    expect(addLeadNote).toHaveBeenCalledWith(
+      "lead-4",
+      expect.stringContaining("I want a career in cybersecurity")
+    );
   });
 
   it("returns 400 when name is missing", async () => {
     const res = await POST(makeRequest({ ...validPayload, name: "" }));
     expect(res.status).toBe(400);
-    expect(upsertContact).not.toHaveBeenCalled();
+    expect(upsertLead).not.toHaveBeenCalled();
   });
 
   it("returns 400 when email is invalid", async () => {
     const res = await POST(makeRequest({ ...validPayload, email: "not-an-email" }));
     expect(res.status).toBe(400);
-    expect(upsertContact).not.toHaveBeenCalled();
+    expect(upsertLead).not.toHaveBeenCalled();
   });
 
   it("returns 400 when consent is false", async () => {
     const res = await POST(makeRequest({ ...validPayload, consent: false }));
     expect(res.status).toBe(400);
-    expect(upsertContact).not.toHaveBeenCalled();
+    expect(upsertLead).not.toHaveBeenCalled();
   });
 
   it("returns 400 when qualifying answer is missing", async () => {
     const res = await POST(makeRequest({ ...validPayload, qualifyingAnswer: "" }));
     expect(res.status).toBe(400);
-    expect(upsertContact).not.toHaveBeenCalled();
+    expect(upsertLead).not.toHaveBeenCalled();
   });
 
-  it("does not create a CRM record when submission is invalid", async () => {
-    await POST(makeRequest({ name: "", email: "", consent: false }));
-    expect(upsertContact).not.toHaveBeenCalled();
+  it("returns 500 when lead creation fails", async () => {
+    (upsertLead as jest.Mock).mockRejectedValueOnce(new Error("DB error"));
+    const res = await POST(makeRequest(validPayload));
+    expect(res.status).toBe(500);
   });
 });

@@ -21,11 +21,9 @@ export const authOptions: NextAuthOptions = {
             where: { email: credentials.email },
           });
 
-          console.log("[auth] user lookup:", user ? "found" : "not found");
           if (!user) return null;
 
           const valid = await bcrypt.compare(credentials.password, user.passwordHash);
-          console.log("[auth] password valid:", valid);
           if (!valid) return null;
 
           return { id: user.id, email: user.email, name: user.name, role: user.role };
@@ -38,7 +36,7 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      if (user) token.role = (user as { role: string }).role;
+      if (user) token.role = (user as unknown as { role: string }).role;
       return token;
     },
     async session({ session, token }) {

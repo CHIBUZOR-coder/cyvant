@@ -35,7 +35,7 @@ export default function TestimonialsPage() {
       </section>
 
       {/* Carousel */}
-      <section className="mx-auto max-w-5xl px-6 pb-28 lg:px-8">
+      <section className="w-full px-4 pb-28 lg:px-8">
         {verified.length === 0 ? (
           <FadeIn>
             <div className="text-center py-20">
@@ -45,7 +45,7 @@ export default function TestimonialsPage() {
           </FadeIn>
         ) : (
           <FadeIn delay={0.3}>
-            <TestimonialCarousel testimonials={verified} />
+            <TestimonialCarousel />
           </FadeIn>
         )}
       </section>
