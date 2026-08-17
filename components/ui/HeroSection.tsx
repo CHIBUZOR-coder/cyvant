@@ -121,7 +121,7 @@ export default function HeroSection() {
       <div aria-hidden className="pointer-events-none absolute bottom-0 right-1/4 -z-10 h-72 w-72 rounded-full bg-violet-700/15 blur-3xl" />
 
       <div className="relative z-10 mx-auto max-w-7xl w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.7fr_1fr] gap-10 md:gap-12 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.7fr_1fr] gap-6 md:gap-10 lg:gap-16 items-center">
 
           {/* ── Left: cycling text ───────────────────────────────── */}
           <div>
@@ -145,7 +145,7 @@ export default function HeroSection() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -40 }}
                   transition={{ duration: 0.5, ease }}
-                  className="absolute text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-blue-400"
+                  className="absolute text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-blue-400"
                 >
                   {TAGLINES[tagIdx][0]}
                   <br />

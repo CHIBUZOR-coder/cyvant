@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { sendConfirmation } from "@/lib/email";
 
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const session = await getServerSession(authOptions);
@@ -30,6 +31,8 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     return NextResponse.json({ error: "Invalid payment status" }, { status: 400 });
   }
 
+  const prevStudent = await db.student.findUnique({ where: { id }, select: { paymentStatus: true } });
+
   const student = await db.student.update({
     where: { id },
     data: {
@@ -40,6 +43,26 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       ...(notes !== undefined && { notes }),
     },
   });
+
+  // Send receipt only when transitioning into "paid" for the first time
+  if (paymentStatus === "paid" && prevStudent?.paymentStatus !== "paid") {
+    sendConfirmation({
+      to: student.email,
+      name: student.name,
+      subject: "Payment Confirmed — CYVANT",
+      bodyHtml: `
+        <div style="font-family:sans-serif;max-width:560px;margin:0 auto;color:#1a1a1a">
+          <h2 style="color:#6d28d9">Payment Received, ${student.name}!</h2>
+          <p>We've confirmed your payment for <strong>${student.courseName}</strong>.</p>
+          ${student.amountPaid ? `<p><strong>Amount paid:</strong> ₦${Number(student.amountPaid).toLocaleString()}</p>` : ""}
+          <p>Your place is fully secured. We'll reach out with any remaining onboarding details.</p>
+          <p>Thank you for choosing CYVANT — we're excited to have you!</p>
+          <br/>
+          <p style="color:#6b7280;font-size:13px">— The CYVANT Team</p>
+        </div>
+      `,
+    }).catch((err) => console.error("[email] payment confirmation failed:", err));
+  }
 
   return NextResponse.json(student);
 }

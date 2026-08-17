@@ -44,8 +44,8 @@ export default function Footer() {
       {/* Top divider glow */}
       <div className="relative z-10 h-px w-full bg-linear-to-r from-transparent via-blue-700/40 to-transparent" />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-8">
-        <div className="grid grid-cols-1 gap-12 sm:grid-cols-3">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8 lg:py-16">
+        <div className="grid grid-cols-1 gap-8 sm:gap-12 sm:grid-cols-3">
 
           {/* Brand */}
           <motion.div
@@ -57,7 +57,7 @@ export default function Footer() {
             variants={column}
           >
             <motion.div whileHover={{ scale: 1.04 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
-              <Link href="/" className="text-2xl font-bold text-white tracking-tight">
+              <Link href="/" className="text-xl sm:text-2xl font-bold text-white tracking-tight">
                 <span className="text-white">CY</span><span className="text-blue-400">VANT</span>
               </Link>
             </motion.div>

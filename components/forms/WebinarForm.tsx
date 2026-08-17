@@ -7,7 +7,17 @@ import { validateContactFields, type ValidationErrors } from "@/lib/validation";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
-export default function WebinarForm() {
+interface Props {
+  webinarId?: string;
+  webinarTitle?: string;
+  qualifyingQuestion?: string;
+}
+
+export default function WebinarForm({
+  webinarId,
+  webinarTitle,
+  qualifyingQuestion = "What's pulling you toward cybersecurity or AI?",
+}: Props) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -28,7 +38,7 @@ export default function WebinarForm() {
       const res = await fetch("/api/forms/webinar", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, phone, qualifyingAnswer: qualifying, consent }),
+        body: JSON.stringify({ name, email, phone, qualifyingAnswer: qualifying, consent, webinarId, webinarTitle }),
       });
       setStatus(res.ok ? "success" : "error");
     } catch {
@@ -52,7 +62,7 @@ export default function WebinarForm() {
       <FormField id="phone" label="Phone / WhatsApp" type="tel" value={phone} onChange={setPhone} required error={errors.phone} />
       <FormField
         id="qualifying"
-        label="What's pulling you toward cybersecurity or AI?"
+        label={qualifyingQuestion}
         type="textarea"
         value={qualifying}
         onChange={setQualifying}

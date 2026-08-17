@@ -69,7 +69,7 @@ export default function TeamManager() {
         <p className="text-sm text-gray-400">{users.length} member{users.length !== 1 ? "s" : ""}</p>
         <button
           onClick={openModal}
-          className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
+          className="cursor-pointer rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
         >
           + Add Team Member
         </button>
@@ -79,8 +79,8 @@ export default function TeamManager() {
       {loading ? (
         <p className="text-gray-500 text-sm py-10 text-center">Loading...</p>
       ) : (
-        <div className="rounded-xl border border-gray-700 overflow-hidden">
-          <table className="w-full text-sm text-left">
+        <div className="rounded-xl border border-gray-700 overflow-x-auto">
+          <table className="w-full text-sm text-left min-w-120">
             <thead className="bg-gray-800 text-gray-400 text-xs uppercase tracking-wider">
               <tr>
                 <th className="px-4 py-3">Name</th>
@@ -126,7 +126,7 @@ export default function TeamManager() {
               <h2 className="text-lg font-bold text-white">Add Team Member</h2>
               <button
                 onClick={() => setModalOpen(false)}
-                className="text-gray-500 hover:text-white transition-colors"
+                className="cursor-pointer text-gray-500 hover:text-white transition-colors"
                 aria-label="Close"
               >
                 <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -193,14 +193,14 @@ export default function TeamManager() {
                 <button
                   type="button"
                   onClick={() => setModalOpen(false)}
-                  className="flex-1 rounded-lg border border-gray-700 px-4 py-2.5 text-sm font-medium text-gray-400 hover:bg-gray-800 hover:text-white transition-colors"
+                  className="cursor-pointer flex-1 rounded-lg border border-gray-700 px-4 py-2.5 text-sm font-medium text-gray-400 hover:bg-gray-800 hover:text-white transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="flex-1 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                  className="cursor-pointer flex-1 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 disabled:opacity-50 transition-colors"
                 >
                   {submitting ? "Adding..." : "Add Member"}
                 </button>

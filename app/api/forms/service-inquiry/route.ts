@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Server error." }, { status: 500 });
   }
 
-  Promise.all([
+  const results = await Promise.allSettled([
     sendConfirmation({
       to: email,
       name,
@@ -35,10 +35,18 @@ export async function POST(req: NextRequest) {
       bodyHtml: `<p>Hi ${name},</p><p>We received your inquiry about <strong>${serviceInterest ?? "our services"}</strong>. A team member will be in touch shortly.</p><p>— The CYVANT Team</p>`,
     }),
     notifyMarketer(
-      `New Services lead: ${name}`,
-      `<p><strong>${name}</strong> (${email}) — Company: ${company ?? "N/A"}</p><p>Service: ${serviceInterest ?? "unspecified"}</p>`
+      `New service inquiry from ${name}`,
+      `<table style="font-size:14px;color:#1a1a1a;border-collapse:collapse;width:100%">
+        <tr><td style="padding:6px 12px 6px 0;color:#6b7280;white-space:nowrap">Name</td><td style="padding:6px 0"><strong>${name}</strong></td></tr>
+        <tr><td style="padding:6px 12px 6px 0;color:#6b7280">Email</td><td style="padding:6px 0"><a href="mailto:${email}" style="color:#6d28d9">${email}</a></td></tr>
+        ${company ? `<tr><td style="padding:6px 12px 6px 0;color:#6b7280">Company</td><td style="padding:6px 0">${company}</td></tr>` : ""}
+        <tr><td style="padding:6px 12px 6px 0;color:#6b7280">Service Interest</td><td style="padding:6px 0">${serviceInterest ?? "Not specified"}</td></tr>
+        <tr><td style="padding:6px 12px 6px 0;color:#6b7280">Source</td><td style="padding:6px 0">Service Inquiry</td></tr>
+      </table>`,
+      email,
     ),
-  ]).catch((err) => console.error("[api/forms/service-inquiry] email", err));
+  ]);
+  results.forEach((r, i) => { if (r.status === "rejected") console.error(`[api/forms/service-inquiry] email[${i}] failed:`, r.reason); });
 
   return NextResponse.json({ success: true }, { status: 200 });
 }

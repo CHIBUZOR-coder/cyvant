@@ -25,23 +25,21 @@ export default function WebinarBanner() {
     day: "numeric",
     month: "long",
     year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
   });
 
   return (
     <div
       role="banner"
       aria-label="Upcoming webinar"
-      className="bg-blue-700 px-6 py-3 text-center text-sm text-white"
+      className="bg-blue-700 px-6 py-2.5 text-center text-sm text-white"
     >
       <span className="font-semibold">{webinar.title}</span>
-      {" — "}
-      <span>{formattedDate}</span>
-      {"  "}
+      {webinar.subtitle && <span className="hidden sm:inline text-blue-200"> — {webinar.subtitle}</span>}
+      {" · "}
+      <span>{formattedDate}{webinar.time ? `, ${webinar.time}` : ""}</span>
       <Link
-        href={webinar.registerUrl}
-        className="ml-2 inline-block rounded bg-white px-3 py-0.5 text-xs font-bold text-blue-700 hover:bg-blue-50 transition-colors"
+        href="/webinars"
+        className="ml-3 inline-block rounded bg-white px-3 py-0.5 text-xs font-bold text-blue-700 hover:bg-blue-50 transition-colors"
       >
         Register
       </Link>

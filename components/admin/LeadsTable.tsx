@@ -55,18 +55,18 @@ export default function LeadsTable() {
   return (
     <div>
       {/* Filters */}
-      <div className="flex flex-wrap gap-3 mb-6">
+      <div className="flex flex-col sm:flex-row flex-wrap gap-3 mb-6">
         <input
           type="search"
           placeholder="Search name, email, course…"
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          className="rounded-lg bg-gray-800 border border-gray-700 px-4 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 w-64"
+          className="rounded-lg bg-gray-800 border border-gray-700 px-4 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 w-full sm:w-64"
         />
         <select
           value={source}
           onChange={(e) => setSource(e.target.value)}
-          className="rounded-lg bg-gray-800 border border-gray-700 px-4 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
+          className="rounded-lg bg-gray-800 border border-gray-700 px-4 py-2 text-sm text-white focus:outline-none focus:border-blue-500 w-full sm:w-auto"
         >
           <option value="">All sources</option>
           {Object.entries(SOURCE_LABEL).map(([val, label]) => (
@@ -76,7 +76,7 @@ export default function LeadsTable() {
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
-          className="rounded-lg bg-gray-800 border border-gray-700 px-4 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
+          className="rounded-lg bg-gray-800 border border-gray-700 px-4 py-2 text-sm text-white focus:outline-none focus:border-blue-500 w-full sm:w-auto"
         >
           <option value="">All statuses</option>
           <option value="new">New</option>
@@ -87,8 +87,8 @@ export default function LeadsTable() {
       </div>
 
       {/* Table */}
-      <div className="rounded-2xl border border-white/5 overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="rounded-2xl border border-white/5 overflow-x-auto">
+        <table className="w-full text-sm min-w-160">
           <thead>
             <tr className="bg-gray-900 border-b border-white/5 text-left">
               <th className="px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-widest">Name</th>
@@ -122,7 +122,7 @@ export default function LeadsTable() {
                   <td className="px-5 py-4 text-gray-400">
                     {SOURCE_LABEL[lead.leadSource] ?? lead.leadSource}
                   </td>
-                  <td className="px-5 py-4 text-gray-300 max-w-[160px] truncate">
+                  <td className="px-5 py-4 text-gray-300 max-w-40 truncate">
                     {lead.courseInterest || <span className="text-gray-600">—</span>}
                   </td>
                   <td className="px-5 py-4">

@@ -1,11 +1,15 @@
 import { NextResponse } from "next/server";
-import { webinars } from "@/data/webinars";
+import { db } from "@/lib/db";
 
 export async function GET() {
-  const now = new Date();
-  const active = webinars.find(
-    (w) => w.active && new Date(w.date) > now
-  ) ?? null;
-
-  return NextResponse.json({ webinar: active });
+  try {
+    const now = new Date();
+    const webinar = await db.webinar.findFirst({
+      where: { date: { gte: now } },
+      orderBy: { date: "asc" },
+    });
+    return NextResponse.json({ webinar });
+  } catch {
+    return NextResponse.json({ webinar: null });
+  }
 }

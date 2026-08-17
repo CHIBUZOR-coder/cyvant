@@ -10,6 +10,7 @@ export interface LeadInput {
   serviceInterest?: string;
   qualifyingAnswer?: string;
   message?: string;
+  photoUrl?: string;
 }
 
 export async function upsertLead(input: LeadInput, scoreIncrement = 0) {
@@ -27,6 +28,7 @@ export async function upsertLead(input: LeadInput, scoreIncrement = 0) {
         serviceInterest: input.serviceInterest ?? existing.serviceInterest,
         qualifyingAnswer: input.qualifyingAnswer ?? existing.qualifyingAnswer,
         message: input.message ?? existing.message,
+        photoUrl: input.photoUrl ?? existing.photoUrl,
         leadScore: existing.leadScore + scoreIncrement,
       },
     });

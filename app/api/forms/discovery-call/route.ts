@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Server error. Please try again." }, { status: 500 });
   }
 
-  Promise.all([
+  const results = await Promise.allSettled([
     sendConfirmation({
       to: email,
       name,
@@ -39,10 +39,17 @@ export async function POST(req: NextRequest) {
       bodyHtml: `<p>Hi ${name},</p><p>We received your request for a discovery call. Use the link below to pick a time that works for you:</p>${calendlyUrl ? `<p><a href="${calendlyUrl}">Book your slot →</a></p>` : ""}<p>If you have any questions in the meantime, just reply to this email.</p><p>— The CYVANT Team</p>`,
     }),
     notifyMarketer(
-      `New discovery call request: ${name}`,
-      `<p><strong>${name}</strong> (${email}${phone ? `, ${phone}` : ""}) requested a discovery call.</p>`
+      `New discovery call request from ${name}`,
+      `<table style="font-size:14px;color:#1a1a1a;border-collapse:collapse;width:100%">
+        <tr><td style="padding:6px 12px 6px 0;color:#6b7280;white-space:nowrap">Name</td><td style="padding:6px 0"><strong>${name}</strong></td></tr>
+        <tr><td style="padding:6px 12px 6px 0;color:#6b7280">Email</td><td style="padding:6px 0"><a href="mailto:${email}" style="color:#6d28d9">${email}</a></td></tr>
+        ${phone ? `<tr><td style="padding:6px 12px 6px 0;color:#6b7280">Phone</td><td style="padding:6px 0">${phone}</td></tr>` : ""}
+        <tr><td style="padding:6px 12px 6px 0;color:#6b7280">Source</td><td style="padding:6px 0">Discovery Call Request</td></tr>
+      </table>`,
+      email,
     ),
-  ]).catch((err) => console.error("[api/forms/discovery-call] email", err));
+  ]);
+  results.forEach((r, i) => { if (r.status === "rejected") console.error(`[api/forms/discovery-call] email[${i}] failed:`, r.reason); });
 
   return NextResponse.json({ success: true }, { status: 200 });
 }

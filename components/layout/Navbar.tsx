@@ -12,6 +12,7 @@ const NAV_LINKS = [
   { href: "/#courses", label: "Courses", sectionId: "courses" },
   { href: "/#testimonials", label: "Testimonials", sectionId: "testimonials" },
   { href: "/#faq", label: "FAQ", sectionId: "faq" },
+  { href: "/webinars", label: "Webinars", sectionId: null },
   { href: "/contact", label: "Contact", sectionId: null },
 ];
 
@@ -53,9 +54,9 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-slate-950 shadow-sm dark:shadow-none">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-14 sm:h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
-        <Link href="/" className="flex items-center font-bold text-xl tracking-tight">
+        <Link href="/" className="flex items-center font-bold text-lg sm:text-xl tracking-tight">
           <span className="text-slate-900 dark:text-white">CY</span><span className="text-blue-700">VANT</span>
         </Link>
 

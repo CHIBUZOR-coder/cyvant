@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 type Note = { id: string; content: string; type: string; createdBy: string | null; createdAt: string };
@@ -8,7 +9,7 @@ type Lead = {
   id: string; name: string; email: string; phone: string | null;
   company: string | null; leadSource: string; courseInterest: string | null;
   serviceInterest: string | null; qualifyingAnswer: string | null; message: string | null;
-  leadScore: number; status: string; createdAt: string; notes: Note[];
+  photoUrl: string | null; leadScore: number; status: string; createdAt: string; notes: Note[];
   student?: { id: string } | null;
 };
 
@@ -47,6 +48,10 @@ export default function LeadDetail({ id }: { id: string }) {
   const [noteType, setNoteType] = useState<"note" | "call" | "email">("note");
   const [saving, setSaving] = useState(false);
   const [statusSaving, setStatusSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [savingStatus, setSavingStatus] = useState<string | null>(null);
+  const router = useRouter();
 
   const fetchLead = useCallback(async () => {
     const res = await fetch(`/api/admin/leads/${id}`);
@@ -60,6 +65,7 @@ export default function LeadDetail({ id }: { id: string }) {
   async function handleStatusChange(status: string) {
     if (!lead) return;
     setStatusSaving(true);
+    setSavingStatus(status);
     await fetch(`/api/admin/leads/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -67,6 +73,13 @@ export default function LeadDetail({ id }: { id: string }) {
     });
     setLead((prev) => prev ? { ...prev, status } : prev);
     setStatusSaving(false);
+    setSavingStatus(null);
+  }
+
+  async function handleDelete() {
+    setDeleting(true);
+    await fetch(`/api/admin/leads/${id}`, { method: "DELETE" });
+    router.push("/admin/leads");
   }
 
   async function handleAddNote(e: React.FormEvent) {
@@ -88,7 +101,7 @@ export default function LeadDetail({ id }: { id: string }) {
   if (!lead) return <div className="p-8 text-red-400">Lead not found.</div>;
 
   return (
-    <div className="p-8 max-w-4xl">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-4xl">
       <Link href="/admin/leads" className="text-sm text-gray-400 hover:text-white transition-colors mb-6 inline-flex items-center gap-1.5">
         ← All leads
       </Link>
@@ -99,9 +112,13 @@ export default function LeadDetail({ id }: { id: string }) {
           {/* Name card */}
           <div className="rounded-2xl bg-gray-900 border border-white/5 p-6">
             <div className="flex items-center gap-3 mb-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-purple-600 to-blue-600 text-white font-bold text-lg">
-                {lead.name.charAt(0).toUpperCase()}
-              </div>
+              {lead.photoUrl ? (
+                <img src={lead.photoUrl} alt={lead.name} className="h-12 w-12 shrink-0 rounded-full object-cover border border-white/10" />
+              ) : (
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-purple-600 to-blue-600 text-white font-bold text-lg">
+                  {lead.name.charAt(0).toUpperCase()}
+                </div>
+              )}
               <div>
                 <p className="font-bold text-white">{lead.name}</p>
                 <p className="text-xs text-gray-400">{SOURCE_LABEL[lead.leadSource] ?? lead.leadSource}</p>
@@ -150,8 +167,14 @@ export default function LeadDetail({ id }: { id: string }) {
                       key={s}
                       onClick={() => handleStatusChange(s)}
                       disabled={statusSaving || lead.status === s}
-                      className={`rounded-full border px-3 py-1 text-xs font-semibold capitalize transition-opacity ${STATUS_STYLES[s]} ${lead.status === s ? "opacity-100" : "opacity-40 hover:opacity-70"}`}
+                      className={`cursor-pointer inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold capitalize transition-opacity ${STATUS_STYLES[s]} ${lead.status === s ? "opacity-100" : "opacity-40 hover:opacity-70"}`}
                     >
+                      {savingStatus === s && (
+                        <svg className="h-3 w-3 animate-spin" viewBox="0 0 24 24" fill="none">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+                        </svg>
+                      )}
                       {s}
                     </button>
                   ))}
@@ -171,6 +194,49 @@ export default function LeadDetail({ id }: { id: string }) {
               >
                 View Student Profile →
               </Link>
+            </div>
+          )}
+
+          {/* Delete — only for non-enrolled leads */}
+          {!lead.student && (
+            <div className="rounded-2xl bg-gray-900 border border-red-500/10 p-4">
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">Danger Zone</p>
+              {confirmDelete ? (
+                <div className="space-y-3">
+                  <p className="text-sm text-gray-300">
+                    Delete <span className="font-semibold text-white">{lead.name}</span>? This cannot be undone.
+                  </p>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={handleDelete}
+                      disabled={deleting}
+                      className="cursor-pointer flex-1 inline-flex items-center justify-center gap-1.5 rounded-lg bg-red-600 hover:bg-red-700 disabled:opacity-50 px-4 py-2 text-sm font-semibold text-white transition-colors"
+                    >
+                      {deleting && (
+                        <svg className="h-3.5 w-3.5 animate-spin" viewBox="0 0 24 24" fill="none">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+                        </svg>
+                      )}
+                      {deleting ? "Deleting…" : "Yes, delete"}
+                    </button>
+                    <button
+                      onClick={() => setConfirmDelete(false)}
+                      disabled={deleting}
+                      className="cursor-pointer flex-1 rounded-lg border border-gray-700 px-4 py-2 text-sm font-semibold text-gray-400 hover:text-white hover:border-gray-500 disabled:opacity-50 transition-colors"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setConfirmDelete(true)}
+                  className="cursor-pointer w-full rounded-lg border border-red-500/30 px-4 py-2 text-sm font-semibold text-red-400 hover:bg-red-500/10 transition-colors"
+                >
+                  Delete Lead
+                </button>
+              )}
             </div>
           )}
 
@@ -218,7 +284,7 @@ export default function LeadDetail({ id }: { id: string }) {
                       key={value}
                       type="button"
                       onClick={() => setNoteType(value)}
-                      className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors border ${
+                      className={`cursor-pointer rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors border ${
                         noteType === value
                           ? "bg-blue-600/20 text-blue-400 border-blue-500/40"
                           : "bg-gray-800 text-gray-400 border-gray-700 hover:text-white"
@@ -238,7 +304,7 @@ export default function LeadDetail({ id }: { id: string }) {
                 <button
                   type="submit"
                   disabled={saving || !noteContent.trim()}
-                  className="rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-40 px-5 py-2 text-sm font-semibold text-white transition-colors"
+                  className="cursor-pointer rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-40 px-5 py-2 text-sm font-semibold text-white transition-colors"
                 >
                   {saving ? "Saving…" : "Save"}
                 </button>

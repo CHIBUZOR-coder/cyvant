@@ -1,54 +1,10 @@
 # CYVANT — Progress & Pending Work
 
-## Pending: requires RESEND_API_KEY + sending domain
-
-Add `RESEND_API_KEY` and `NOTIFICATION_EMAIL` to `.env.local` then implement the following:
-
-### 1. Enrollment confirmation email
-
-When a lead is marked **enrolled** (PATCH `/api/admin/leads/[id]`), send the new student a confirmation email with their course name and next steps.
-
-- File to edit: `app/api/admin/leads/[id]/route.ts`
-- Use `sendConfirmation()` from `lib/email.ts`
-- Fire-and-forget pattern (don't let email failure block the 200 response)
-
-### 2. Payment confirmation email
-
-When a student's payment status is updated to **paid** (PATCH `/api/admin/students/[id]`), send a payment receipt email.
-
-- File to edit: `app/api/admin/students/[id]/route.ts`
-- Use `sendConfirmation()` from `lib/email.ts`
-
-### 3. Admin password reset flow
-
-If an admin or marketer forgets their password, there is currently no way to reset it from the UI.
-
-- Needs a `/admin/forgot-password` page with an email input
-- Needs a `/admin/reset-password?token=...` page to set a new password
-- Needs a `PasswordResetToken` model in Prisma (or use a signed JWT)
-- Send reset link via `sendConfirmation()` from `lib/email.ts`
-
----
-
 ## Pending: content needed from you (no code required)
 
-### 4. Founder photo
+### 5. Team member details
 
-Save Emmanuel's photo as `public/images/emmanuel.jpg`. Then in `app/page.tsx`, replace the `<div>` initials avatar with an `<Image>` tag pointing to that file.
-
-### 5. Team member details (Digital Marketer & Content Creator)
-
-The "Meet the team" section (`app/page.tsx` → `FOUNDERS` array) currently only shows Emmanuel. Add the remaining two team members once you have their names, photos, and short bios.
-
-### 6. Services section descriptions
-
-The three service cards in `app/page.tsx` still use placeholder descriptions:
-
-- Corporate Training
-- Custom Curriculum Design
-- Partnership & Consulting
-
-Replace each with a real one-to-two sentence pitch.
+No additional team members yet. When ready, add each person (name, role, bio, photo, LinkedIn) to the `FOUNDERS` array in `app/page.tsx`. The avatar will automatically use their photo if provided, or fall back to initials.
 
 ### 7. Individual course prices
 
@@ -66,10 +22,6 @@ The PRD requires a second Academy (AI/Data track). No AI courses exist yet in `d
 
 `data/outcomes.ts` contains placeholder entries. Replace with verified graduate outcomes (role, company/employer, cohort, photo) once real data is available.
 
-### 11. Webinar schedule
-
-`data/webinars.ts` is currently empty. Add upcoming webinar entries (title, date, time, registration link) when the schedule is confirmed.
-
 ---
 
 ## Completed
@@ -86,3 +38,23 @@ The PRD requires a second Academy (AI/Data track). No AI courses exist yet in `d
 - [x] Hero sub-headline and price signal updated from PDF content
 - [x] Founder bio, vision, mission, FAQ answers, and program highlights filled from PDF
 - [x] GitHub button on founder card hidden when no URL is provided
+- [x] Enrollment confirmation email — fires on lead status → enrolled (fire-and-forget)
+- [x] Payment confirmation email — fires on student paymentStatus → paid (fire-and-forget)
+- [x] Testimonial carousel replaced with 3 SVG slides
+- [x] Founder photo (Emmanuel) — saved to public/images/emmanuel.png
+- [x] Services section descriptions — all 3 updated with real copy
+- [x] Webinar feature — banner, /webinars page, admin CRUD, DB-backed (Prisma)
+- [x] Webinar flier image upload via Cloudinary
+- [x] Student inquiry photo upload via Cloudinary (optional field)
+- [x] All screens and pages made responsive across all screen sizes
+- [x] Image uploads switched from filesystem to Cloudinary
+- [x] Admin password reset flow — `/admin/forgot-password` + `/admin/reset-password`, DB token model, email via Resend
+- [x] Homepage and public pages fetch courses/webinars live from DB (force-dynamic, revalidatePath) — admin changes reflect immediately
+- [x] Unit, integration, and E2E tests — 80 passing across 6 test files; uses `chibuzormekalam@gmail.com` as test lead/student
+- [x] Lead deletion — admin can delete non-enrolled leads; enrolled leads (converted to student) are protected
+- [x] Lead delete confirmation — replaced browser confirm() with inline custom UI (no native alert)
+- [x] Status change loader — spinner appears on the active status button while the PATCH request is in flight
+- [x] Admin notification emails — all 5 form routes send a distinct, structured admin alert to NOTIFICATION_EMAIL with lead details table and reply-to set to the lead's email; clearly separate from the customer-facing confirmation
+- [x] Admin notifications driven by DB — `notifyAdmins()` queries `AdminUser` where `role = "admin"` so adding/changing the admin automatically updates who gets notified; no hardcoded env var needed
+- [x] Cursor pointer on all admin action buttons — every button across LeadDetail, StudentDetail, TeamManager, WebinarManager, CourseManager, AdminNav, Login, Forgot Password, and Reset Password pages
+- [x] Services DB feature — `Service` model added to Prisma schema, seeded with 3 existing services; admin can add, edit, and delete services at `/admin/services`; homepage and `/services` page now fetch live from DB (hardcoded array removed); 6 icon choices available; published/draft toggle; sort order control

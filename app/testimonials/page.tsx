@@ -14,7 +14,7 @@ export default function TestimonialsPage() {
   return (
     <div className="bg-gray-950 min-h-screen">
       {/* Hero */}
-      <section className="px-6 pt-24 pb-16 lg:px-8">
+      <section className="px-4 pt-16 pb-10 sm:px-6 sm:pt-20 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <FadeIn delay={0}>
             <p className="text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4">
@@ -22,7 +22,7 @@ export default function TestimonialsPage() {
             </p>
           </FadeIn>
           <FadeIn delay={0.1}>
-            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-6xl bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
               Testimonials
             </h1>
           </FadeIn>
@@ -35,7 +35,7 @@ export default function TestimonialsPage() {
       </section>
 
       {/* Carousel */}
-      <section className="w-full px-4 pb-28 lg:px-8">
+      <section className="w-full px-4 pb-16 sm:pb-24 lg:px-8 lg:pb-28">
         {verified.length === 0 ? (
           <FadeIn>
             <div className="text-center py-20">

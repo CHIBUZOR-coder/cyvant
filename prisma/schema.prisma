@@ -18,6 +18,7 @@ model Lead {
   serviceInterest  String?
   qualifyingAnswer String?
   message          String?
+  photoUrl         String?
   leadScore        Int      @default(0)
   status           String   @default("new")
   createdAt        DateTime @default(now())
@@ -59,13 +60,92 @@ model Note {
   @@map("notes")
 }
 
+model Webinar {
+  id                           String   @id @default(cuid())
+  slug                         String   @unique
+  title                        String
+  subtitle                     String?
+  date                         DateTime
+  time                         String
+  description                  String?
+  formatSummary                String?
+  speakers                     Json     @default("[]")
+  registrationOpen             Boolean  @default(true)
+  qualifyingQuestion           String   @default("What's pulling you toward cybersecurity or AI?")
+  thumbnailImage               String?
+  recordingUrl                 String?
+  recordingPermissionConfirmed Boolean  @default(false)
+  recapContent                 String?
+  createdAt                    DateTime @default(now())
+  updatedAt                    DateTime @updatedAt
+
+  @@map("webinars")
+}
+
 model AdminUser {
-  id           String   @id @default(cuid())
-  email        String   @unique
+  id           String               @id @default(cuid())
+  email        String               @unique
   passwordHash String
   name         String
-  role         String   @default("marketer")
-  createdAt    DateTime @default(now())
+  role         String               @default("marketer")
+  createdAt    DateTime             @default(now())
+  resetTokens  PasswordResetToken[]
 
   @@map("admin_users")
+}
+
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  token     String    @unique @default(cuid())
+  adminId   String
+  admin     AdminUser @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@map("password_reset_tokens")
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  number      String   @default("01")
+  title       String
+  description String
+  cta         String   @default("Talk to us")
+  icon        String   @default("shield")
+  published   Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("services")
+}
+
+model Course {
+  id                    String   @id @default(cuid())
+  slug                  String   @unique
+  title                 String
+  academy               String   @default("cybersecurity")
+  tier                  Int
+  path                  String?
+  level                 String
+  duration              String
+  format                String   @default("Online, cohort-based")
+  startingPrice         Int      @default(0)
+  isStartHere           Boolean  @default(false)
+  isMostPopular         Boolean  @default(false)
+  featured              Boolean  @default(false)
+  published             Boolean  @default(true)
+  description           String?
+  prerequisites         Json     @default("[]")
+  whatYouLearn          Json     @default("[]")
+  capstone              String?
+  advancedElective      String?
+  certificationAlignment Json    @default("[]")
+  careerPaths           Json     @default("[]")
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@map("courses")
 }

@@ -16,7 +16,7 @@ interface Props {
 export default function ServiceCard({ id, number, title, description, cta, icon }: Props) {
   return (
     <motion.li
-      className="group flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 p-6 shadow-sm h-full"
+      className="group flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 p-4 sm:p-6 shadow-sm h-full"
       data-service-id={id}
       initial="rest"
       whileHover="hover"
@@ -34,7 +34,7 @@ export default function ServiceCard({ id, number, title, description, cta, icon 
         <p className="text-xs font-bold text-blue-700 dark:text-blue-400 tracking-widest">{number}</p>
       </div>
       <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">{title}</h2>
-      <p className="text-gray-600 dark:text-gray-400 leading-7 flex-1">{description}</p>
+      <p className="text-sm text-gray-600 dark:text-gray-400 leading-7 flex-1">{description}</p>
       <div className="mt-6">
         <Link
           href={`/contact?service=${id}`}

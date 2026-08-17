@@ -44,18 +44,18 @@ export default function StudentsTable() {
   return (
     <div className="space-y-4">
       {/* Filters */}
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-col sm:flex-row flex-wrap gap-3">
         <input
           type="search"
           placeholder="Search name, email or course..."
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          className="rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 w-64"
+          className="rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 w-full sm:w-64"
         />
         <select
           value={paymentFilter}
           onChange={(e) => setPaymentFilter(e.target.value)}
-          className="rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-600"
+          className="rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-600 w-full sm:w-auto"
         >
           <option value="">All payments</option>
           <option value="pending">Pending</option>
@@ -71,7 +71,7 @@ export default function StudentsTable() {
         <p className="text-gray-500 text-sm py-10 text-center">No students found.</p>
       ) : (
         <div className="overflow-x-auto rounded-xl border border-gray-700">
-          <table className="w-full text-sm text-left">
+          <table className="w-full text-sm text-left min-w-160">
             <thead className="bg-gray-800 text-gray-400 text-xs uppercase tracking-wider">
               <tr>
                 <th className="px-4 py-3">Name</th>

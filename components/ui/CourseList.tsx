@@ -14,7 +14,7 @@ export default function CourseList({ courses }: { courses: Course[] }) {
 
   return (
     <div>
-      <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" role="list" aria-label="Courses">
+      <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6" role="list" aria-label="Courses">
         <AnimatePresence initial={false}>
           {visible.map((course, index) => (
             <CourseCard key={course.id} course={course} index={index} />

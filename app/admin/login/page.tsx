@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -77,10 +78,17 @@ export default function AdminLoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-50 px-4 py-2.5 text-sm font-semibold text-white transition-colors"
+            className="cursor-pointer w-full rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-50 px-4 py-2.5 text-sm font-semibold text-white transition-colors"
           >
             {loading ? "Signing in…" : "Sign in"}
           </button>
+
+          <Link
+            href="/admin/forgot-password"
+            className="block text-center text-sm text-gray-500 hover:text-gray-300 transition-colors"
+          >
+            Forgot password?
+          </Link>
         </form>
       </div>
     </div>

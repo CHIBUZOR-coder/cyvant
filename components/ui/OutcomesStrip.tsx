@@ -15,7 +15,7 @@ export default function OutcomesStrip({ outcomes }: Props) {
   }
 
   return (
-    <section className="bg-gray-50 dark:bg-slate-900 py-16 px-6 lg:px-8">
+    <section className="bg-gray-50 dark:bg-slate-900 px-4 py-10 sm:px-6 sm:py-14 lg:px-8 lg:py-16">
       <div className="mx-auto max-w-7xl">
         <motion.h2
           className="text-center text-sm font-semibold uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-10"
@@ -26,7 +26,7 @@ export default function OutcomesStrip({ outcomes }: Props) {
         >
           Where Our Graduates Work
         </motion.h2>
-        <ul className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:flex-wrap justify-center gap-4 sm:gap-6" role="list">
+        <ul className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:flex-wrap justify-center gap-3 sm:gap-4 lg:gap-6" role="list">
           {verified.map((outcome, index) => (
             <motion.li
               key={outcome.id}

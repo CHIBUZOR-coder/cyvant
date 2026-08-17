@@ -11,6 +11,12 @@ const LEVEL_STYLES: Record<Course["level"], string> = {
   Advanced:     "bg-violet-500/15 text-violet-400 border border-violet-500/30",
 };
 
+const TIER_STYLES: Record<1 | 2 | 3, { bar: string; label: string }> = {
+  1: { bar: "bg-blue-600",   label: "text-blue-600 dark:text-blue-400" },
+  2: { bar: "bg-indigo-600", label: "text-indigo-600 dark:text-indigo-400" },
+  3: { bar: "bg-violet-600", label: "text-violet-600 dark:text-violet-400" },
+};
+
 function CheckIcon() {
   return (
     <svg viewBox="0 0 12 12" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -41,6 +47,7 @@ export default function CourseCard({ course, index = 0 }: { course: Course; inde
   const [canScrollDown, setCanScrollDown] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const levelStyle = LEVEL_STYLES[course.level];
+  const tierStyle = TIER_STYLES[course.tier];
 
   const checkScroll = useCallback(() => {
     const el = scrollRef.current;
@@ -59,23 +66,45 @@ export default function CourseCard({ course, index = 0 }: { course: Course; inde
   return (
     <>
       <motion.li
-        className="relative flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 p-6 shadow-sm hover:shadow-md hover:border-blue-200 dark:hover:border-blue-500/50 transition-all duration-200"
+        className="relative flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 overflow-hidden shadow-sm hover:shadow-md hover:border-blue-200 dark:hover:border-blue-500/50 transition-all duration-200"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.4, delay: index * 0.08 }}
         whileHover={{ y: -4 }}
       >
+        {/* Tier colour bar */}
+        <div className={`h-1 w-full ${tierStyle.bar}`} />
+
+        <div className="p-6 flex flex-col flex-1">
+        {/* Floating badges */}
         {course.isStartHere && (
-          <span className="absolute -top-3 left-5 rounded-full bg-blue-700 px-3 py-0.5 text-xs font-bold text-white shadow">
+          <span className="absolute top-4 right-4 rounded-full bg-blue-700 px-2.5 py-0.5 text-xs font-bold text-white shadow">
             Start Here
           </span>
         )}
+        {course.isMostPopular && (
+          <span className="absolute top-4 right-4 rounded-full bg-amber-500 px-2.5 py-0.5 text-xs font-bold text-white shadow">
+            Most Popular
+          </span>
+        )}
+        {course.path && (
+          <span className="absolute top-4 right-4 rounded-full bg-violet-700 px-2.5 py-0.5 text-xs font-bold text-white shadow">
+            Path {course.path}
+          </span>
+        )}
 
-        <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold w-fit ${levelStyle}`}>
-          <CheckIcon />
-          {course.level}
-        </span>
+        {/* Tier + level row */}
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className={`text-xs font-bold uppercase tracking-widest ${tierStyle.label}`}>
+            Tier {course.tier}
+          </span>
+          <span className="text-gray-300 dark:text-gray-600 text-xs">·</span>
+          <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ${levelStyle}`}>
+            <CheckIcon />
+            {course.level}
+          </span>
+        </div>
 
         <h3 className="mt-4 text-lg font-bold text-gray-900 dark:text-white leading-snug">{course.title}</h3>
 
@@ -95,6 +124,7 @@ export default function CourseCard({ course, index = 0 }: { course: Course; inde
             Details →
           </button>
         </div>
+        </div>{/* end p-6 wrapper */}
       </motion.li>
 
       <AnimatePresence>
@@ -131,10 +161,20 @@ export default function CourseCard({ course, index = 0 }: { course: Course; inde
                   <CloseIcon />
                 </button>
 
-                <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ${levelStyle}`}>
-                  <CheckIcon />
-                  {course.level}
-                </span>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className={`text-xs font-bold uppercase tracking-widest ${tierStyle.label}`}>Tier {course.tier}</span>
+                  <span className="text-gray-300 dark:text-gray-600 text-xs">·</span>
+                  <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ${levelStyle}`}>
+                    <CheckIcon />
+                    {course.level}
+                  </span>
+                  {course.isMostPopular && (
+                    <span className="rounded-full bg-amber-500 px-2.5 py-0.5 text-xs font-bold text-white">Most Popular</span>
+                  )}
+                  {course.path && (
+                    <span className="rounded-full bg-violet-700 px-2.5 py-0.5 text-xs font-bold text-white">Path {course.path}</span>
+                  )}
+                </div>
 
                 <h2 className="mt-4 text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white leading-tight">{course.title}</h2>
 
@@ -194,6 +234,46 @@ export default function CourseCard({ course, index = 0 }: { course: Course; inde
                           className="rounded-full bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20 px-3 py-1 text-xs text-blue-700 dark:text-blue-300"
                         >
                           {item}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {course.capstone && (
+                  <div className="mt-5">
+                    <p className="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-2">Capstone Projects</p>
+                    <p className="text-sm text-gray-700 dark:text-gray-300">{course.capstone}</p>
+                  </div>
+                )}
+
+                {course.advancedElective && (
+                  <div className="mt-5 rounded-xl bg-violet-50 dark:bg-violet-500/10 border border-violet-200 dark:border-violet-500/20 px-4 py-3">
+                    <p className="text-xs font-semibold uppercase tracking-widest text-violet-600 dark:text-violet-400 mb-1">Optional Add-on</p>
+                    <p className="text-sm text-gray-700 dark:text-gray-300">{course.advancedElective}</p>
+                  </div>
+                )}
+
+                {course.certificationAlignment && course.certificationAlignment.length > 0 && (
+                  <div className="mt-5">
+                    <p className="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-2">Certification Alignment</p>
+                    <div className="flex flex-wrap gap-2">
+                      {course.certificationAlignment.map((cert, i) => (
+                        <span key={i} className="rounded-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-3 py-1 text-xs text-gray-600 dark:text-gray-300">
+                          {cert}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {course.careerPaths && course.careerPaths.length > 0 && (
+                  <div className="mt-5">
+                    <p className="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-2">Career Paths</p>
+                    <div className="flex flex-wrap gap-2">
+                      {course.careerPaths.map((path, i) => (
+                        <span key={i} className="rounded-full bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 px-3 py-1 text-xs text-emerald-700 dark:text-emerald-400">
+                          {path}
                         </span>
                       ))}
                     </div>

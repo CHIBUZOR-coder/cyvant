@@ -1,14 +1,27 @@
 import type { Webinar } from "@/types";
 
-// Source of truth for active webinars — used by /api/webinar/active.
-// Update this array to schedule/unschedule webinars without a full rebuild.
+// Add entries here to schedule webinars.
+// Status is auto-computed: upcoming = date >= today, past = date < today.
+// No manual status field needed — just set the date and everything updates automatically.
 export const webinars: Webinar[] = [
-  // Example (set active: true and update details when a webinar is scheduled):
   // {
   //   id: "w1",
-  //   title: "Intro to Cybersecurity for Non-Tech Professionals",
+  //   slug: "career-pivot-sep-2026",
+  //   title: "Career Pivot into Cybersecurity",
+  //   subtitle: "Breaking into Cyber/AI With No Tech Background",
   //   date: "2026-09-01T17:00:00+01:00",
-  //   registerUrl: "#webinar-register",
-  //   active: false,
+  //   time: "6:00 PM WAT",
+  //   description: "Join us for a live session on how to break into cybersecurity from any background. No prior tech experience required.",
+  //   formatSummary: "Student presentation, 2 speakers, panel, audience Q&A",
+  //   speakers: [
+  //     {
+  //       name: "Emmanuel Tavershima",
+  //       role: "Founder",
+  //       bio: "Co-Founder & CEO of CYVANT, building Africa's leading cybersecurity education platform.",
+  //     },
+  //   ],
+  //   registrationOpen: true,
+  //   qualifyingQuestion: "What's your current background and what's pulling you toward cybersecurity?",
+  //   recordingPermissionConfirmed: false,
   // },
 ];

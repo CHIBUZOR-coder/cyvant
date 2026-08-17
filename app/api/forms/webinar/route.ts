@@ -5,7 +5,7 @@ import { sendConfirmation, notifyMarketer } from "@/lib/email";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const { name, email, phone, qualifyingAnswer, consent } = body ?? {};
+  const { name, email, phone, qualifyingAnswer, consent, webinarId, webinarTitle } = body ?? {};
 
   const errors = validateContactFields({ name: name ?? "", email: email ?? "", phone, consent: !!consent });
   if (!qualifyingAnswer?.trim()) errors.qualifying = "Qualifying answer is required.";
@@ -26,24 +26,47 @@ export async function POST(req: NextRequest) {
       qualifyingAnswer,
     }, 1);
 
-    await addLeadNote(lead.id, `Webinar registration — Qualifying answer: ${qualifyingAnswer}`);
+    const noteText = [
+      `Webinar registration${webinarTitle ? ` — "${webinarTitle}"` : ""}`,
+      webinarId ? `Webinar ID: ${webinarId}` : null,
+      `Qualifying answer: ${qualifyingAnswer}`,
+    ].filter(Boolean).join(" | ");
+
+    await addLeadNote(lead.id, noteText);
   } catch (err) {
     console.error("[api/forms/webinar]", err);
     return NextResponse.json({ error: "Server error. Please try again." }, { status: 500 });
   }
 
-  Promise.all([
+  const results = await Promise.allSettled([
     sendConfirmation({
       to: email,
       name,
-      subject: "You're registered for the CYVANT webinar!",
-      bodyHtml: `<p>Hi ${name},</p><p>You're registered. We'll send the webinar link closer to the date.</p><p>— The CYVANT Team</p>`,
+      subject: `You're registered${webinarTitle ? ` for "${webinarTitle}"` : " for the CYVANT webinar"}!`,
+      bodyHtml: `
+        <div style="font-family:sans-serif;max-width:560px;margin:0 auto;color:#1a1a1a">
+          <h2 style="color:#6d28d9">You're in, ${name}!</h2>
+          ${webinarTitle ? `<p>You've successfully registered for <strong>${webinarTitle}</strong>.</p>` : "<p>You've successfully registered for our upcoming webinar.</p>"}
+          <p>We'll send the join link closer to the date. Keep an eye on your inbox.</p>
+          <br/>
+          <p style="color:#6b7280;font-size:13px">— The CYVANT Team</p>
+        </div>
+      `,
     }),
     notifyMarketer(
-      `New webinar registration: ${name}`,
-      `<p><strong>${name}</strong> (${email}) registered for the webinar.</p><p>Qualifying answer: ${qualifyingAnswer}</p>`
+      `New webinar registration from ${name}`,
+      `<table style="font-size:14px;color:#1a1a1a;border-collapse:collapse;width:100%">
+        <tr><td style="padding:6px 12px 6px 0;color:#6b7280;white-space:nowrap">Name</td><td style="padding:6px 0"><strong>${name}</strong></td></tr>
+        <tr><td style="padding:6px 12px 6px 0;color:#6b7280">Email</td><td style="padding:6px 0"><a href="mailto:${email}" style="color:#6d28d9">${email}</a></td></tr>
+        ${phone ? `<tr><td style="padding:6px 12px 6px 0;color:#6b7280">Phone</td><td style="padding:6px 0">${phone}</td></tr>` : ""}
+        ${webinarTitle ? `<tr><td style="padding:6px 12px 6px 0;color:#6b7280">Webinar</td><td style="padding:6px 0">${webinarTitle}</td></tr>` : ""}
+        <tr><td style="padding:6px 12px 6px 0;color:#6b7280;vertical-align:top">Qualifying Answer</td><td style="padding:6px 0"><em>${qualifyingAnswer}</em></td></tr>
+        <tr><td style="padding:6px 12px 6px 0;color:#6b7280">Source</td><td style="padding:6px 0">Webinar Registration</td></tr>
+      </table>`,
+      email,
     ),
-  ]).catch((err) => console.error("[api/forms/webinar] email", err));
+  ]);
+  results.forEach((r, i) => { if (r.status === "rejected") console.error(`[api/forms/webinar] email[${i}] failed:`, r.reason); });
 
   return NextResponse.json({ success: true }, { status: 200 });
 }

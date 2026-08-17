@@ -83,10 +83,10 @@ export default function StudentDetail({ id }: { id: string }) {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-start justify-between">
+      <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-white">{student.name}</h1>
-          <p className="text-gray-400 mt-1">{student.email}{student.phone ? ` · ${student.phone}` : ""}</p>
+          <h1 className="text-xl sm:text-2xl font-bold text-white">{student.name}</h1>
+          <p className="text-gray-400 mt-1 text-sm">{student.email}{student.phone ? ` · ${student.phone}` : ""}</p>
         </div>
         <span className={`inline-flex rounded-full px-3 py-1 text-sm font-semibold ${PAYMENT_COLORS[student.paymentStatus]}`}>
           Payment: {student.paymentStatus}
@@ -164,7 +164,7 @@ export default function StudentDetail({ id }: { id: string }) {
             <button
               onClick={save}
               disabled={saving}
-              className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-700 disabled:opacity-50 transition-colors"
+              className="cursor-pointer rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-700 disabled:opacity-50 transition-colors"
             >
               {saving ? "Saving..." : "Save Changes"}
             </button>

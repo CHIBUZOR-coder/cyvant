@@ -1,19 +1,50 @@
 import Link from "next/link";
+import Image from "next/image";
 import HeroSection from "@/components/ui/HeroSection";
 import TrustedBy from "@/components/ui/TrustedBy";
 import HowItWorks from "@/components/ui/HowItWorks";
 import OutcomesStrip from "@/components/ui/OutcomesStrip";
-import WebinarBanner from "@/components/ui/WebinarBanner";
 import { graduateOutcomes } from "@/data/outcomes";
 import FadeIn from "@/components/ui/FadeIn";
 import ParticleCanvas from "@/components/ui/ParticleCanvas";
 import DarkSection from "@/components/ui/DarkSection";
 import ServiceCard from "@/components/ui/ServiceCard";
-import { courses } from "@/data/courses";
 import CourseList from "@/components/ui/CourseList";
 import { testimonials } from "@/data/testimonials";
 import TestimonialCarousel from "@/components/ui/TestimonialCarousel";
 import FaqAccordion from "@/components/ui/FaqAccordion";
+import { db } from "@/lib/db";
+import type { Course as PrismaCourse } from "@prisma/client";
+import type { Course } from "@/types";
+import { SERVICE_ICONS } from "@/lib/service-icons";
+import type { ServiceIconKey } from "@/lib/service-icons";
+
+export const dynamic = "force-dynamic";
+
+function mapCourse(c: PrismaCourse): Course {
+  return {
+    id: c.id,
+    slug: c.slug,
+    title: c.title,
+    academy: c.academy as Course["academy"],
+    tier: c.tier as 1 | 2 | 3,
+    path: (c.path ?? undefined) as "A" | "B" | "C" | undefined,
+    level: c.level as Course["level"],
+    duration: c.duration,
+    format: c.format,
+    startingPrice: c.startingPrice,
+    isStartHere: c.isStartHere,
+    isMostPopular: c.isMostPopular,
+    featured: c.featured,
+    description: c.description ?? undefined,
+    prerequisites: (c.prerequisites as string[]) ?? [],
+    whatYouLearn: (c.whatYouLearn as string[]) ?? [],
+    capstone: c.capstone ?? undefined,
+    advancedElective: c.advancedElective ?? undefined,
+    certificationAlignment: (c.certificationAlignment as string[]) ?? [],
+    careerPaths: (c.careerPaths as string[]) ?? [],
+  };
+}
 
 // ── About data ─────────────────────────────────────────────────────────────────
 
@@ -55,6 +86,7 @@ const FEATURES = [
 const FOUNDERS = [
   {
     initials: "ET",
+    photo: "/images/emmanuel.png",
     name: "Emmanuel Tavershima",
     role: "CO-FOUNDER & CEO",
     bio: "I'm building CYVANT around a simple belief: Africa doesn't lack talent; it lacks enough pathways that turn potential into opportunity. As Co-Founder & CEO, I design practical learning systems that move people beyond consuming knowledge into building, solving, demonstrating, and becoming industry-ready. My work sits at the intersection of technology, education, and operations — building programmes, communities, and partnerships that turn learning into practical capability and real-world opportunity.",
@@ -113,50 +145,6 @@ const WHY_CYVANT = [
   },
 ];
 
-// ── Services data ───────────────────────────────────────────────────────────────
-
-const SERVICES = [
-  {
-    id: "corporate-training",
-    number: "01",
-    title: "Corporate Cybersecurity Awareness Training",
-    description:
-      "[PLACEHOLDER: Description of the corporate training offering — audience, format, outcomes, duration.]",
-    cta: "Request a quote",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-blue-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.8} stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
-      </svg>
-    ),
-  },
-  {
-    id: "custom-curriculum",
-    number: "02",
-    title: "Custom Curriculum & Team Upskilling",
-    description:
-      "[PLACEHOLDER: Bespoke programs designed for specific teams or skill gaps.]",
-    cta: "Talk to us",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-violet-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.8} stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 3.741-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
-      </svg>
-    ),
-  },
-  {
-    id: "partnership-consulting",
-    number: "03",
-    title: "Partnership, Speaking & Consulting",
-    description:
-      "[PLACEHOLDER: Speaking engagements, advisory roles, partnerships with organisations.]",
-    cta: "Talk to us",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-emerald-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.8} stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
-      </svg>
-    ),
-  },
-];
-
 // ── FAQ data ────────────────────────────────────────────────────────────────────
 
 const FAQ_ITEMS = [
@@ -200,13 +188,26 @@ function AboutCheckIcon() {
 
 // ── Page ────────────────────────────────────────────────────────────────────────
 
-export default function HomePage() {
+export default async function HomePage() {
   const verified = testimonials.filter((t) => t.permissionOnFile);
+  const [upcomingWebinar, courseRows, serviceRows] = await Promise.all([
+    db.webinar.findFirst({
+      where: { date: { gte: new Date() } },
+      orderBy: { date: "asc" },
+    }).catch(() => null),
+    db.course.findMany({
+      where: { published: true },
+      orderBy: [{ tier: "asc" }, { startingPrice: "asc" }],
+    }).catch(() => []),
+    db.service.findMany({
+      where: { published: true },
+      orderBy: [{ order: "asc" }, { createdAt: "asc" }],
+    }).catch(() => []),
+  ]);
+  const courses = courseRows.map(mapCourse);
 
   return (
     <>
-      <WebinarBanner />
-
       {/* ══ HOME ══════════════════════════════════════════════════════════════ */}
       <div id="home">
         <HeroSection />
@@ -219,7 +220,7 @@ export default function HomePage() {
       <div id="about" className="bg-slate-900 scroll-mt-16">
 
         {/* Banner 1: About + Vision / Mission */}
-        <section className="relative overflow-hidden px-6 py-20 lg:px-8 lg:py-28 border-b border-white/5">
+        <section className="relative overflow-hidden px-4 py-12 sm:px-6 lg:px-8 lg:py-28 border-b border-white/5">
           <ParticleCanvas />
           <div className="relative z-10 mx-auto max-w-7xl">
             <div className="grid lg:grid-cols-2 gap-8 items-stretch">
@@ -281,21 +282,27 @@ export default function HomePage() {
         </section>
 
         {/* Banner 2: Founders & Leadership */}
-        <section className="relative overflow-hidden px-6 py-20 lg:px-8 lg:py-28 border-b border-white/5">
+        <section className="relative overflow-hidden px-4 py-12 sm:px-6 lg:px-8 lg:py-28 border-b border-white/5">
           <div className="mx-auto max-w-7xl">
             <FadeIn delay={0}>
               <h2 className="text-2xl sm:text-3xl font-bold bg-linear-to-r from-blue-400 to-violet-400 bg-clip-text text-transparent text-center mb-12">
                 Founders &amp; Leadership
               </h2>
             </FadeIn>
-            <div className="grid sm:grid-cols-2 gap-6">
-              {FOUNDERS.map(({ initials, name, role, bio, linkedin, github }, i) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {FOUNDERS.map(({ initials, photo, name, role, bio, linkedin, github }, i) => (
                 <FadeIn key={name} delay={i * 0.1}>
                   <div className="group rounded-2xl border border-white/10 bg-white/5 p-8 h-full flex flex-col transition-all duration-300 hover:border-blue-500/40 hover:shadow-[0_0_30px_rgba(59,130,246,0.18)]">
                     <div className="flex items-center gap-4 mb-5">
-                      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-blue-600 to-violet-600 text-white font-bold text-lg transition-all duration-300 group-hover:shadow-[0_0_22px_rgba(139,92,246,0.65)]">
-                        {initials}
-                      </div>
+                      {photo ? (
+                        <div className="relative h-14 w-14 shrink-0 rounded-full overflow-hidden bg-gray-800 transition-all duration-300 group-hover:shadow-[0_0_22px_rgba(139,92,246,0.65)]">
+                          <Image src={photo} alt={name} fill className="object-cover object-top" />
+                        </div>
+                      ) : (
+                        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-blue-600 to-violet-600 text-white font-bold text-lg transition-all duration-300 group-hover:shadow-[0_0_22px_rgba(139,92,246,0.65)]">
+                          {initials}
+                        </div>
+                      )}
                       <div>
                         <p className="font-bold text-white text-lg">{name}</p>
                         <p className="text-xs font-semibold tracking-widest text-blue-400 mt-0.5">{role}</p>
@@ -338,7 +345,7 @@ export default function HomePage() {
         </section>
 
         {/* Banner 3: Program Highlights + Why CYVANT */}
-        <section className="relative overflow-hidden px-6 py-20 lg:px-8 lg:py-28">
+        <section className="relative overflow-hidden px-4 py-12 sm:px-6 lg:px-8 lg:py-28">
           <div className="mx-auto max-w-7xl">
             <FadeIn delay={0}>
               <h2 className="text-2xl sm:text-3xl font-bold bg-linear-to-r from-blue-400 to-violet-400 bg-clip-text text-transparent mb-12">
@@ -387,13 +394,13 @@ export default function HomePage() {
 
       {/* ══ SERVICES ══════════════════════════════════════════════════════════ */}
       <div id="services" className="bg-white dark:bg-slate-950 scroll-mt-16">
-        <DarkSection className="px-6 pt-28 pb-14 lg:px-8 lg:pt-36 lg:pb-16">
+        <DarkSection className="px-4 pt-14 pb-10 sm:px-6 lg:px-8 lg:pt-36 lg:pb-16">
           <div className="mx-auto max-w-4xl">
             <FadeIn delay={0}>
               <p className="text-sm font-bold uppercase tracking-widest text-blue-400 mb-4">Services</p>
             </FadeIn>
             <FadeIn delay={0.1}>
-              <h2 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-7xl">
+              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-7xl">
                 Beyond the classroom
               </h2>
             </FadeIn>
@@ -407,9 +414,10 @@ export default function HomePage() {
 
         <section className="mx-auto max-w-7xl px-6 pt-10 pb-14 lg:px-8">
           <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" role="list">
-            {SERVICES.map(({ id, number, title, description, cta, icon }, index) => (
+            {serviceRows.map(({ id, slug, number, title, description, cta, icon }, index) => (
               <FadeIn key={id} delay={index * 0.1}>
-                <ServiceCard id={id} number={number} title={title} description={description} cta={cta} icon={icon} />
+                <ServiceCard id={slug} number={number} title={title} description={description} cta={cta}
+                  icon={SERVICE_ICONS[icon as ServiceIconKey] ?? SERVICE_ICONS.shield} />
               </FadeIn>
             ))}
           </ul>
@@ -418,7 +426,7 @@ export default function HomePage() {
 
       {/* ══ COURSES ═══════════════════════════════════════════════════════════ */}
       <div id="courses" className="bg-white dark:bg-slate-950 scroll-mt-16">
-        <DarkSection className="px-6 py-24 lg:px-8">
+        <DarkSection className="px-4 py-12 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl">
             <p className="text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4">Our Courses</p>
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
@@ -432,7 +440,7 @@ export default function HomePage() {
           </div>
         </DarkSection>
 
-        <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-20 lg:px-8">
           <div className="mb-10">
             <p className="text-xs font-semibold uppercase tracking-widest text-blue-700 dark:text-blue-400 mb-2">Academy 1</p>
             <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Cybersecurity Academy</h3>
@@ -444,7 +452,7 @@ export default function HomePage() {
 
       {/* ══ TESTIMONIALS ══════════════════════════════════════════════════════ */}
       <div id="testimonials" className="bg-gray-950 scroll-mt-16">
-        <section className="px-6 pt-24 pb-16 lg:px-8">
+        <section className="px-4 pt-16 pb-10 sm:px-6 sm:pt-20 sm:pb-14 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <FadeIn delay={0}>
               <p className="text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4">
@@ -452,7 +460,7 @@ export default function HomePage() {
               </p>
             </FadeIn>
             <FadeIn delay={0.1}>
-              <h2 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-6xl bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
                 Testimonials
               </h2>
             </FadeIn>
@@ -480,9 +488,55 @@ export default function HomePage() {
         </section>
       </div>
 
+      {/* ══ WEBINARS ══════════════════════════════════════════════════════════ */}
+      <div className="bg-gray-950">
+        <section className="mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
+          <FadeIn>
+            <div className="rounded-2xl border border-blue-500/20 bg-gray-900 p-5 sm:p-8 lg:p-10 flex flex-col sm:flex-row items-start sm:items-center gap-8 justify-between">
+              <div className="flex-1">
+                <p className="text-xs font-semibold uppercase tracking-widest text-blue-400 mb-3">Live Sessions</p>
+                {upcomingWebinar ? (
+                  <>
+                    <h2 className="text-2xl sm:text-3xl font-bold text-white leading-tight">
+                      {upcomingWebinar.title}
+                    </h2>
+                    {upcomingWebinar.subtitle && (
+                      <p className="mt-2 text-blue-300">{upcomingWebinar.subtitle}</p>
+                    )}
+                    <p className="mt-3 text-gray-400 text-sm">
+                      📅{" "}
+                      {new Date(upcomingWebinar.date).toLocaleDateString("en-NG", {
+                        weekday: "long", day: "numeric", month: "long", year: "numeric",
+                      })}
+                      {upcomingWebinar.time && ` · ${upcomingWebinar.time}`}
+                    </p>
+                    {upcomingWebinar.description && (
+                      <p className="mt-4 text-gray-300 leading-7 max-w-xl">{upcomingWebinar.description}</p>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <h2 className="text-2xl sm:text-3xl font-bold text-white">Free Webinars</h2>
+                    <p className="mt-3 text-gray-300 leading-7 max-w-xl">
+                      We run regular live sessions on cybersecurity careers, AI, and practical skills — free and open to everyone. Stay tuned for our next one.
+                    </p>
+                  </>
+                )}
+              </div>
+              <Link
+                href="/webinars"
+                className="shrink-0 rounded-lg bg-blue-600 px-6 py-3 text-sm font-semibold text-white hover:bg-blue-500 transition-colors"
+              >
+                {upcomingWebinar ? "Register now" : "View webinars"}
+              </Link>
+            </div>
+          </FadeIn>
+        </section>
+      </div>
+
       {/* ══ FAQ ═══════════════════════════════════════════════════════════════ */}
       <div id="faq" className="bg-white dark:bg-slate-950 scroll-mt-16">
-        <DarkSection className="px-6 py-24 lg:px-8">
+        <DarkSection className="px-4 py-12 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl">
             <FadeIn delay={0}>
               <p className="text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4">FAQ</p>
@@ -504,7 +558,7 @@ export default function HomePage() {
           </div>
         </DarkSection>
 
-        <section className="mx-auto max-w-3xl px-6 py-20 lg:px-8">
+        <section className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
           <FadeIn>
             <FaqAccordion items={FAQ_ITEMS} />
           </FadeIn>
