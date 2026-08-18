@@ -116,7 +116,7 @@ export default function CourseInquiryForm({ initialCourse }: Props) {
               <button
                 type="button"
                 onClick={() => { setPhoto(null); setPhotoPreview(null); if (fileRef.current) fileRef.current.value = ""; }}
-                className="ml-3 text-xs text-gray-400 hover:text-red-400 transition-colors"
+                className="cursor-pointer ml-3 text-xs text-gray-400 hover:text-red-400 transition-colors"
               >
                 Remove
               </button>

@@ -35,7 +35,7 @@ export default function FaqAccordion({ items }: Props) {
             <dt>
               <button
                 type="button"
-                className="flex w-full items-start justify-between text-left gap-4 group"
+                className="cursor-pointer flex w-full items-start justify-between text-left gap-4 group"
                 aria-expanded={isOpen}
                 aria-controls={`faq-answer-${index}`}
                 id={`faq-question-${index}`}

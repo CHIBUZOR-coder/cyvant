@@ -16,11 +16,13 @@ jest.mock("@/lib/db", () => ({
   db: {
     lead: {
       findMany: jest.fn(),
+      count: jest.fn(),
       findUnique: jest.fn(),
       update: jest.fn(),
     },
     student: {
       findMany: jest.fn(),
+      count: jest.fn(),
       findUnique: jest.fn(),
       create: jest.fn(),
       update: jest.fn(),
@@ -123,13 +125,14 @@ describe("Flow: lead marked enrolled → student auto-created → email sent", (
   it("step 1 — admin sees lead in the leads list", async () => {
     mockSession();
     (db.lead.findMany as jest.Mock).mockResolvedValueOnce([LEAD]);
+    (db.lead.count as jest.Mock).mockResolvedValueOnce(1);
 
     const res = await getLeads(req("GET", "http://localhost/api/admin/leads"));
     const data = await res.json();
 
     expect(res.status).toBe(200);
-    expect(data[0].email).toBe("chibuzormekalam@gmail.com");
-    expect(data[0].status).toBe("new");
+    expect(data.data[0].email).toBe("chibuzormekalam@gmail.com");
+    expect(data.data[0].status).toBe("new");
   });
 
   it("step 2 — admin contacts the lead (status → contacted)", async () => {
@@ -181,13 +184,14 @@ describe("Flow: lead marked enrolled → student auto-created → email sent", (
   it("step 4 — student appears in student list", async () => {
     mockSession();
     (db.student.findMany as jest.Mock).mockResolvedValueOnce([STUDENT]);
+    (db.student.count as jest.Mock).mockResolvedValueOnce(1);
 
     const res = await getStudents(req("GET", "http://localhost/api/admin/students"));
     const data = await res.json();
 
     expect(res.status).toBe(200);
-    expect(data[0].email).toBe("chibuzormekalam@gmail.com");
-    expect(data[0].paymentStatus).toBe("pending");
+    expect(data.data[0].email).toBe("chibuzormekalam@gmail.com");
+    expect(data.data[0].paymentStatus).toBe("pending");
   });
 });
 

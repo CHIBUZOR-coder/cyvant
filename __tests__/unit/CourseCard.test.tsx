@@ -66,11 +66,11 @@ describe("CourseCard — rendering", () => {
     expect(screen.getByText("Most Popular")).toBeInTheDocument();
   });
 
-  it("shows path badge for Tier 3 courses", () => {
+  it("does not show a path badge regardless of path value", () => {
     render(
       <CourseCard course={{ ...BASE_COURSE, tier: 3, path: "A", isStartHere: false }} />
     );
-    expect(screen.getByText("Path A")).toBeInTheDocument();
+    expect(screen.queryByText("Path A")).not.toBeInTheDocument();
   });
 
   it("shows 'Details →' button", () => {

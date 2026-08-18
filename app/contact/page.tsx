@@ -25,7 +25,7 @@ export default function ContactPage() {
           </FadeIn>
           <FadeIn delay={0.2}>
             <p className="mt-4 text-gray-300">
-              Not sure which course is right for you? Book a free 20-minute discovery call
+              Not sure which course is right for you? Book a free 20 minute discovery call
               and we&apos;ll help you figure it out. Or just send us a message.
             </p>
           </FadeIn>

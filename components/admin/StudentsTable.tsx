@@ -16,6 +16,8 @@ interface Student {
   enrolledAt: string;
 }
 
+const TAKE = 50;
+
 const PAYMENT_COLORS: Record<string, string> = {
   pending: "bg-yellow-500/15 text-yellow-400 border border-yellow-500/30",
   partial: "bg-blue-500/15 text-blue-400 border border-blue-500/30",
@@ -27,19 +29,30 @@ export default function StudentsTable() {
   const [loading, setLoading] = useState(true);
   const [q, setQ] = useState("");
   const [paymentFilter, setPaymentFilter] = useState("");
+  const [page, setPage] = useState(0);
+  const [total, setTotal] = useState(0);
 
   const load = useCallback(async () => {
     setLoading(true);
     const params = new URLSearchParams();
     if (q) params.set("q", q);
     if (paymentFilter) params.set("paymentStatus", paymentFilter);
+    params.set("page", String(page));
     const res = await fetch(`/api/admin/students?${params}`);
-    const data = await res.json();
-    setStudents(data);
+    const json = await res.json();
+    setStudents(json.data);
+    setTotal(json.total);
     setLoading(false);
-  }, [q, paymentFilter]);
+  }, [q, paymentFilter, page]);
 
   useEffect(() => { load(); }, [load]);
+
+  function handleQ(value: string) { setQ(value); setPage(0); }
+  function handlePayment(value: string) { setPaymentFilter(value); setPage(0); }
+
+  const pages = Math.ceil(total / TAKE);
+  const from = total === 0 ? 0 : page * TAKE + 1;
+  const to = Math.min((page + 1) * TAKE, total);
 
   return (
     <div className="space-y-4">
@@ -49,12 +62,12 @@ export default function StudentsTable() {
           type="search"
           placeholder="Search name, email or course..."
           value={q}
-          onChange={(e) => setQ(e.target.value)}
+          onChange={(e) => handleQ(e.target.value)}
           className="rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 w-full sm:w-64"
         />
         <select
           value={paymentFilter}
-          onChange={(e) => setPaymentFilter(e.target.value)}
+          onChange={(e) => handlePayment(e.target.value)}
           className="rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-600 w-full sm:w-auto"
         >
           <option value="">All payments</option>
@@ -117,6 +130,36 @@ export default function StudentsTable() {
           </table>
         </div>
       )}
+
+      {/* Pagination */}
+      <div className="flex items-center justify-between text-xs text-gray-500">
+        <p>
+          {total === 0
+            ? "No students"
+            : `Showing ${from}–${to} of ${total} student${total !== 1 ? "s" : ""}`}
+        </p>
+        {pages > 1 && (
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setPage((p) => p - 1)}
+              disabled={page === 0}
+              className="cursor-pointer px-3 py-1.5 rounded bg-gray-800 text-gray-300 hover:bg-gray-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            >
+              ← Prev
+            </button>
+            <span className="text-gray-400 px-1">
+              {page + 1} / {pages}
+            </span>
+            <button
+              onClick={() => setPage((p) => p + 1)}
+              disabled={page + 1 >= pages}
+              className="cursor-pointer px-3 py-1.5 rounded bg-gray-800 text-gray-300 hover:bg-gray-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            >
+              Next →
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

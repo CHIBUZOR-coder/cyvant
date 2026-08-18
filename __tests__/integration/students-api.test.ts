@@ -13,6 +13,7 @@ jest.mock("@/lib/db", () => ({
   db: {
     student: {
       findMany: jest.fn(),
+      count: jest.fn(),
       findUnique: jest.fn(),
       update: jest.fn(),
     },
@@ -85,18 +86,20 @@ describe("GET /api/admin/students", () => {
   it("returns all students including test student", async () => {
     (getServerSession as jest.Mock).mockResolvedValueOnce(SESSION);
     (db.student.findMany as jest.Mock).mockResolvedValueOnce([STUDENT]);
+    (db.student.count as jest.Mock).mockResolvedValueOnce(1);
 
     const res = await GET(makeReq("GET", "http://localhost/api/admin/students"));
     expect(res.status).toBe(200);
     const data = await res.json();
-    expect(data).toHaveLength(1);
-    expect(data[0].email).toBe("chibuzormekalam@gmail.com");
-    expect(data[0].courseName).toBe("Cyber Security Fundamentals");
+    expect(data.data).toHaveLength(1);
+    expect(data.data[0].email).toBe("chibuzormekalam@gmail.com");
+    expect(data.data[0].courseName).toBe("Cyber Security Fundamentals");
   });
 
   it("filters students by paymentStatus", async () => {
     (getServerSession as jest.Mock).mockResolvedValueOnce(SESSION);
     (db.student.findMany as jest.Mock).mockResolvedValueOnce([STUDENT]);
+    (db.student.count as jest.Mock).mockResolvedValueOnce(1);
 
     const res = await GET(
       makeReq("GET", "http://localhost/api/admin/students?paymentStatus=pending")
@@ -112,6 +115,7 @@ describe("GET /api/admin/students", () => {
   it("searches by query string", async () => {
     (getServerSession as jest.Mock).mockResolvedValueOnce(SESSION);
     (db.student.findMany as jest.Mock).mockResolvedValueOnce([STUDENT]);
+    (db.student.count as jest.Mock).mockResolvedValueOnce(1);
 
     const res = await GET(makeReq("GET", "http://localhost/api/admin/students?q=chibuzor"));
     expect(res.status).toBe(200);
@@ -125,10 +129,11 @@ describe("GET /api/admin/students", () => {
   it("returns empty array when no students match", async () => {
     (getServerSession as jest.Mock).mockResolvedValueOnce(SESSION);
     (db.student.findMany as jest.Mock).mockResolvedValueOnce([]);
+    (db.student.count as jest.Mock).mockResolvedValueOnce(0);
 
     const res = await GET(makeReq("GET", "http://localhost/api/admin/students?q=nobody"));
     const data = await res.json();
-    expect(data).toEqual([]);
+    expect(data.data).toEqual([]);
   });
 });
 

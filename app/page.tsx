@@ -19,8 +19,6 @@ import type { Course } from "@/types";
 import { SERVICE_ICONS } from "@/lib/service-icons";
 import type { ServiceIconKey } from "@/lib/service-icons";
 
-export const dynamic = "force-dynamic";
-
 function mapCourse(c: PrismaCourse): Course {
   return {
     id: c.id,
@@ -66,7 +64,7 @@ const FEATURES = [
     ),
   },
   {
-    label: "Real-world Labs",
+    label: "Real World Labs",
     icon: (
       <svg className="h-4 w-4 text-emerald-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.8} stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
@@ -96,10 +94,10 @@ const FOUNDERS = [
 ];
 
 const HIGHLIGHTS = [
-  { label: "Duration", detail: "4–10 weeks depending on your track — from beginner foundations to advanced engineering." },
+  { label: "Duration", detail: "4 to 10 weeks depending on your track, from beginner foundations to advanced engineering." },
   { label: "Format", detail: "Live sessions, practical labs, guided projects, and independent practice. Consistent participation, not just attendance." },
-  { label: "Tools", detail: "TryHackMe, Hack The Box, Splunk, Wireshark, Metasploit, and more — the same tools used on the job." },
-  { label: "Outcome", detail: "Job-ready skills, a demonstrable portfolio, CV and interview support, and access to industry opportunities." },
+  { label: "Tools", detail: "TryHackMe, Hack The Box, Splunk, Wireshark, Metasploit, and more. The same tools used on the job." },
+  { label: "Outcome", detail: "Job ready skills, a demonstrable portfolio, CV and interview support, and access to industry opportunities." },
 ];
 
 const WHY_CYVANT = [
@@ -150,7 +148,7 @@ const WHY_CYVANT = [
 const FAQ_ITEMS = [
   {
     question: "Do I need a tech background to join?",
-    answer: "Not necessarily. Our programmes are designed for different starting points — from beginners building their foundations to professionals looking to deepen their skills. Each programme clearly states the recommended entry level.",
+    answer: "Not necessarily. Our programmes are designed for different starting points, from beginners building their foundations to professionals looking to deepen their skills. Each programme clearly states the recommended entry level.",
   },
   {
     question: "How much time does this require weekly?",
@@ -158,7 +156,7 @@ const FAQ_ITEMS = [
   },
   {
     question: "What certification or credential do I get?",
-    answer: "This depends on the programme. You may receive a CYVANT certificate of completion, while certification-focused programmes can prepare you for recognised industry certifications such as CompTIA. External certification exams are subject to their respective requirements and fees.",
+    answer: "This depends on the programme. You may receive a CYVANT certificate of completion, while certification focused programmes can prepare you for recognised industry certifications such as CompTIA. External certification exams are subject to their respective requirements and fees.",
   },
   {
     question: "Is there career support after the program?",
@@ -166,11 +164,11 @@ const FAQ_ITEMS = [
   },
   {
     question: "What's the payment structure?",
-    answer: "Payment depends on the programme. We offer full-payment and, where available, instalment options. The specific payment structure is provided on each programme page before enrolment.",
+    answer: "Payment depends on the programme. We offer full payment and, where available, instalment options. The specific payment structure is provided on each programme page before enrolment.",
   },
   {
     question: "How is this different from self-study or other platforms?",
-    answer: "You don't just consume content — you put it to work. CYVANT combines structured learning with practical labs, projects, mentorship, peer learning, assessments, and opportunities to demonstrate what you've built. The goal is not simply to finish a course, but to leave with skills you can demonstrate and apply.",
+    answer: "You don't just consume content; you put it to work. CYVANT combines structured learning with practical labs, projects, mentorship, peer learning, assessments, and opportunities to demonstrate what you've built. The goal is not simply to finish a course, but to leave with skills you can demonstrate and apply.",
   },
 ];
 
@@ -190,11 +188,18 @@ function AboutCheckIcon() {
 
 export default async function HomePage() {
   const verified = testimonials.filter((t) => t.permissionOnFile);
-  const [upcomingWebinar, courseRows, serviceRows] = await Promise.all([
-    db.webinar.findFirst({
-      where: { date: { gte: new Date() } },
+  const now = new Date();
+  const [upcomingWebinars, pastWebinars, courseRows, serviceRows] = await Promise.all([
+    db.webinar.findMany({
+      where: { date: { gte: now } },
       orderBy: { date: "asc" },
-    }).catch(() => null),
+      take: 3,
+    }).catch(() => []),
+    db.webinar.findMany({
+      where: { date: { lt: now } },
+      orderBy: { date: "desc" },
+      take: 3,
+    }).catch(() => []),
     db.course.findMany({
       where: { published: true },
       orderBy: [{ tier: "asc" }, { startingPrice: "asc" }],
@@ -205,6 +210,7 @@ export default async function HomePage() {
     }).catch(() => []),
   ]);
   const courses = courseRows.map(mapCourse);
+  const webinarRows = [...upcomingWebinars, ...pastWebinars];
 
   return (
     <>
@@ -239,7 +245,7 @@ export default async function HomePage() {
                     </h2>
                   </div>
                   <p className="text-gray-300 leading-8 flex-1">
-                    CYVANT was founded in Lagos, Nigeria with a simple conviction: Africa has the talent to build and secure its digital future, but too many people lack the practical pathways to turn their potential into opportunity. We combine guided labs, simulations, projects, mentorship, and practical challenges that require learners to learn, build, solve, and demonstrate — not just consume content and collect certificates.
+                    CYVANT was founded in Lagos, Nigeria with a simple conviction: Africa has the talent to build and secure its digital future, but too many people lack the practical pathways to turn their potential into opportunity. We combine guided labs, simulations, projects, mentorship, and practical challenges that require learners to learn, build, solve, and demonstrate, not just consume content and collect certificates.
                   </p>
                   <div className="mt-8 grid grid-cols-2 gap-3">
                     {FEATURES.map(({ label, icon }) => (
@@ -262,7 +268,7 @@ export default async function HomePage() {
                       Our Vision
                     </h3>
                     <p className="text-gray-300 leading-7">
-                      To become Africa&apos;s most trusted technology education institution — building skilled, ethical, and future-ready professionals who are capable of creating and shaping the digital future.
+                      To become Africa&apos;s most trusted technology education institution, building skilled, ethical, and future ready professionals who are capable of creating and shaping the digital future.
                     </p>
                   </div>
                 </FadeIn>
@@ -272,7 +278,7 @@ export default async function HomePage() {
                       Our Mission
                     </h3>
                     <p className="text-gray-300 leading-7">
-                      To develop job-ready cybersecurity professionals through hands-on learning, mentorship, and execution-focused education — while contributing to the growth of Africa&apos;s digital workforce and cybersecurity resilience.
+                      To develop job ready cybersecurity professionals through hands on learning, mentorship, and execution focused education, while contributing to the growth of Africa&apos;s digital workforce and cybersecurity resilience.
                     </p>
                   </div>
                 </FadeIn>
@@ -406,7 +412,7 @@ export default async function HomePage() {
             </FadeIn>
             <FadeIn delay={0.2}>
               <p className="mt-6 text-base leading-8 text-gray-300 sm:text-xl max-w-2xl">
-                CYVANT works directly with organisations to build cyber-aware, AI-ready teams.
+                CYVANT works directly with organisations to build cyber aware, AI ready teams.
               </p>
             </FadeIn>
           </div>
@@ -433,7 +439,7 @@ export default async function HomePage() {
               Cybersecurity courses. Every level.
             </h2>
             <p className="mt-6 text-lg leading-8 text-gray-300 max-w-2xl">
-              Built to take you from no background to job-ready. Look for the{" "}
+              Built to take you from no background to job ready. Look for the{" "}
               <span className="rounded-full bg-blue-700 text-white px-2 py-0.5 text-xs font-bold">Start Here</span>{" "}
               badge if you&apos;re not sure where to begin.
             </p>
@@ -444,7 +450,7 @@ export default async function HomePage() {
           <div className="mb-10">
             <p className="text-xs font-semibold uppercase tracking-widest text-blue-700 dark:text-blue-400 mb-2">Academy 1</p>
             <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Cybersecurity Academy</h3>
-            <p className="mt-2 text-gray-500 dark:text-gray-400">From awareness to hands-on defence.</p>
+            <p className="mt-2 text-gray-500 dark:text-gray-400">From awareness to hands on defence.</p>
           </div>
           <CourseList courses={courses} />
         </div>
@@ -490,47 +496,88 @@ export default async function HomePage() {
 
       {/* ══ WEBINARS ══════════════════════════════════════════════════════════ */}
       <div className="bg-gray-950">
-        <section className="mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
+        <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
           <FadeIn>
-            <div className="rounded-2xl border border-blue-500/20 bg-gray-900 p-5 sm:p-8 lg:p-10 flex flex-col sm:flex-row items-start sm:items-center gap-8 justify-between">
-              <div className="flex-1">
-                <p className="text-xs font-semibold uppercase tracking-widest text-blue-400 mb-3">Live Sessions</p>
-                {upcomingWebinar ? (
-                  <>
-                    <h2 className="text-2xl sm:text-3xl font-bold text-white leading-tight">
-                      {upcomingWebinar.title}
-                    </h2>
-                    {upcomingWebinar.subtitle && (
-                      <p className="mt-2 text-blue-300">{upcomingWebinar.subtitle}</p>
-                    )}
-                    <p className="mt-3 text-gray-400 text-sm">
-                      📅{" "}
-                      {new Date(upcomingWebinar.date).toLocaleDateString("en-NG", {
-                        weekday: "long", day: "numeric", month: "long", year: "numeric",
-                      })}
-                      {upcomingWebinar.time && ` · ${upcomingWebinar.time}`}
-                    </p>
-                    {upcomingWebinar.description && (
-                      <p className="mt-4 text-gray-300 leading-7 max-w-xl">{upcomingWebinar.description}</p>
-                    )}
-                  </>
-                ) : (
-                  <>
-                    <h2 className="text-2xl sm:text-3xl font-bold text-white">Free Webinars</h2>
-                    <p className="mt-3 text-gray-300 leading-7 max-w-xl">
-                      We run regular live sessions on cybersecurity careers, AI, and practical skills — free and open to everyone. Stay tuned for our next one.
-                    </p>
-                  </>
-                )}
-              </div>
-              <Link
-                href="/webinars"
-                className="shrink-0 rounded-lg bg-blue-600 px-6 py-3 text-sm font-semibold text-white hover:bg-blue-500 transition-colors"
-              >
-                {upcomingWebinar ? "Register now" : "View webinars"}
+            <div className="flex items-end justify-between gap-4 mb-3">
+              <p className="text-xs font-semibold uppercase tracking-widest text-blue-400">Live Sessions</p>
+              <Link href="/webinars" className="text-sm text-blue-400 hover:text-blue-300 font-medium transition-colors shrink-0">
+                View all →
               </Link>
             </div>
+            <div className="flex items-end justify-between gap-4 mb-3">
+              <h2 className="text-2xl sm:text-3xl font-bold text-white">Free Webinars</h2>
+            </div>
+            <p className="text-gray-400 text-sm max-w-xl mb-8">
+              We run regular live sessions on cybersecurity careers, AI, and practical skills. Free and open to everyone.
+            </p>
           </FadeIn>
+
+          {webinarRows.length === 0 ? (
+            <FadeIn delay={0.1}>
+              <div className="rounded-2xl border border-blue-500/20 bg-gray-900 p-8 text-center">
+                <p className="text-white font-semibold text-lg">Coming soon</p>
+                <p className="text-gray-400 mt-2 text-sm">Stay tuned for our next live session.</p>
+                <Link
+                  href="/webinars"
+                  className="mt-5 inline-block rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-blue-500 transition-colors"
+                >
+                  Get notified
+                </Link>
+              </div>
+            </FadeIn>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {webinarRows.map((w, i) => {
+                  const isPast = w.date < now;
+                  return (
+                    <FadeIn key={w.id} delay={i * 0.07}>
+                      <Link
+                        href="/webinars"
+                        className="group flex flex-col rounded-2xl border border-white/5 bg-gray-900 overflow-hidden hover:border-blue-500/40 transition-colors h-full"
+                      >
+                        {w.thumbnailImage && (
+                          <div className="relative w-full h-32 shrink-0">
+                            <Image src={w.thumbnailImage} alt={w.title} fill className="object-cover" />
+                          </div>
+                        )}
+                        <div className="p-5 flex flex-col flex-1 gap-2">
+                          <span className={`self-start inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold ${
+                            isPast ? "bg-gray-700/70 text-gray-400" : "bg-blue-500/15 text-blue-400"
+                          }`}>
+                            {isPast ? "Past" : "Upcoming"}
+                          </span>
+                          <p className="font-semibold text-white text-sm leading-snug group-hover:text-blue-300 transition-colors">
+                            {w.title}
+                          </p>
+                          <p className="text-xs text-gray-500">
+                            📅 {w.date.toLocaleDateString("en-NG", { day: "numeric", month: "short", year: "numeric" })}
+                            {w.time ? ` · ${w.time}` : ""}
+                          </p>
+                          <p className="text-xs text-blue-400 mt-auto pt-2 group-hover:text-blue-300 transition-colors">
+                            {isPast ? "View recap →" : "Register →"}
+                          </p>
+                        </div>
+                      </Link>
+                    </FadeIn>
+                  );
+                })}
+              </div>
+              <FadeIn delay={0.2}>
+                <div className="mt-8 text-center">
+                  <Link
+                    href="/webinars"
+                    className="inline-flex items-center gap-2 rounded-xl border border-gray-700 bg-gray-900 px-6 py-3 text-sm font-semibold text-gray-200 hover:border-blue-500 hover:text-blue-400 transition-colors"
+                  >
+                    View all webinars
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M9 18l6-6-6-6" />
+                    </svg>
+                  </Link>
+                </div>
+              </FadeIn>
+            </>
+          )}
         </section>
       </div>
 

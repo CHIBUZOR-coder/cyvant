@@ -26,7 +26,7 @@ export default function CourseList({ courses }: { courses: Course[] }) {
         <div className="mt-10 flex justify-center">
           <button
             onClick={() => setShowAll((prev) => !prev)}
-            className="inline-flex items-center gap-2 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-900 px-6 py-3 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:border-blue-400 dark:hover:border-blue-500 hover:text-blue-700 dark:hover:text-blue-400 transition-colors shadow-sm"
+            className="cursor-pointer inline-flex items-center gap-2 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-900 px-6 py-3 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:border-blue-400 dark:hover:border-blue-500 hover:text-blue-700 dark:hover:text-blue-400 transition-colors shadow-sm"
           >
             {showAll ? (
               <>

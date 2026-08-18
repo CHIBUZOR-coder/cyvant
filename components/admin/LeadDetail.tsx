@@ -318,7 +318,7 @@ export default function LeadDetail({ id }: { id: string }) {
               <p className="text-sm font-semibold text-white">Activity ({lead.notes.length})</p>
             </div>
             {lead.notes.length === 0 ? (
-              <p className="px-6 py-8 text-sm text-gray-600 text-center">No activity yet — log the first interaction above.</p>
+              <p className="px-6 py-8 text-sm text-gray-600 text-center">No activity yet. Log the first interaction above.</p>
             ) : (
               <ul className="divide-y divide-white/5">
                 {lead.notes.map((note) => (

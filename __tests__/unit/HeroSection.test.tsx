@@ -1,6 +1,12 @@
 import { render, screen } from "@testing-library/react";
 import HeroSection from "@/components/ui/HeroSection";
 
+jest.mock("@/components/ui/ParticleCanvas", () => {
+  const ParticleCanvas = () => null;
+  ParticleCanvas.displayName = "ParticleCanvas";
+  return ParticleCanvas;
+});
+
 describe("HeroSection", () => {
   beforeEach(() => render(<HeroSection />));
 
@@ -9,24 +15,23 @@ describe("HeroSection", () => {
   });
 
   it("renders the sub-headline", () => {
-    expect(screen.getByText(/AI and cybersecurity education/i)).toBeInTheDocument();
+    expect(screen.getByText(/Practical technology training/i)).toBeInTheDocument();
   });
 
-  it("renders a primary CTA with highest-contrast class and correct href", () => {
-    const cta = screen.getByRole("link", { name: /start your journey/i });
+  it("renders a primary CTA with correct label and href", () => {
+    const cta = screen.getByRole("link", { name: /Kickstart Your Career/i });
     expect(cta).toBeInTheDocument();
     expect(cta).toHaveAttribute("href", "/courses");
-    // Primary CTA is white button on dark background (white = brand primary)
-    expect(cta).toHaveClass("bg-white");
+    expect(cta).toHaveClass("bg-blue-600");
   });
 
   it("renders the starting price signal", () => {
-    expect(screen.getByText(/Programs from/i)).toBeInTheDocument();
+    expect(screen.getByText(/Programs starting from/i)).toBeInTheDocument();
   });
 
-  it("renders the secondary CTA as a smaller subordinate link (no button class)", () => {
-    const secondary = screen.getByRole("link", { name: /talk to us/i });
+  it("renders the secondary CTA as a subordinate link", () => {
+    const secondary = screen.getByRole("link", { name: /Contact Us/i });
     expect(secondary).toBeInTheDocument();
-    expect(secondary).not.toHaveClass("bg-white");
+    expect(secondary).not.toHaveClass("bg-blue-600");
   });
 });

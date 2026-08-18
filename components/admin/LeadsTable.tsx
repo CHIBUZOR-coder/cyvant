@@ -16,6 +16,8 @@ type Lead = {
   _count: { notes: number };
 };
 
+const TAKE = 50;
+
 const STATUS_STYLES: Record<string, string> = {
   new:       "bg-blue-500/15 text-blue-400 border-blue-500/30",
   contacted: "bg-yellow-500/15 text-yellow-400 border-yellow-500/30",
@@ -24,11 +26,12 @@ const STATUS_STYLES: Record<string, string> = {
 };
 
 const SOURCE_LABEL: Record<string, string> = {
-  course_inquiry:      "Course Inquiry",
+  course_inquiry:       "Course Inquiry",
   webinar_registration: "Webinar",
-  service_inquiry:     "Service",
-  general_contact:     "General",
-  discovery_call:      "Discovery Call",
+  webinar_notify:       "Webinar Notify",
+  service_inquiry:      "Service",
+  general_contact:      "General",
+  discovery_call:       "Discovery Call",
 };
 
 export default function LeadsTable() {
@@ -37,6 +40,8 @@ export default function LeadsTable() {
   const [q, setQ] = useState("");
   const [source, setSource] = useState("");
   const [status, setStatus] = useState("");
+  const [page, setPage] = useState(0);
+  const [total, setTotal] = useState(0);
 
   const fetchLeads = useCallback(async () => {
     setLoading(true);
@@ -44,13 +49,23 @@ export default function LeadsTable() {
     if (q) params.set("q", q);
     if (source) params.set("source", source);
     if (status) params.set("status", status);
+    params.set("page", String(page));
     const res = await fetch(`/api/admin/leads?${params}`);
-    const data = await res.json();
-    setLeads(data);
+    const json = await res.json();
+    setLeads(json.data);
+    setTotal(json.total);
     setLoading(false);
-  }, [q, source, status]);
+  }, [q, source, status, page]);
 
   useEffect(() => { fetchLeads(); }, [fetchLeads]);
+
+  function handleQ(value: string) { setQ(value); setPage(0); }
+  function handleSource(value: string) { setSource(value); setPage(0); }
+  function handleStatus(value: string) { setStatus(value); setPage(0); }
+
+  const pages = Math.ceil(total / TAKE);
+  const from = total === 0 ? 0 : page * TAKE + 1;
+  const to = Math.min((page + 1) * TAKE, total);
 
   return (
     <div>
@@ -60,22 +75,23 @@ export default function LeadsTable() {
           type="search"
           placeholder="Search name, email, course…"
           value={q}
-          onChange={(e) => setQ(e.target.value)}
+          onChange={(e) => handleQ(e.target.value)}
           className="rounded-lg bg-gray-800 border border-gray-700 px-4 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 w-full sm:w-64"
         />
         <select
           value={source}
-          onChange={(e) => setSource(e.target.value)}
+          onChange={(e) => handleSource(e.target.value)}
           className="rounded-lg bg-gray-800 border border-gray-700 px-4 py-2 text-sm text-white focus:outline-none focus:border-blue-500 w-full sm:w-auto"
         >
           <option value="">All sources</option>
           {Object.entries(SOURCE_LABEL).map(([val, label]) => (
             <option key={val} value={val}>{label}</option>
           ))}
+
         </select>
         <select
           value={status}
-          onChange={(e) => setStatus(e.target.value)}
+          onChange={(e) => handleStatus(e.target.value)}
           className="rounded-lg bg-gray-800 border border-gray-700 px-4 py-2 text-sm text-white focus:outline-none focus:border-blue-500 w-full sm:w-auto"
         >
           <option value="">All statuses</option>
@@ -148,7 +164,35 @@ export default function LeadsTable() {
         </table>
       </div>
 
-      <p className="text-xs text-gray-600 mt-4">{leads.length} lead{leads.length !== 1 ? "s" : ""}</p>
+      {/* Pagination */}
+      <div className="mt-4 flex items-center justify-between text-xs text-gray-500">
+        <p>
+          {total === 0
+            ? "No leads"
+            : `Showing ${from}–${to} of ${total} lead${total !== 1 ? "s" : ""}`}
+        </p>
+        {pages > 1 && (
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setPage((p) => p - 1)}
+              disabled={page === 0}
+              className="cursor-pointer px-3 py-1.5 rounded bg-gray-800 text-gray-300 hover:bg-gray-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            >
+              ← Prev
+            </button>
+            <span className="text-gray-400 px-1">
+              {page + 1} / {pages}
+            </span>
+            <button
+              onClick={() => setPage((p) => p + 1)}
+              disabled={page + 1 >= pages}
+              className="cursor-pointer px-3 py-1.5 rounded bg-gray-800 text-gray-300 hover:bg-gray-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            >
+              Next →
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

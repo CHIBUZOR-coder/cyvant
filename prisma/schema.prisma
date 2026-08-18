@@ -27,6 +27,9 @@ model Lead {
   student          Student?
 
   @@map("leads")
+  @@index([status])
+  @@index([leadSource])
+  @@index([createdAt])
 }
 
 model Student {
@@ -46,6 +49,7 @@ model Student {
   updatedAt     DateTime  @updatedAt
 
   @@map("students")
+  @@index([paymentStatus])
 }
 
 model Note {
@@ -80,6 +84,7 @@ model Webinar {
   updatedAt                    DateTime @updatedAt
 
   @@map("webinars")
+  @@index([date])
 }
 
 model AdminUser {

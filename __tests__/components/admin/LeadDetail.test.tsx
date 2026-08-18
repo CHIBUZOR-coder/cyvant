@@ -9,6 +9,10 @@ jest.mock("next/link", () => {
   return Link;
 });
 
+jest.mock("next/navigation", () => ({
+  useRouter: () => ({ push: jest.fn() }),
+}));
+
 const baseLead = {
   id: "l1",
   name: "John Doe",

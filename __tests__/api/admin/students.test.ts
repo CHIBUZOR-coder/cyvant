@@ -9,6 +9,7 @@ jest.mock("@/lib/db", () => ({
   db: {
     student: {
       findMany: jest.fn(),
+      count: jest.fn(),
       findUnique: jest.fn(),
       update: jest.fn(),
     },
@@ -46,15 +47,17 @@ describe("GET /api/admin/students", () => {
   it("returns students list", async () => {
     const students = [{ id: "s1", name: "Test Student", paymentStatus: "pending" }];
     (db.student.findMany as jest.Mock).mockResolvedValue(students);
+    (db.student.count as jest.Mock).mockResolvedValue(1);
 
     const res = await GET(makeReq("http://localhost/api/admin/students"));
     const data = await res.json();
     expect(res.status).toBe(200);
-    expect(data).toEqual(students);
+    expect(data.data).toEqual(students);
   });
 
   it("filters by paymentStatus", async () => {
     (db.student.findMany as jest.Mock).mockResolvedValue([]);
+    (db.student.count as jest.Mock).mockResolvedValue(0);
     await GET(makeReq("http://localhost/api/admin/students?paymentStatus=paid"));
     expect(db.student.findMany).toHaveBeenCalledWith(
       expect.objectContaining({ where: expect.objectContaining({ paymentStatus: "paid" }) })
@@ -63,6 +66,7 @@ describe("GET /api/admin/students", () => {
 
   it("filters by search query", async () => {
     (db.student.findMany as jest.Mock).mockResolvedValue([]);
+    (db.student.count as jest.Mock).mockResolvedValue(0);
     await GET(makeReq("http://localhost/api/admin/students?q=jane"));
     expect(db.student.findMany).toHaveBeenCalledWith(
       expect.objectContaining({ where: expect.objectContaining({ OR: expect.any(Array) }) })

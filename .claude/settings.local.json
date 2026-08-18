@@ -52,7 +52,12 @@
       "Bash(Get-Content .env)",
       "Bash(Select-String -Pattern \"RESEND|EMAIL|NOTIFY\")",
       "Bash(xargs grep -l -i \"service\")",
-      "Bash(mkdir -p \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant\\\\app\\\\api\\\\admin\\\\services\\\\[id]\" && mkdir -p \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant\\\\app\\\\admin\\\\services\" && echo \"done\")"
+      "Bash(mkdir -p \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant\\\\app\\\\api\\\\admin\\\\services\\\\[id]\" && mkdir -p \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant\\\\app\\\\admin\\\\services\" && echo \"done\")",
+      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant\" -Recurse -Depth 2)",
+      "Bash(Select-Object FullName)",
+      "Bash(node -e \"const { courses } = require\\('./data/courses.ts'\\); console.log\\(courses.length\\)\")",
+      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant\" -Recurse -Directory)",
+      "Bash(Head -30)"
     ],
     "additionalDirectories": [
       "C:\\Users\\HomePC\\.claude\\projects\\c--Users-HomePC-Desktop-cyvant",

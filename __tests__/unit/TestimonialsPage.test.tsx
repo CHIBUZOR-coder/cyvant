@@ -1,3 +1,4 @@
+import React from "react";
 import { render, screen } from "@testing-library/react";
 import TestimonialsPage from "@/app/testimonials/page";
 import type { Testimonial } from "@/types";
@@ -6,13 +7,19 @@ jest.mock("@/data/testimonials", () => ({
   testimonials: [] as Testimonial[],
 }));
 
+jest.mock("@/components/ui/TestimonialCarousel", () => {
+  const TestimonialCarousel = () => <div data-testid="testimonial-carousel" />;
+  TestimonialCarousel.displayName = "TestimonialCarousel";
+  return TestimonialCarousel;
+});
+
 describe("Testimonials page", () => {
   it("filters out cards with permissionOnFile: false and shows empty state", () => {
     render(<TestimonialsPage />);
     expect(screen.getByText(/testimonials coming soon/i)).toBeInTheDocument();
   });
 
-  it("renders verified testimonial cards when permissionOnFile is true", async () => {
+  it("renders the carousel when at least one testimonial has permissionOnFile: true", async () => {
     const { testimonials } = await import("@/data/testimonials");
     (testimonials as Testimonial[]).push({
       id: "t-test",
@@ -26,6 +33,6 @@ describe("Testimonials page", () => {
     });
 
     render(<TestimonialsPage />);
-    expect(screen.getByText("Test Student")).toBeInTheDocument();
+    expect(screen.getByTestId("testimonial-carousel")).toBeInTheDocument();
   });
 });

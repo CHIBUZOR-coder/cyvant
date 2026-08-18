@@ -3,6 +3,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 
+const TAKE = 50;
+
 export async function GET(req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -11,24 +13,32 @@ export async function GET(req: NextRequest) {
   const source = searchParams.get("source");
   const status = searchParams.get("status");
   const q = searchParams.get("q");
+  const page = Math.max(0, parseInt(searchParams.get("page") ?? "0", 10));
 
-  const leads = await db.lead.findMany({
-    where: {
-      ...(source ? { leadSource: source } : {}),
-      ...(status ? { status } : {}),
-      ...(q
-        ? {
-            OR: [
-              { name: { contains: q, mode: "insensitive" } },
-              { email: { contains: q, mode: "insensitive" } },
-              { courseInterest: { contains: q, mode: "insensitive" } },
-            ],
-          }
-        : {}),
-    },
-    orderBy: { createdAt: "desc" },
-    include: { _count: { select: { notes: true } } },
-  });
+  const where = {
+    ...(source ? { leadSource: source } : {}),
+    ...(status ? { status } : {}),
+    ...(q
+      ? {
+          OR: [
+            { name: { contains: q, mode: "insensitive" as const } },
+            { email: { contains: q, mode: "insensitive" as const } },
+            { courseInterest: { contains: q, mode: "insensitive" as const } },
+          ],
+        }
+      : {}),
+  };
 
-  return NextResponse.json(leads);
+  const [data, total] = await Promise.all([
+    db.lead.findMany({
+      where,
+      orderBy: { createdAt: "desc" },
+      include: { _count: { select: { notes: true } } },
+      take: TAKE,
+      skip: page * TAKE,
+    }),
+    db.lead.count({ where }),
+  ]);
+
+  return NextResponse.json({ data, total, page, pages: Math.ceil(total / TAKE) });
 }

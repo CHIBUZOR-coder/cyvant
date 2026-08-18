@@ -63,14 +63,29 @@ export async function PATCH(
   try {
     const body = await req.json();
 
-    // Coerce numeric fields if present
-    if (body.tier !== undefined) body.tier = Number(body.tier);
-    if (body.startingPrice !== undefined) body.startingPrice = Number(body.startingPrice);
-    if (body.path === "") body.path = null;
-
     const course = await db.course.update({
       where: { id },
-      data: body,
+      data: {
+        ...(body.title !== undefined && { title: body.title }),
+        ...(body.academy !== undefined && { academy: body.academy }),
+        ...(body.tier !== undefined && { tier: Number(body.tier) }),
+        ...(body.path !== undefined && { path: body.path || null }),
+        ...(body.level !== undefined && { level: body.level }),
+        ...(body.duration !== undefined && { duration: body.duration }),
+        ...(body.format !== undefined && { format: body.format }),
+        ...(body.startingPrice !== undefined && { startingPrice: Number(body.startingPrice) }),
+        ...(body.isStartHere !== undefined && { isStartHere: body.isStartHere }),
+        ...(body.isMostPopular !== undefined && { isMostPopular: body.isMostPopular }),
+        ...(body.featured !== undefined && { featured: body.featured }),
+        ...(body.published !== undefined && { published: body.published }),
+        ...(body.description !== undefined && { description: body.description }),
+        ...(body.prerequisites !== undefined && { prerequisites: body.prerequisites }),
+        ...(body.whatYouLearn !== undefined && { whatYouLearn: body.whatYouLearn }),
+        ...(body.capstone !== undefined && { capstone: body.capstone }),
+        ...(body.advancedElective !== undefined && { advancedElective: body.advancedElective }),
+        ...(body.certificationAlignment !== undefined && { certificationAlignment: body.certificationAlignment }),
+        ...(body.careerPaths !== undefined && { careerPaths: body.careerPaths }),
+      },
     });
 
     revalidatePath("/courses");

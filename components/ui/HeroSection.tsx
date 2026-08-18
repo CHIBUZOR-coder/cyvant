@@ -160,7 +160,7 @@ export default function HeroSection() {
               transition={{ duration: 0.55, ease, delay: 0.2 }}
               className="mt-3 sm:mt-4 text-sm sm:text-base text-gray-300 leading-7 max-w-md"
             >
-              Practical technology training designed to take you from learning to building, demonstrating, and becoming industry-ready.
+              Practical technology training designed to take you from learning to building, demonstrating, and becoming industry ready.
             </motion.p>
 
             <motion.div
@@ -252,7 +252,7 @@ export default function HeroSection() {
                   key={s.id}
                   onClick={() => setImgIdx(i)}
                   aria-label={`Slide ${i + 1}`}
-                  className="h-1.5 rounded-full transition-all duration-300"
+                  className="cursor-pointer h-1.5 rounded-full transition-all duration-300"
                   style={{
                     width: imgIdx === i ? 24 : 6,
                     backgroundColor: imgIdx === i ? "#60a5fa" : "rgba(255,255,255,0.2)",

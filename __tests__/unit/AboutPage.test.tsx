@@ -1,37 +1,41 @@
 import { render, screen } from "@testing-library/react";
 import AboutPage from "@/app/about/page";
 
+jest.mock("@/components/ui/ParticleCanvas", () => {
+  const ParticleCanvas = () => null;
+  ParticleCanvas.displayName = "ParticleCanvas";
+  return ParticleCanvas;
+});
+
 describe("About page", () => {
   beforeEach(() => render(<AboutPage />));
 
-  it("renders the mission section", () => {
-    expect(screen.getByRole("heading", { name: /built to change who gets into tech/i })).toBeInTheDocument();
+  it("renders the About CYVANT heading", () => {
+    expect(screen.getByRole("heading", { name: /About CYVANT/i })).toBeInTheDocument();
   });
 
   it("renders the founder section with Emmanuel Tavershima", () => {
-    expect(screen.getByRole("heading", { name: /emmanuel tavershima/i })).toBeInTheDocument();
+    expect(screen.getByText("Emmanuel Tavershima")).toBeInTheDocument();
   });
 
   it("renders LinkedIn and GitHub links with noopener noreferrer", () => {
-    const linkedin = screen.getByRole("link", { name: /linkedin/i });
-    const github = screen.getByRole("link", { name: /github/i });
-    expect(linkedin).toHaveAttribute("rel", "noopener noreferrer");
-    expect(github).toHaveAttribute("rel", "noopener noreferrer");
+    const linkedinLinks = screen.getAllByRole("link", { name: /linkedin/i });
+    const githubLinks = screen.getAllByRole("link", { name: /github/i });
+    expect(linkedinLinks[0]).toHaveAttribute("rel", "noopener noreferrer");
+    expect(githubLinks[0]).toHaveAttribute("rel", "noopener noreferrer");
   });
 
-  it("renders the team section", () => {
-    expect(screen.getByRole("heading", { name: /our team/i })).toBeInTheDocument();
-    expect(screen.getByText("Content Creator")).toBeInTheDocument();
-    expect(screen.getByText("Digital Marketer")).toBeInTheDocument();
+  it("renders the Founders & Leadership section", () => {
+    expect(screen.getByRole("heading", { name: /Founders & Leadership/i })).toBeInTheDocument();
   });
 
-  it("renders the company story section", () => {
-    expect(screen.getByRole("heading", { name: /why cyvant exists/i })).toBeInTheDocument();
+  it("renders the Program Highlights section", () => {
+    expect(screen.getByRole("heading", { name: /Program Highlights/i })).toBeInTheDocument();
   });
 
-  it("renders the values section with at least 3 values", () => {
-    expect(screen.getByRole("heading", { name: /what we stand for/i })).toBeInTheDocument();
-    const list = screen.getByRole("list");
-    expect(list.children.length).toBeGreaterThanOrEqual(3);
+  it("renders the Why CYVANT section with list items", () => {
+    expect(screen.getByRole("heading", { name: /Why CYVANT\?/i })).toBeInTheDocument();
+    const listItems = screen.getAllByRole("listitem");
+    expect(listItems.length).toBeGreaterThanOrEqual(3);
   });
 });

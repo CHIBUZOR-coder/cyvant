@@ -184,8 +184,8 @@ export default function TeamManager() {
                   onChange={(e) => setForm({ ...form, role: e.target.value })}
                   className="w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-600"
                 >
-                  <option value="marketer">Marketer — view leads &amp; students</option>
-                  <option value="admin">Admin — full access</option>
+                  <option value="marketer">Marketer: view leads and students</option>
+                  <option value="admin">Admin: full access</option>
                 </select>
               </div>
 

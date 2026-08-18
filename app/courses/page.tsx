@@ -67,12 +67,12 @@ export default async function CoursesPage() {
             Cybersecurity courses. Every level.
           </h1>
           <p className="mt-6 text-base leading-8 text-gray-300 max-w-2xl sm:text-lg">
-            A structured 3-tier pathway — from zero background to advanced specialisation. Start at Tier 1 and work your way up, or jump in where your skills match.
+            A structured 3 tier pathway from zero background to advanced specialisation. Start at Tier 1 and work your way up, or jump in where your skills match.
           </p>
           <div className="mt-8 flex flex-wrap gap-3 text-sm">
-            <span className="rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-1.5 text-blue-300">Tier 1 — Fundamentals</span>
-            <span className="rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-1.5 text-blue-300">Tier 2 — Intermediate Tracks</span>
-            <span className="rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-1.5 text-violet-300">Tier 3 — Specialisations</span>
+            <span className="rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-1.5 text-blue-300">Tier 1: Fundamentals</span>
+            <span className="rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-1.5 text-blue-300">Tier 2: Intermediate Tracks</span>
+            <span className="rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-1.5 text-violet-300">Tier 3: Specialisations</span>
           </div>
         </div>
       </DarkSection>
@@ -126,7 +126,7 @@ export default async function CoursesPage() {
           </div>
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Choose One Path</h2>
           <p className="mt-2 text-gray-500 dark:text-gray-400 max-w-2xl">
-            After completing Fundamentals and Security+, students choose a specialisation. Each path includes 1-to-1 mentorship, career support, and a capstone project. 16 weeks each.
+            After completing Fundamentals and Security+, students choose a specialisation. Each path includes one to one mentorship, career support, and a capstone project. 16 weeks each.
           </p>
         </div>
         <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6" role="list">

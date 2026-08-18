@@ -13,6 +13,7 @@ jest.mock("@/lib/db", () => ({
   db: {
     lead: {
       findMany: jest.fn(),
+      count: jest.fn(),
       findUnique: jest.fn(),
       update: jest.fn(),
     },
@@ -90,18 +91,20 @@ describe("GET /api/admin/leads", () => {
   it("returns all leads including test lead", async () => {
     (getServerSession as jest.Mock).mockResolvedValueOnce(SESSION);
     (db.lead.findMany as jest.Mock).mockResolvedValueOnce([LEAD]);
+    (db.lead.count as jest.Mock).mockResolvedValueOnce(1);
 
     const res = await GET(makeReq("GET", "http://localhost/api/admin/leads"));
     expect(res.status).toBe(200);
     const data = await res.json();
-    expect(data).toHaveLength(1);
-    expect(data[0].email).toBe("chibuzormekalam@gmail.com");
-    expect(data[0].name).toBe("Chibuzor Mekalam");
+    expect(data.data).toHaveLength(1);
+    expect(data.data[0].email).toBe("chibuzormekalam@gmail.com");
+    expect(data.data[0].name).toBe("Chibuzor Mekalam");
   });
 
   it("filters by status=new", async () => {
     (getServerSession as jest.Mock).mockResolvedValueOnce(SESSION);
     (db.lead.findMany as jest.Mock).mockResolvedValueOnce([LEAD]);
+    (db.lead.count as jest.Mock).mockResolvedValueOnce(1);
 
     const res = await GET(makeReq("GET", "http://localhost/api/admin/leads?status=new"));
     expect(res.status).toBe(200);
@@ -115,6 +118,7 @@ describe("GET /api/admin/leads", () => {
   it("filters by source=website", async () => {
     (getServerSession as jest.Mock).mockResolvedValueOnce(SESSION);
     (db.lead.findMany as jest.Mock).mockResolvedValueOnce([LEAD]);
+    (db.lead.count as jest.Mock).mockResolvedValueOnce(1);
 
     const res = await GET(makeReq("GET", "http://localhost/api/admin/leads?source=website"));
     expect(res.status).toBe(200);
@@ -128,6 +132,7 @@ describe("GET /api/admin/leads", () => {
   it("searches by query string matching name or email", async () => {
     (getServerSession as jest.Mock).mockResolvedValueOnce(SESSION);
     (db.lead.findMany as jest.Mock).mockResolvedValueOnce([LEAD]);
+    (db.lead.count as jest.Mock).mockResolvedValueOnce(1);
 
     const res = await GET(makeReq("GET", "http://localhost/api/admin/leads?q=chibuzor"));
     expect(res.status).toBe(200);

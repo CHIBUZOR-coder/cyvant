@@ -20,7 +20,7 @@ describe("Navbar", () => {
     render(<Navbar />);
     const cta = screen.getByRole("link", { name: /explore courses/i });
     expect(cta).toBeInTheDocument();
-    expect(cta).toHaveAttribute("href", "/courses");
+    expect(cta).toHaveAttribute("href", "/#courses");
   });
 
   it("hamburger button toggles mobile menu open and closed", async () => {

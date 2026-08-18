@@ -88,11 +88,6 @@ export default function CourseCard({ course, index = 0 }: { course: Course; inde
             Most Popular
           </span>
         )}
-        {course.path && (
-          <span className="absolute top-4 right-4 rounded-full bg-violet-700 px-2.5 py-0.5 text-xs font-bold text-white shadow">
-            Path {course.path}
-          </span>
-        )}
 
         {/* Tier + level row */}
         <div className="flex items-center gap-2 flex-wrap">
@@ -119,7 +114,7 @@ export default function CourseCard({ course, index = 0 }: { course: Course; inde
           </div>
           <button
             onClick={() => setOpen(true)}
-            className="text-sm font-semibold text-blue-700 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors"
+            className="cursor-pointer text-sm font-semibold text-blue-700 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors"
           >
             Details →
           </button>
@@ -155,7 +150,7 @@ export default function CourseCard({ course, index = 0 }: { course: Course; inde
               >
                 <button
                   onClick={() => setOpen(false)}
-                  className="absolute top-4 right-4 z-10 text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
+                  className="cursor-pointer absolute top-4 right-4 z-10 text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
                   aria-label="Close modal"
                 >
                   <CloseIcon />
@@ -170,9 +165,6 @@ export default function CourseCard({ course, index = 0 }: { course: Course; inde
                   </span>
                   {course.isMostPopular && (
                     <span className="rounded-full bg-amber-500 px-2.5 py-0.5 text-xs font-bold text-white">Most Popular</span>
-                  )}
-                  {course.path && (
-                    <span className="rounded-full bg-violet-700 px-2.5 py-0.5 text-xs font-bold text-white">Path {course.path}</span>
                   )}
                 </div>
 
@@ -284,7 +276,7 @@ export default function CourseCard({ course, index = 0 }: { course: Course; inde
                   href={`/courses/${course.slug}/inquire`}
                   className="mt-7 block w-full rounded-xl bg-blue-600 px-6 py-3.5 text-center text-sm font-semibold text-white hover:bg-blue-700 transition-colors shadow-lg shadow-blue-900/20"
                 >
-                  Apply Now — Our team will be in touch
+                  Apply Now. Our team will be in touch.
                 </Link>
               </div>
 

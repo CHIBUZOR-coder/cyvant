@@ -209,9 +209,9 @@ export default function CourseManager({ initialCourses }: { initialCourses: Cour
             <div>
               <label className={labelCls}>Tier *</label>
               <select required value={form.tier} onChange={(e) => set("tier", e.target.value)} className={inputCls}>
-                <option value="1">Tier 1 — Fundamentals</option>
-                <option value="2">Tier 2 — Intermediate</option>
-                <option value="3">Tier 3 — Advanced</option>
+                <option value="1">Tier 1: Fundamentals</option>
+                <option value="2">Tier 2: Intermediate</option>
+                <option value="3">Tier 3: Advanced</option>
               </select>
             </div>
 
@@ -287,7 +287,7 @@ export default function CourseManager({ initialCourses }: { initialCourses: Cour
               value={form.prerequisites}
               onChange={(e) => set("prerequisites", e.target.value)}
               rows={3}
-              placeholder={"None — ideal for beginners\nOr list each prerequisite on a new line"}
+              placeholder={"No prior experience required\nOr list each prerequisite on a new line"}
               className={inputCls + " resize-none"}
             />
           </div>

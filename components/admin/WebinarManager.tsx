@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import type { Webinar } from "@prisma/client";
 
 function badge(date: Date) {
@@ -21,6 +21,32 @@ export default function WebinarManager({ initialWebinars }: { initialWebinars: W
   const [submitting, setSubmitting] = useState(false);
   const [deleting, setDeleting] = useState<string | null>(null);
   const [error, setError] = useState("");
+
+  const [notifyCount, setNotifyCount] = useState<number | null>(null);
+  const [notifying, setNotifying] = useState(false);
+  const [notifyResult, setNotifyResult] = useState<{ ok: boolean; msg: string } | null>(null);
+
+  useEffect(() => {
+    fetch("/api/admin/webinars/notify-all")
+      .then((r) => r.json())
+      .then((d) => setNotifyCount(d.count ?? 0))
+      .catch(() => setNotifyCount(0));
+  }, []);
+
+  async function handleNotifyAll() {
+    if (!notifyCount) return;
+    setNotifying(true);
+    setNotifyResult(null);
+    try {
+      const res = await fetch("/api/admin/webinars/notify-all", { method: "POST" });
+      const data = await res.json();
+      setNotifyResult({ ok: true, msg: `Notified ${data.notified} lead${data.notified !== 1 ? "s" : ""}.${data.failed ? ` (${data.failed} failed)` : ""}` });
+    } catch {
+      setNotifyResult({ ok: false, msg: "Failed to send notifications. Try again." });
+    } finally {
+      setNotifying(false);
+    }
+  }
 
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
@@ -97,8 +123,31 @@ export default function WebinarManager({ initialWebinars }: { initialWebinars: W
 
   return (
     <div className="space-y-6">
-      {/* Add button */}
-      <div className="flex justify-end">
+      {/* Top bar */}
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        {/* Notify All */}
+        <div className="flex flex-col gap-1">
+          <button
+            onClick={handleNotifyAll}
+            disabled={notifying || !notifyCount}
+            className="cursor-pointer inline-flex items-center gap-2 rounded-lg border border-purple-500/40 bg-purple-500/10 px-4 py-2 text-sm font-semibold text-purple-300 hover:bg-purple-500/20 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 00-5-5.917V5a1 1 0 00-2 0v.083A6 6 0 006 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+            </svg>
+            {notifying
+              ? "Sending…"
+              : notifyCount === null
+              ? "Notify Interested Leads"
+              : `Notify ${notifyCount} Interested Lead${notifyCount !== 1 ? "s" : ""}`}
+          </button>
+          {notifyResult && (
+            <p className={`text-xs px-1 ${notifyResult.ok ? "text-green-400" : "text-red-400"}`}>
+              {notifyResult.msg}
+            </p>
+          )}
+        </div>
+
         <button
           onClick={() => { setShowForm((v) => !v); resetForm(); }}
           className="cursor-pointer rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 transition-colors"

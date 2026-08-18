@@ -10,6 +10,7 @@ jest.mock("@/lib/db", () => ({
   db: {
     lead: {
       findMany: jest.fn(),
+      count: jest.fn(),
       findUnique: jest.fn(),
       update: jest.fn(),
     },
@@ -54,16 +55,18 @@ describe("GET /api/admin/leads", () => {
   it("returns leads list when authenticated", async () => {
     const leads = [{ id: "1", name: "Test Lead" }];
     (db.lead.findMany as jest.Mock).mockResolvedValue(leads);
+    (db.lead.count as jest.Mock).mockResolvedValue(1);
 
     const res = await GET(makeReq("http://localhost/api/admin/leads"));
     const data = await res.json();
 
     expect(res.status).toBe(200);
-    expect(data).toEqual(leads);
+    expect(data.data).toEqual(leads);
   });
 
   it("passes search params to db query", async () => {
     (db.lead.findMany as jest.Mock).mockResolvedValue([]);
+    (db.lead.count as jest.Mock).mockResolvedValue(0);
     await GET(makeReq("http://localhost/api/admin/leads?status=enrolled&q=john"));
     expect(db.lead.findMany).toHaveBeenCalledWith(
       expect.objectContaining({ where: expect.objectContaining({ status: "enrolled" }) })

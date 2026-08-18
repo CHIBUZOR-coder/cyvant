@@ -24,7 +24,7 @@ function NavButton({
     <button
       onClick={onClick}
       aria-label={direction === "prev" ? "Previous testimonial" : "Next testimonial"}
-      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-gray-700 bg-gray-900 text-gray-400 hover:border-purple-500 hover:text-purple-400 transition-colors"
+      className="cursor-pointer flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-gray-700 bg-gray-900 text-gray-400 hover:border-purple-500 hover:text-purple-400 transition-colors"
     >
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
         {direction === "prev"

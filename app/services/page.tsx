@@ -6,8 +6,6 @@ import { db } from "@/lib/db";
 import { SERVICE_ICONS } from "@/lib/service-icons";
 import type { ServiceIconKey } from "@/lib/service-icons";
 
-export const dynamic = "force-dynamic";
-
 export const metadata: Metadata = {
   title: "Services",
   description: "Corporate cybersecurity training, curriculum design, and consulting from CYVANT.",
