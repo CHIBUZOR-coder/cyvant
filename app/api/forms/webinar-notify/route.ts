@@ -31,10 +31,10 @@ export async function POST(req: NextRequest) {
       bodyHtml: `
         <div style="font-family:sans-serif;max-width:560px;margin:0 auto;color:#1a1a1a">
           <h2 style="color:#6d28d9">Hi ${name}, you&apos;re on the list!</h2>
-          <p>Thanks for your interest in CYVANT webinars. We&apos;ll send you an email as soon as our next live session is ready for registration — just keep an eye on your inbox.</p>
+          <p>Thanks for your interest in CYVANT webinars. We&apos;ll send you an email as soon as our next live session is ready for registration. Just keep an eye on your inbox.</p>
           <p>In the meantime, feel free to explore our courses and services.</p>
           <br/>
-          <p style="color:#6b7280;font-size:13px">— The CYVANT Team</p>
+          <p style="color:#6b7280;font-size:13px">The CYVANT Team</p>
         </div>
       `,
     }),

@@ -35,8 +35,8 @@ export async function POST(req: NextRequest) {
     sendConfirmation({
       to: email,
       name,
-      subject: "CYVANT — Let's book your discovery call",
-      bodyHtml: `<p>Hi ${name},</p><p>We received your request for a discovery call. Use the link below to pick a time that works for you:</p>${calendlyUrl ? `<p><a href="${calendlyUrl}">Book your slot →</a></p>` : ""}<p>If you have any questions in the meantime, just reply to this email.</p><p>— The CYVANT Team</p>`,
+      subject: "CYVANT: Let's book your discovery call",
+      bodyHtml: `<p>Hi ${name},</p><p>We received your request for a discovery call. Use the link below to pick a time that works for you:</p>${calendlyUrl ? `<p><a href="${calendlyUrl}">Book your slot →</a></p>` : ""}<p>If you have any questions in the meantime, just reply to this email.</p><p>The CYVANT Team</p>`,
     }),
     notifyMarketer(
       `New discovery call request from ${name}`,

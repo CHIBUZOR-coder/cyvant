@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
@@ -299,12 +299,12 @@ export default function LeadDetail({ id }: { id: string }) {
                   onChange={(e) => setNoteContent(e.target.value)}
                   rows={3}
                   placeholder={noteType === "call" ? "What did you discuss?" : noteType === "email" ? "What email did you send?" : "Add a note…"}
-                  className="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 resize-none"
+                  className="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#007dff] resize-none"
                 />
                 <button
                   type="submit"
                   disabled={saving || !noteContent.trim()}
-                  className="cursor-pointer rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-40 px-5 py-2 text-sm font-semibold text-white transition-colors"
+                  className="cursor-pointer rounded-lg bg-[#007dff] hover:bg-[#007dff] disabled:opacity-40 px-5 py-2 text-sm font-semibold text-white transition-colors"
                 >
                   {saving ? "Saving…" : "Save"}
                 </button>

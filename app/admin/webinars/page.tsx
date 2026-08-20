@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import { db } from "@/lib/db";
 import WebinarManager from "@/components/admin/WebinarManager";
 
-export const metadata: Metadata = { title: "Webinars — CYVANT Admin" };
+export const metadata: Metadata = { title: "Webinars: CYVANT Admin" };
 export const dynamic = "force-dynamic";
 
 export default async function AdminWebinarsPage() {

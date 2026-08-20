@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useSearchParams } from "next/navigation";
 import { useRef, useState } from "react";
@@ -108,7 +108,7 @@ export default function CourseInquiryForm({ initialCourse }: Props) {
             />
             <label
               htmlFor="photo-upload"
-              className="inline-block cursor-pointer rounded-md border border-gray-300 dark:border-gray-600 px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:border-blue-400 hover:text-blue-500 transition-colors"
+              className="inline-block cursor-pointer rounded-md border border-gray-300 dark:border-gray-600 px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:border-blue-400 hover:text-[#007dff] transition-colors"
             >
               {photo ? "Change photo" : "Upload photo"}
             </label>
@@ -130,7 +130,7 @@ export default function CourseInquiryForm({ initialCourse }: Props) {
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="w-full rounded-md bg-blue-700 px-4 py-3 text-sm font-semibold text-white hover:bg-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className="w-full rounded-md bg-[#007dff] px-4 py-3 text-sm font-semibold text-white hover:bg-[#0066d9] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
       >
         {status === "submitting" ? "Sending…" : "Send Inquiry"}
       </button>

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -31,15 +31,15 @@ export default function WebinarBanner() {
     <div
       role="banner"
       aria-label="Upcoming webinar"
-      className="bg-blue-700 px-6 py-2.5 text-center text-sm text-white"
+      className="bg-[#007dff] px-6 py-2.5 text-center text-sm text-white"
     >
       <span className="font-semibold">{webinar.title}</span>
-      {webinar.subtitle && <span className="hidden sm:inline text-blue-200"> — {webinar.subtitle}</span>}
+      {webinar.subtitle && <span className="hidden sm:inline text-blue-200">: {webinar.subtitle}</span>}
       {" · "}
       <span>{formattedDate}{webinar.time ? `, ${webinar.time}` : ""}</span>
       <Link
         href="/webinars"
-        className="ml-3 inline-block rounded bg-white px-3 py-0.5 text-xs font-bold text-blue-700 hover:bg-blue-50 transition-colors"
+        className="ml-3 inline-block rounded bg-white px-3 py-0.5 text-xs font-bold text-[#007dff] hover:bg-blue-50 transition-colors"
       >
         Register
       </Link>

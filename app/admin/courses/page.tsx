@@ -7,7 +7,7 @@ import type { Course } from "@/types";
 import type { Metadata } from "next";
 import CourseManager from "@/components/admin/CourseManager";
 
-export const metadata: Metadata = { title: "Courses — CYVANT Admin" };
+export const metadata: Metadata = { title: "Courses: CYVANT Admin" };
 
 function mapCourse(c: PrismaCourse): Course {
   return {

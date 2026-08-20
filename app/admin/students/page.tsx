@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import StudentsTable from "@/components/admin/StudentsTable";
 
-export const metadata: Metadata = { title: "Students — CYVANT Admin" };
+export const metadata: Metadata = { title: "Students: CYVANT Admin" };
 
 export default function StudentsPage() {
   return (

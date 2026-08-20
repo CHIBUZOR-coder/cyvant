@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -92,7 +92,7 @@ export default function ResetPasswordPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
               minLength={8}
-              className="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors"
+              className="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#007dff] transition-colors"
               placeholder="Min. 8 characters"
             />
           </div>
@@ -107,7 +107,7 @@ export default function ResetPasswordPage() {
               onChange={(e) => setConfirm(e.target.value)}
               required
               minLength={8}
-              className="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors"
+              className="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#007dff] transition-colors"
               placeholder="Repeat your password"
             />
           </div>
@@ -121,7 +121,7 @@ export default function ResetPasswordPage() {
           <button
             type="submit"
             disabled={status === "loading" || !token}
-            className="cursor-pointer w-full rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-50 px-4 py-2.5 text-sm font-semibold text-white transition-colors"
+            className="cursor-pointer w-full rounded-lg bg-[#007dff] hover:bg-[#007dff] disabled:opacity-50 px-4 py-2.5 text-sm font-semibold text-white transition-colors"
           >
             {status === "loading" ? "Updating…" : "Update password"}
           </button>

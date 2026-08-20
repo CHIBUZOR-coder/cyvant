@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { db } from "@/lib/db";
 import type { Course as PrismaCourse } from "@prisma/client";
 import type { Course } from "@/types";
@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Courses",
-  description: "Explore CYVANT's Cybersecurity Academy — 3-tier structure from Fundamentals to Advanced Specialisation.",
+  description: "Explore CYVANT's Cybersecurity Academy. A 3 tier structure from Fundamentals to Advanced Specialisation.",
 };
 
 function mapCourse(c: PrismaCourse): Course {
@@ -81,8 +81,8 @@ export default async function CoursesPage() {
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">
-            <span className="rounded-full bg-blue-700 px-3 py-0.5 text-xs font-bold text-white">Tier 1</span>
-            <p className="text-xs font-semibold uppercase tracking-widest text-blue-700 dark:text-blue-400">Start Here</p>
+            <span className="rounded-full bg-[#007dff] px-3 py-0.5 text-xs font-bold text-white">Tier 1</span>
+            <p className="text-xs font-semibold uppercase tracking-widest text-[#007dff] dark:text-blue-400">Start Here</p>
           </div>
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Cyber Security Fundamentals</h2>
           <p className="mt-2 text-gray-500 dark:text-gray-400">No background required. This is the entry point for everyone.</p>
@@ -102,8 +102,8 @@ export default async function CoursesPage() {
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">
-            <span className="rounded-full bg-blue-600 px-3 py-0.5 text-xs font-bold text-white">Tier 2</span>
-            <p className="text-xs font-semibold uppercase tracking-widest text-blue-700 dark:text-blue-400">Intermediate Tracks</p>
+            <span className="rounded-full bg-[#007dff] px-3 py-0.5 text-xs font-bold text-white">Tier 2</span>
+            <p className="text-xs font-semibold uppercase tracking-widest text-[#007dff] dark:text-blue-400">Intermediate Tracks</p>
           </div>
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Choose Your Track</h2>
           <p className="mt-2 text-gray-500 dark:text-gray-400 max-w-2xl">

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 
@@ -17,7 +17,7 @@ export default function HowItWorks() {
     <section className="bg-white dark:bg-slate-950 border-b border-gray-100 dark:border-gray-800 py-20 px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <motion.p
-          className="text-center text-xs font-semibold uppercase tracking-widest text-blue-700 dark:text-blue-400 mb-12"
+          className="text-center text-xs font-semibold uppercase tracking-widest text-[#007dff] dark:text-blue-400 mb-12"
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -39,7 +39,7 @@ export default function HowItWorks() {
             >
               <div className="flex flex-col items-center">
                 <motion.div
-                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-blue-700 text-white font-bold text-sm shadow-sm cursor-default"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#007dff] text-white font-bold text-sm shadow-sm cursor-default"
                   whileHover={{ scale: 1.25, backgroundColor: "#1e40af" }}
                   whileTap={{ scale: 0.92 }}
                   transition={{ type: "spring", stiffness: 400, damping: 12 }}
@@ -70,7 +70,7 @@ export default function HowItWorks() {
                 transition={{ duration: 0.35, delay: index * 0.07 }}
               >
                 <motion.div
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-700 text-white font-bold text-sm shadow-sm cursor-default"
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-[#007dff] text-white font-bold text-sm shadow-sm cursor-default"
                   whileHover={{ scale: 1.3, backgroundColor: "#1e40af", boxShadow: "0 0 0 6px rgba(59,130,246,0.2)" }}
                   whileTap={{ scale: 0.92 }}
                   transition={{ type: "spring", stiffness: 380, damping: 10 }}

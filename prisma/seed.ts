@@ -11,13 +11,13 @@ const COURSES = [
     tier: 1,
     level: "Beginner",
     duration: "6 Weeks",
-    format: "Online, cohort-based",
+    format: "Online, cohort based",
     startingPrice: 200000,
     isStartHere: true,
     featured: true,
     description:
       "The perfect starting point. Learn the core concepts of information security, threats, vulnerabilities, and defenses.",
-    prerequisites: ["None — ideal for beginners"],
+    prerequisites: ["No prior experience required"],
     whatYouLearn: ["CIA Triad", "Network Basics", "Threat Actors", "Cryptography"],
     certificationAlignment: [],
     careerPaths: [],
@@ -30,16 +30,16 @@ const COURSES = [
     tier: 2,
     level: "Intermediate",
     duration: "12 Weeks",
-    format: "Online, cohort-based",
+    format: "Online, cohort based",
     startingPrice: 680000,
     isMostPopular: true,
     featured: true,
     description:
-      "Build toward one of the most recognised entry-level certifications in the industry.",
+      "Build toward one of the most recognised entry level certifications in the industry.",
     prerequisites: ["Cyber Security Fundamentals"],
     whatYouLearn: ["Risk Management", "Access Control", "Applied Cryptography", "Security Architecture"],
     capstone:
-      "Project 1 — Human Firewall / Phishing Awareness Initiative · Project 2 — CYVANT Cybersecurity Innovation Challenge",
+      "Project 1: Human Firewall and Phishing Awareness Initiative. Project 2: CYVANT Cybersecurity Innovation Challenge",
     certificationAlignment: [],
     careerPaths: [],
   },
@@ -50,10 +50,10 @@ const COURSES = [
     tier: 2,
     level: "Intermediate",
     duration: "8 Weeks",
-    format: "Online, cohort-based",
+    format: "Online, cohort based",
     startingPrice: 400000,
     description:
-      "Understand how data moves — and how attackers intercept, disrupt, or exploit it.",
+      "Understand how data moves and how attackers intercept, disrupt, or exploit it.",
     prerequisites: ["Cyber Security Fundamentals"],
     whatYouLearn: ["Firewalls & VPNs", "Network Protocols", "Intrusion Detection", "Network Segmentation"],
     certificationAlignment: [],
@@ -66,7 +66,7 @@ const COURSES = [
     tier: 2,
     level: "Intermediate",
     duration: "4 Weeks",
-    format: "Online, cohort-based",
+    format: "Online, cohort based",
     startingPrice: 250000,
     description:
       "Get comfortable operating in the environment most security tools and servers actually run on.",
@@ -82,10 +82,10 @@ const COURSES = [
     tier: 2,
     level: "Intermediate",
     duration: "8 Weeks",
-    format: "Online, cohort-based",
+    format: "Online, cohort based",
     startingPrice: 400000,
     description:
-      "Learn how most enterprise networks manage identity, access, and authentication — and where that system is commonly attacked.",
+      "Learn how most enterprise networks manage identity, access, and authentication, and where that system is commonly attacked.",
     prerequisites: ["Cyber Security Fundamentals (Linux Administration recommended alongside)"],
     whatYouLearn: [
       "AD Structure & Domains",
@@ -103,10 +103,10 @@ const COURSES = [
     tier: 2,
     level: "Intermediate",
     duration: "4 Weeks",
-    format: "Online, cohort-based",
+    format: "Online, cohort based",
     startingPrice: 250000,
     description:
-      "Learn the fundamentals of watching a live environment for suspicious activity — the entry point into monitoring-focused security work.",
+      "Learn the fundamentals of watching a live environment for suspicious activity, the entry point into monitoring focused security work.",
     prerequisites: ["Network Security recommended"],
     whatYouLearn: ["SIEM Fundamentals", "Log Analysis Basics", "Alert Triage", "Monitoring Tools Overview"],
     certificationAlignment: [],
@@ -119,7 +119,7 @@ const COURSES = [
     tier: 2,
     level: "Intermediate",
     duration: "4 Weeks",
-    format: "Online, cohort-based",
+    format: "Online, cohort based",
     startingPrice: 250000,
     description:
       "Learn to systematically identify, score, and report security weaknesses before they're exploited.",
@@ -142,14 +142,14 @@ const COURSES = [
     path: "A",
     level: "Advanced",
     duration: "16 Weeks",
-    format: "Online, cohort-based",
+    format: "Online, cohort based",
     startingPrice: 920000,
     description:
-      "Learn to think like an attacker — legally and methodically — to find and report vulnerabilities before someone else exploits them.",
+      "Learn to think like an attacker, legally and methodically, to find and report vulnerabilities before someone else exploits them.",
     prerequisites: ["CompTIA Security+ or equivalent skill level"],
     whatYouLearn: ["Reconnaissance", "Vulnerability Scanning", "Exploitation Techniques", "Professional Reporting"],
     advancedElective:
-      "Cloud Security — Shared Responsibility Model, Cloud IAM, Cloud Threat Landscape, Securing AWS/Azure Environments",
+      "Cloud Security: Shared Responsibility Model, Cloud IAM, Cloud Threat Landscape, Securing AWS/Azure Environments",
     certificationAlignment: ["CEH (Certified Ethical Hacker)", "CompTIA PenTest+", "OSCP (introductory exposure)"],
     careerPaths: ["Ethical Hacker", "Penetration Tester", "Vulnerability Analyst", "Red Team Specialist", "Security Researcher"],
   },
@@ -161,14 +161,14 @@ const COURSES = [
     path: "B",
     level: "Advanced",
     duration: "16 Weeks",
-    format: "Online, cohort-based",
+    format: "Online, cohort based",
     startingPrice: 850000,
     description:
-      "Step into the role of a Security Operations Center analyst — monitoring, detecting, and responding to real-time threats.",
+      "Step into the role of a Security Operations Center analyst, monitoring, detecting, and responding to real time threats.",
     prerequisites: ["CompTIA Security+ or equivalent skill level"],
     whatYouLearn: ["SIEM Tools", "Log Analysis", "Incident Triage", "Threat Detection"],
     advancedElective:
-      "Digital Forensics — Evidence Handling, Disk & Memory Forensics, Chain of Custody, Investigation Reporting",
+      "Digital Forensics: Evidence Handling, Disk and Memory Forensics, Chain of Custody, Investigation Reporting",
     certificationAlignment: ["CompTIA CySA+", "Blue Team Level 1"],
     careerPaths: ["SOC Analyst", "Cybersecurity Analyst", "Security Engineer", "Application Security Engineer", "Cybersecurity Consultant"],
   },
@@ -180,10 +180,10 @@ const COURSES = [
     path: "C",
     level: "Advanced",
     duration: "16 Weeks",
-    format: "Online, cohort-based",
+    format: "Online, cohort based",
     startingPrice: 900000,
     description:
-      "For those drawn to the policy and risk side of security — where technical understanding meets business and regulatory decision-making.",
+      "For those drawn to the policy and risk side of security, where technical understanding meets business and regulatory decision making.",
     prerequisites: ["CompTIA Security+ or equivalent skill level"],
     whatYouLearn: ["Risk Frameworks", "Compliance Standards (ISO/NIST)", "Policy Writing", "Audit Fundamentals"],
     certificationAlignment: [
@@ -201,7 +201,7 @@ const SERVICES = [
     number: "01",
     title: "Corporate Cybersecurity Awareness Training",
     description:
-      "Practical, human-focused training that helps your team recognize and respond to real-world threats — phishing, social engineering, and the everyday mistakes that lead to breaches. Delivered as half-day workshops or multi-week programs, tailored to your organization's size and risk profile.",
+      "Practical, human-focused training that helps your team recognize and respond to real world threats including phishing, social engineering, and the everyday mistakes that lead to breaches. Delivered as half-day workshops or multi-week programs, tailored to your organization's size and risk profile.",
     cta: "Request a quote",
     icon: "shield",
     published: true,
@@ -212,7 +212,7 @@ const SERVICES = [
     number: "02",
     title: "Custom Curriculum & Team Upskilling",
     description:
-      "Bespoke training built around your team's actual skill gaps — whether that means getting IT staff security-ready, upskilling existing analysts, or building internal security literacy. We design the curriculum around your goals, not a generic template.",
+      "Bespoke training built around your team's actual skill gaps, whether that means getting IT staff security ready, upskilling existing analysts, or building internal security literacy. We design the curriculum around your goals, not a generic template.",
     cta: "Talk to us",
     icon: "curriculum",
     published: true,
@@ -271,21 +271,31 @@ async function main() {
 
   console.log("Seeded: Test Student (test.student@cyvant.com)");
 
-  // ── Seed courses ──
-  const result = await db.course.createMany({
+  // ── Seed courses (upsert so existing records get the latest text) ──
+  for (const c of COURSES) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    data: COURSES as any,
-    skipDuplicates: true,
-  });
+    await (db.course as any).upsert({
+      where: { slug: c.slug },
+      update: {
+        title: c.title, description: c.description, format: c.format,
+        prerequisites: c.prerequisites, whatYouLearn: c.whatYouLearn,
+        capstone: c.capstone ?? null, advancedElective: c.advancedElective ?? null,
+        certificationAlignment: c.certificationAlignment, careerPaths: c.careerPaths,
+      },
+      create: c,
+    });
+  }
+  console.log(`Seeded ${COURSES.length} courses.`);
 
-  console.log(`Seeded ${result.count} courses.`);
-
-  // ── Seed services ──
-  const servicesResult = await db.service.createMany({
-    data: SERVICES,
-    skipDuplicates: true,
-  });
-  console.log(`Seeded ${servicesResult.count} services.`);
+  // ── Seed services (upsert so existing records get the latest text) ──
+  for (const s of SERVICES) {
+    await db.service.upsert({
+      where: { slug: s.slug },
+      update: { title: s.title, description: s.description, cta: s.cta, icon: s.icon, published: s.published, order: s.order },
+      create: s,
+    });
+  }
+  console.log(`Seeded ${SERVICES.length} services.`);
 }
 
 main()

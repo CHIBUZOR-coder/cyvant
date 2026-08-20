@@ -1,4 +1,4 @@
-interface Props {
+﻿interface Props {
   id: string;
   label: string;
   type?: "text" | "email" | "tel" | "textarea";
@@ -20,7 +20,7 @@ export default function FormField({
   placeholder,
 }: Props) {
   const baseClass =
-    "block w-full rounded-md border px-3 py-2 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-colors";
+    "block w-full rounded-md border px-3 py-2 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#007dff] focus:border-[#007dff] transition-colors";
   const stateClass = error
     ? "border-red-400 bg-red-50 dark:bg-red-900/20 dark:border-red-600"
     : "border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800";

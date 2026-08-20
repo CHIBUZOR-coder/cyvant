@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
@@ -24,19 +24,19 @@ export async function POST() {
       sendConfirmation({
         to: lead.email,
         name: lead.name,
-        subject: "CYVANT Webinar — Registration Is Now Open!",
+        subject: "CYVANT Webinar: Registration Is Now Open!",
         bodyHtml: `
           <div style="font-family:sans-serif;max-width:560px;margin:0 auto;color:#1a1a1a">
             <h2 style="color:#6d28d9">Hi ${lead.name}, a new webinar is ready!</h2>
-            <p>You asked us to let you know when our next live session opens for registration — and the time is now.</p>
+            <p>You asked us to let you know when our next live session opens for registration. The time is now.</p>
             <p>Visit our webinars page to see the details and secure your spot. It&apos;s free.</p>
             <div style="margin:28px 0;text-align:center">
               <a href="${siteUrl}/webinars"
-                style="display:inline-block;background:#1d4ed8;color:#fff;font-weight:600;padding:14px 32px;border-radius:10px;text-decoration:none;font-size:15px">
+                style="display:inline-block;background:#007dff;color:#fff;font-weight:600;padding:14px 32px;border-radius:10px;text-decoration:none;font-size:15px">
                 View Webinars &amp; Register →
               </a>
             </div>
-            <p style="color:#6b7280;font-size:13px">— The CYVANT Team</p>
+            <p style="color:#6b7280;font-size:13px">The CYVANT Team</p>
           </div>
         `,
       })

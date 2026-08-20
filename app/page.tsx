@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import Image from "next/image";
 import HeroSection from "@/components/ui/HeroSection";
 import TrustedBy from "@/components/ui/TrustedBy";
@@ -87,7 +87,7 @@ const FOUNDERS = [
     photo: "/images/emmanuel.png",
     name: "Emmanuel Tavershima",
     role: "CO-FOUNDER & CEO",
-    bio: "I'm building CYVANT around a simple belief: Africa doesn't lack talent; it lacks enough pathways that turn potential into opportunity. As Co-Founder & CEO, I design practical learning systems that move people beyond consuming knowledge into building, solving, demonstrating, and becoming industry-ready. My work sits at the intersection of technology, education, and operations — building programmes, communities, and partnerships that turn learning into practical capability and real-world opportunity.",
+    bio: "I'm building CYVANT around a simple belief: Africa doesn't lack talent; it lacks enough pathways that turn potential into opportunity. As Co-Founder & CEO, I design practical learning systems that move people beyond consuming knowledge into building, solving, demonstrating, and becoming industry-ready. My work sits at the intersection of technology, education, and operations, building programmes, communities, and partnerships that turn learning into practical capability and real-world opportunity.",
     linkedin: "https://www.linkedin.com/in/emmanuel-tavershima/",
     github: "",
   },
@@ -235,7 +235,7 @@ export default async function HomePage() {
               <FadeIn delay={0}>
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-8 h-full flex flex-col">
                   <div className="flex items-center gap-4 mb-6">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-700/30">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#007dff]/30">
                       <svg className="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.8} stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
                       </svg>
@@ -440,7 +440,7 @@ export default async function HomePage() {
             </h2>
             <p className="mt-6 text-lg leading-8 text-gray-300 max-w-2xl">
               Built to take you from no background to job ready. Look for the{" "}
-              <span className="rounded-full bg-blue-700 text-white px-2 py-0.5 text-xs font-bold">Start Here</span>{" "}
+              <span className="rounded-full bg-[#007dff] text-white px-2 py-0.5 text-xs font-bold">Start Here</span>{" "}
               badge if you&apos;re not sure where to begin.
             </p>
           </div>
@@ -448,7 +448,7 @@ export default async function HomePage() {
 
         <div className="mx-auto max-w-7xl px-4 py-20 lg:px-8">
           <div className="mb-10">
-            <p className="text-xs font-semibold uppercase tracking-widest text-blue-700 dark:text-blue-400 mb-2">Academy 1</p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-[#007dff] dark:text-blue-400 mb-2">Academy 1</p>
             <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Cybersecurity Academy</h3>
             <p className="mt-2 text-gray-500 dark:text-gray-400">From awareness to hands on defence.</p>
           </div>
@@ -519,7 +519,7 @@ export default async function HomePage() {
                 <p className="text-gray-400 mt-2 text-sm">Stay tuned for our next live session.</p>
                 <Link
                   href="/webinars"
-                  className="mt-5 inline-block rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-blue-500 transition-colors"
+                  className="mt-5 inline-block rounded-lg bg-[#007dff] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#0066d9] transition-colors"
                 >
                   Get notified
                 </Link>
@@ -616,7 +616,7 @@ export default async function HomePage() {
               <p className="text-gray-400 text-sm mb-6">We&apos;ll reply within 24 hours.</p>
               <Link
                 href="/contact"
-                className="inline-block rounded-xl bg-blue-700 px-7 py-3 text-sm font-semibold text-white hover:bg-blue-800 transition-colors"
+                className="inline-block rounded-xl bg-[#007dff] px-7 py-3 text-sm font-semibold text-white hover:bg-[#0066d9] transition-colors"
               >
                 Talk to us →
               </Link>

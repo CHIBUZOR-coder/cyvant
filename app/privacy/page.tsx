@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import DarkSection from "@/components/ui/DarkSection";
 import FadeIn from "@/components/ui/FadeIn";
 
@@ -28,7 +28,7 @@ export default function PrivacyPage() {
         </div>
       </DarkSection>
 
-      <div className="mx-auto max-w-3xl px-6 py-16 lg:px-8 prose prose-slate prose-headings:font-bold prose-a:text-blue-700 max-w-none">
+      <div className="mx-auto max-w-3xl px-6 py-16 lg:px-8 prose prose-slate prose-headings:font-bold prose-a:text-[#007dff]">
         <FadeIn>
           <section className="mb-10">
             <h2 className="text-xl font-bold text-gray-900 mb-3">1. Who We Are</h2>
@@ -40,7 +40,7 @@ export default function PrivacyPage() {
             </p>
             <p className="mt-3 text-gray-600 leading-8">
               For any data-related enquiries, contact us at:{" "}
-              <a href="mailto:hello@cyvant.org" className="text-blue-700 hover:underline">
+              <a href="mailto:hello@cyvant.org" className="text-[#007dff] hover:underline">
                 hello@cyvant.org
               </a>
             </p>
@@ -52,11 +52,11 @@ export default function PrivacyPage() {
               We only collect data you actively provide to us through our website forms:
             </p>
             <ul className="list-disc pl-6 space-y-2 text-gray-600">
-              <li><span className="font-medium text-gray-800">Full name</span> — to address you correctly</li>
-              <li><span className="font-medium text-gray-800">Email address</span> — to send confirmations and follow-ups</li>
-              <li><span className="font-medium text-gray-800">Phone / WhatsApp number</span> — to reach you about your enquiry</li>
-              <li><span className="font-medium text-gray-800">Course or service interest</span> — to route your enquiry to the right team member</li>
-              <li><span className="font-medium text-gray-800">Message content</span> — where you choose to include it</li>
+              <li><span className="font-medium text-gray-800">Full name</span>: to address you correctly</li>
+              <li><span className="font-medium text-gray-800">Email address</span>: to send confirmations and follow-ups</li>
+              <li><span className="font-medium text-gray-800">Phone / WhatsApp number</span>: to reach you about your enquiry</li>
+              <li><span className="font-medium text-gray-800">Course or service interest</span>: to route your enquiry to the right team member</li>
+              <li><span className="font-medium text-gray-800">Message content</span>: where you choose to include it</li>
             </ul>
             <p className="mt-4 text-gray-600 leading-8">
               We do not collect payment details, ID documents, or any sensitive personal data through this website.
@@ -96,13 +96,13 @@ export default function PrivacyPage() {
             </p>
             <ul className="list-disc pl-6 space-y-2 text-gray-600">
               <li>
-                <span className="font-medium text-gray-800">HubSpot</span> — our CRM for storing contact records
+                <span className="font-medium text-gray-800">HubSpot</span>: our CRM for storing contact records
               </li>
               <li>
-                <span className="font-medium text-gray-800">Resend</span> — our email delivery provider for sending confirmations
+                <span className="font-medium text-gray-800">Resend</span>: our email delivery provider for sending confirmations
               </li>
               <li>
-                <span className="font-medium text-gray-800">Calendly</span> — only if you proceed to book a discovery call
+                <span className="font-medium text-gray-800">Calendly</span>: only if you proceed to book a discovery call
               </li>
             </ul>
             <p className="mt-4 text-gray-600 leading-8">
@@ -117,15 +117,15 @@ export default function PrivacyPage() {
               Under the NDPR and NDPA, you have the right to:
             </p>
             <ul className="list-disc pl-6 space-y-2 text-gray-600">
-              <li><span className="font-medium text-gray-800">Access</span> — request a copy of the data we hold about you</li>
-              <li><span className="font-medium text-gray-800">Correction</span> — ask us to correct inaccurate data</li>
-              <li><span className="font-medium text-gray-800">Deletion</span> — request that we delete your data</li>
-              <li><span className="font-medium text-gray-800">Withdrawal of consent</span> — opt out of communications at any time</li>
-              <li><span className="font-medium text-gray-800">Objection</span> — object to how your data is being used</li>
+              <li><span className="font-medium text-gray-800">Access</span>: request a copy of the data we hold about you</li>
+              <li><span className="font-medium text-gray-800">Correction</span>: ask us to correct inaccurate data</li>
+              <li><span className="font-medium text-gray-800">Deletion</span>: request that we delete your data</li>
+              <li><span className="font-medium text-gray-800">Withdrawal of consent</span>: opt out of communications at any time</li>
+              <li><span className="font-medium text-gray-800">Objection</span>: object to how your data is being used</li>
             </ul>
             <p className="mt-4 text-gray-600 leading-8">
               To exercise any of these rights, email{" "}
-              <a href="mailto:hello@cyvant.org" className="text-blue-700 hover:underline">
+              <a href="mailto:hello@cyvant.org" className="text-[#007dff] hover:underline">
                 hello@cyvant.org
               </a>{" "}
               with the subject line <span className="font-medium">"Data Request"</span>. We will respond within 30 days.
@@ -153,9 +153,9 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-xl font-bold text-gray-900 mb-3">9. Contact</h2>
             <p className="text-gray-600 leading-8">
-              CYVANT — Data Controller<br />
+              CYVANT, Data Controller<br />
               Email:{" "}
-              <a href="mailto:hello@cyvant.org" className="text-blue-700 hover:underline">
+              <a href="mailto:hello@cyvant.org" className="text-[#007dff] hover:underline">
                 hello@cyvant.org
               </a>
               <br />

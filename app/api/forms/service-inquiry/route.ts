@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
       serviceInterest: serviceInterest ?? "",
     }, 1);
 
-    await addLeadNote(lead.id, `Services lead — Service: ${serviceInterest ?? "Not specified"} | Company: ${company ?? "N/A"}`);
+    await addLeadNote(lead.id, `Services lead. Service: ${serviceInterest ?? "Not specified"} | Company: ${company ?? "N/A"}`);
   } catch (err) {
     console.error("[api/forms/service-inquiry]", err);
     return NextResponse.json({ error: "Server error." }, { status: 500 });
@@ -31,8 +31,8 @@ export async function POST(req: NextRequest) {
     sendConfirmation({
       to: email,
       name,
-      subject: "CYVANT — Service inquiry received",
-      bodyHtml: `<p>Hi ${name},</p><p>We received your inquiry about <strong>${serviceInterest ?? "our services"}</strong>. A team member will be in touch shortly.</p><p>— The CYVANT Team</p>`,
+      subject: "CYVANT: Service inquiry received",
+      bodyHtml: `<p>Hi ${name},</p><p>We received your inquiry about <strong>${serviceInterest ?? "our services"}</strong>. A team member will be in touch shortly.</p><p>The CYVANT Team</p>`,
     }),
     notifyMarketer(
       `New service inquiry from ${name}`,

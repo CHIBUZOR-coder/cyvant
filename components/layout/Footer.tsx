@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -115,7 +115,7 @@ export default function Footer() {
                 >
                   <Link
                     href="/courses"
-                    className="block rounded-md bg-blue-700 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-800 transition-colors"
+                    className="block rounded-md bg-[#007dff] px-4 py-2 text-sm font-semibold text-white hover:bg-[#0066d9] transition-colors"
                   >
                     Explore Courses →
                   </Link>

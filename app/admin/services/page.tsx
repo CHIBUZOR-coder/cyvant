@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import ServiceManager from "@/components/admin/ServiceManager";
 
-export const metadata = { title: "Services — CYVANT Admin" };
+export const metadata = { title: "Services: CYVANT Admin" };
 
 export default async function AdminServicesPage() {
   const session = await getServerSession(authOptions);

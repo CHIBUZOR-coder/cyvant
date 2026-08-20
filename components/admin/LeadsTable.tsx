@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
@@ -76,12 +76,12 @@ export default function LeadsTable() {
           placeholder="Search name, email, course…"
           value={q}
           onChange={(e) => handleQ(e.target.value)}
-          className="rounded-lg bg-gray-800 border border-gray-700 px-4 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 w-full sm:w-64"
+          className="rounded-lg bg-gray-800 border border-gray-700 px-4 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#007dff] w-full sm:w-64"
         />
         <select
           value={source}
           onChange={(e) => handleSource(e.target.value)}
-          className="rounded-lg bg-gray-800 border border-gray-700 px-4 py-2 text-sm text-white focus:outline-none focus:border-blue-500 w-full sm:w-auto"
+          className="rounded-lg bg-gray-800 border border-gray-700 px-4 py-2 text-sm text-white focus:outline-none focus:border-[#007dff] w-full sm:w-auto"
         >
           <option value="">All sources</option>
           {Object.entries(SOURCE_LABEL).map(([val, label]) => (
@@ -92,7 +92,7 @@ export default function LeadsTable() {
         <select
           value={status}
           onChange={(e) => handleStatus(e.target.value)}
-          className="rounded-lg bg-gray-800 border border-gray-700 px-4 py-2 text-sm text-white focus:outline-none focus:border-blue-500 w-full sm:w-auto"
+          className="rounded-lg bg-gray-800 border border-gray-700 px-4 py-2 text-sm text-white focus:outline-none focus:border-[#007dff] w-full sm:w-auto"
         >
           <option value="">All statuses</option>
           <option value="new">New</option>

@@ -60,7 +60,7 @@ function adminEmailHtml(bodyHtml: string, replyTo?: string) {
   return `
     <div style="font-family:sans-serif;max-width:600px;margin:0 auto">
       <div style="background:#6d28d9;padding:14px 24px;border-radius:8px 8px 0 0">
-        <span style="color:#ffffff;font-weight:700;font-size:15px;letter-spacing:0.5px">CYVANT — Admin Notification</span>
+        <span style="color:#ffffff;font-weight:700;font-size:15px;letter-spacing:0.5px">CYVANT: Admin Notification</span>
       </div>
       <div style="background:#ffffff;border:1px solid #e5e7eb;border-top:none;padding:24px;border-radius:0 0 8px 8px">
         ${bodyHtml}

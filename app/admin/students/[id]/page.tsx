@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import StudentDetail from "@/components/admin/StudentDetail";
 
-export const metadata: Metadata = { title: "Student Profile — CYVANT Admin" };
+export const metadata: Metadata = { title: "Student Profile: CYVANT Admin" };
 
 export default async function StudentProfilePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

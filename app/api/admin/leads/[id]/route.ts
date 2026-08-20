@@ -68,7 +68,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     sendConfirmation({
       to: lead.email,
       name: lead.name,
-      subject: "Welcome to CYVANT — You're Enrolled!",
+      subject: "Welcome to CYVANT: You're Enrolled!",
       bodyHtml: `
         <div style="font-family:sans-serif;max-width:560px;margin:0 auto;color:#1a1a1a">
           <h2 style="color:#6d28d9">Welcome aboard, ${lead.name}!</h2>
@@ -76,7 +76,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
           <p>Our team will be in touch shortly with your next steps, schedule, and onboarding materials.</p>
           <p>In the meantime, if you have any questions feel free to reply to this email.</p>
           <br/>
-          <p style="color:#6b7280;font-size:13px">— The CYVANT Team</p>
+          <p style="color:#6b7280;font-size:13px">The CYVANT Team</p>
         </div>
       `,
     }).catch((err) => console.error("[email] enrollment confirmation failed:", err));

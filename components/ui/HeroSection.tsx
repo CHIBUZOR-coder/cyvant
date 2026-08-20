@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -171,7 +171,7 @@ export default function HeroSection() {
             >
               <Link
                 href="/courses"
-                className="rounded-xl bg-blue-600 px-6 sm:px-7 py-3 sm:py-3.5 text-sm font-semibold text-white hover:bg-blue-700 transition-colors shadow-lg shadow-blue-900/40"
+                className="rounded-xl bg-[#007dff] px-6 sm:px-7 py-3 sm:py-3.5 text-sm font-semibold text-white hover:bg-[#007dff] transition-colors shadow-lg shadow-blue-900/40"
               >
                 Kickstart Your Career
               </Link>

@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
     }, 1);
 
     const noteText = [
-      `Webinar registration${webinarTitle ? ` — "${webinarTitle}"` : ""}`,
+      `Webinar registration${webinarTitle ? `: "${webinarTitle}"` : ""}`,
       webinarId ? `Webinar ID: ${webinarId}` : null,
       `Qualifying answer: ${qualifyingAnswer}`,
     ].filter(Boolean).join(" | ");

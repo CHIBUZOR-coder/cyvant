@@ -6,9 +6,11 @@
 @theme {
   /* Brand tokens */
   --color-brand-primary: #ffffff;
-  --color-brand-secondary: #1d4ed8;
-  --color-brand-secondary-hover: #1e40af;
-  --color-brand-secondary-light: #eff6ff;
+  --color-brand: #007dff;
+  --color-brand-hover: #0066d9;
+  --color-brand-secondary: #007dff;
+  --color-brand-secondary-hover: #0066d9;
+  --color-brand-secondary-light: #e0efff;
   --color-brand-dark: #0f172a;
 
   --font-sans: var(--font-geist-sans), system-ui, sans-serif;
@@ -56,7 +58,7 @@ html {
 }
 
 :focus-visible {
-  outline: 2px solid #1d4ed8;
+  outline: 2px solid #007dff;
   outline-offset: 2px;
 }
 

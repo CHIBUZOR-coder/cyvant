@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import FaqAccordion from "@/components/ui/FaqAccordion";
 import FadeIn from "@/components/ui/FadeIn";
@@ -74,7 +74,7 @@ export default function FaqPage() {
             <p className="text-gray-400 text-sm mb-6">We&apos;ll reply within 24 hours.</p>
             <Link
               href="/contact"
-              className="inline-block rounded-xl bg-blue-700 px-7 py-3 text-sm font-semibold text-white hover:bg-blue-800 transition-colors"
+              className="inline-block rounded-xl bg-[#007dff] px-7 py-3 text-sm font-semibold text-white hover:bg-[#0066d9] transition-colors"
             >
               Talk to us →
             </Link>

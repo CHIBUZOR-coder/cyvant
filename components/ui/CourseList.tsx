@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -26,7 +26,7 @@ export default function CourseList({ courses }: { courses: Course[] }) {
         <div className="mt-10 flex justify-center">
           <button
             onClick={() => setShowAll((prev) => !prev)}
-            className="cursor-pointer inline-flex items-center gap-2 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-900 px-6 py-3 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:border-blue-400 dark:hover:border-blue-500 hover:text-blue-700 dark:hover:text-blue-400 transition-colors shadow-sm"
+            className="cursor-pointer inline-flex items-center gap-2 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-900 px-6 py-3 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:border-blue-400 dark:hover:border-blue-500 hover:text-[#007dff] dark:hover:text-blue-400 transition-colors shadow-sm"
           >
             {showAll ? (
               <>
@@ -38,7 +38,7 @@ export default function CourseList({ courses }: { courses: Course[] }) {
             ) : (
               <>
                 See More
-                <span className="rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400 text-xs font-bold px-2 py-0.5">
+                <span className="rounded-full bg-blue-100 dark:bg-blue-900/40 text-[#007dff] dark:text-blue-400 text-xs font-bold px-2 py-0.5">
                   +{hidden}
                 </span>
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">

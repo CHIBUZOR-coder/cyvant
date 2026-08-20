@@ -31,8 +31,8 @@ export async function POST(req: NextRequest) {
     sendConfirmation({
       to: email,
       name,
-      subject: "CYVANT — We got your message",
-      bodyHtml: `<p>Hi ${name},</p><p>Thanks for reaching out. We'll reply within 24 hours.</p><p>— The CYVANT Team</p>`,
+      subject: "CYVANT: We got your message",
+      bodyHtml: `<p>Hi ${name},</p><p>Thanks for reaching out. We'll reply within 24 hours.</p><p>The CYVANT Team</p>`,
     }),
     notifyMarketer(
       `New general contact from ${name}`,

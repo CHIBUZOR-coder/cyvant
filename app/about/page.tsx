@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import FadeIn from "@/components/ui/FadeIn";
 import ParticleCanvas from "@/components/ui/ParticleCanvas";
@@ -136,7 +136,7 @@ export default function AboutPage() {
             <FadeIn delay={0}>
               <div className="rounded-2xl border border-white/10 bg-white/5 p-8 h-full flex flex-col">
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-700/30">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#007dff]/30">
                     <svg className="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.8} stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
                     </svg>
@@ -294,7 +294,7 @@ export default function AboutPage() {
             <p className="text-gray-400 mb-6">Ready to build real skills?</p>
             <Link
               href="/courses"
-              className="inline-block rounded-xl bg-blue-700 px-8 py-3.5 text-sm font-semibold text-white shadow-lg hover:bg-blue-800 transition-colors"
+              className="inline-block rounded-xl bg-[#007dff] px-8 py-3.5 text-sm font-semibold text-white shadow-lg hover:bg-[#0066d9] transition-colors"
             >
               Explore Courses →
             </Link>

@@ -49,16 +49,16 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     sendConfirmation({
       to: student.email,
       name: student.name,
-      subject: "Payment Confirmed — CYVANT",
+      subject: "Payment Confirmed: CYVANT",
       bodyHtml: `
         <div style="font-family:sans-serif;max-width:560px;margin:0 auto;color:#1a1a1a">
           <h2 style="color:#6d28d9">Payment Received, ${student.name}!</h2>
           <p>We've confirmed your payment for <strong>${student.courseName}</strong>.</p>
           ${student.amountPaid ? `<p><strong>Amount paid:</strong> ₦${Number(student.amountPaid).toLocaleString()}</p>` : ""}
           <p>Your place is fully secured. We'll reach out with any remaining onboarding details.</p>
-          <p>Thank you for choosing CYVANT — we're excited to have you!</p>
+          <p>Thank you for choosing CYVANT. We're excited to have you!</p>
           <br/>
-          <p style="color:#6b7280;font-size:13px">— The CYVANT Team</p>
+          <p style="color:#6b7280;font-size:13px">The CYVANT Team</p>
         </div>
       `,
     }).catch((err) => console.error("[email] payment confirmation failed:", err));

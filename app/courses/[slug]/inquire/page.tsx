@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const course = courses.find((c) => c.slug === slug);
   if (!course) return {};
   return {
-    title: `Inquire — ${course.title}`,
+    title: `Inquire: ${course.title}`,
     description: `Get in touch about the ${course.title} course at CYVANT.`,
   };
 }

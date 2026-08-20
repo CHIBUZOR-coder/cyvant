@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 
 interface Props {
   checked: boolean;
@@ -19,7 +19,7 @@ export default function ConsentCheckbox({ checked, onChange, error }: Props) {
           required
           aria-describedby={error ? "consent-error" : undefined}
           aria-invalid={!!error}
-          className="mt-0.5 h-4 w-4 rounded border-gray-300 dark:border-gray-600 text-blue-700 focus:ring-blue-600 dark:bg-slate-800"
+          className="mt-0.5 h-4 w-4 rounded border-gray-300 dark:border-gray-600 text-[#007dff] focus:ring-[#007dff] dark:bg-slate-800"
         />
         <label htmlFor="consent" className="text-sm text-gray-600 dark:text-gray-300 leading-5">
           I agree that my data will be used for CYVANT communications in accordance with the{" "}
@@ -27,7 +27,7 @@ export default function ConsentCheckbox({ checked, onChange, error }: Props) {
             href="/privacy"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-700 dark:text-blue-400 underline underline-offset-2 hover:text-blue-600"
+            className="text-[#007dff] dark:text-blue-400 underline underline-offset-2 hover:text-[#0066d9]"
           >
             Privacy Policy
           </Link>

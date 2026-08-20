@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -12,7 +12,7 @@ const LEVEL_STYLES: Record<Course["level"], string> = {
 };
 
 const TIER_STYLES: Record<1 | 2 | 3, { bar: string; label: string }> = {
-  1: { bar: "bg-blue-600",   label: "text-blue-600 dark:text-blue-400" },
+  1: { bar: "bg-[#007dff]",   label: "text-blue-600 dark:text-blue-400" },
   2: { bar: "bg-indigo-600", label: "text-indigo-600 dark:text-indigo-400" },
   3: { bar: "bg-violet-600", label: "text-violet-600 dark:text-violet-400" },
 };
@@ -79,7 +79,7 @@ export default function CourseCard({ course, index = 0 }: { course: Course; inde
         <div className="p-6 flex flex-col flex-1">
         {/* Floating badges */}
         {course.isStartHere && (
-          <span className="absolute top-4 right-4 rounded-full bg-blue-700 px-2.5 py-0.5 text-xs font-bold text-white shadow">
+          <span className="absolute top-4 right-4 rounded-full bg-[#007dff] px-2.5 py-0.5 text-xs font-bold text-white shadow">
             Start Here
           </span>
         )}
@@ -114,7 +114,7 @@ export default function CourseCard({ course, index = 0 }: { course: Course; inde
           </div>
           <button
             onClick={() => setOpen(true)}
-            className="cursor-pointer text-sm font-semibold text-blue-700 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors"
+            className="cursor-pointer text-sm font-semibold text-[#007dff] dark:text-blue-400 hover:text-[#0066d9] dark:hover:text-blue-300 transition-colors"
           >
             Details →
           </button>
@@ -223,7 +223,7 @@ export default function CourseCard({ course, index = 0 }: { course: Course; inde
                       {course.whatYouLearn.map((item, i) => (
                         <span
                           key={i}
-                          className="rounded-full bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20 px-3 py-1 text-xs text-blue-700 dark:text-blue-300"
+                          className="rounded-full bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20 px-3 py-1 text-xs text-[#007dff] dark:text-blue-300"
                         >
                           {item}
                         </span>
@@ -274,7 +274,7 @@ export default function CourseCard({ course, index = 0 }: { course: Course; inde
 
                 <Link
                   href={`/courses/${course.slug}/inquire`}
-                  className="mt-7 block w-full rounded-xl bg-blue-600 px-6 py-3.5 text-center text-sm font-semibold text-white hover:bg-blue-700 transition-colors shadow-lg shadow-blue-900/20"
+                  className="mt-7 block w-full rounded-xl bg-[#007dff] px-6 py-3.5 text-center text-sm font-semibold text-white hover:bg-[#007dff] transition-colors shadow-lg shadow-blue-900/20"
                 >
                   Apply Now. Our team will be in touch.
                 </Link>

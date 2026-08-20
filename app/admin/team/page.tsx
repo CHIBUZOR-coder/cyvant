@@ -4,7 +4,7 @@ import { authOptions } from "@/lib/auth";
 import type { Metadata } from "next";
 import TeamManager from "@/components/admin/TeamManager";
 
-export const metadata: Metadata = { title: "Team — CYVANT Admin" };
+export const metadata: Metadata = { title: "Team: CYVANT Admin" };
 
 export default async function TeamPage() {
   const session = await getServerSession(authOptions);

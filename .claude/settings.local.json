@@ -57,7 +57,15 @@
       "Bash(Select-Object FullName)",
       "Bash(node -e \"const { courses } = require\\('./data/courses.ts'\\); console.log\\(courses.length\\)\")",
       "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant\" -Recurse -Directory)",
-      "Bash(Head -30)"
+      "Bash(Head -30)",
+      "Bash(curl -s -c - http://localhost:3000/admin)",
+      "Bash(curl -s -X POST http://localhost:3000/api/admin/fix-course-text -H \"Cookie: $\\(curl -s -c - http://localhost:3000/admin)",
+      "Bash(awk '{print $6\"=\"$7}')",
+      "Bash(curl -s -X POST http://localhost:3000/api/admin/fix-course-text)",
+      "Bash(Remove-Item -Recurse -Force \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant\\\\app\\\\api\\\\admin\\\\fix-course-text\")",
+      "Bash(python -c \"import fitz; print\\('pymupdf ok'\\)\")",
+      "Bash(python -m pip install pymupdf --quiet)",
+      "Bash(python -c ' *)"
     ],
     "additionalDirectories": [
       "C:\\Users\\HomePC\\.claude\\projects\\c--Users-HomePC-Desktop-cyvant",

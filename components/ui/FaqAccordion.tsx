@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -41,11 +41,11 @@ export default function FaqAccordion({ items }: Props) {
                 id={`faq-question-${index}`}
                 onClick={() => toggle(index)}
               >
-                <span className={`text-base font-semibold transition-colors duration-200 ${isOpen ? "text-blue-700 dark:text-blue-400" : "text-gray-900 dark:text-white group-hover:text-blue-700 dark:group-hover:text-blue-400"}`}>
+                <span className={`text-base font-semibold transition-colors duration-200 ${isOpen ? "text-[#007dff] dark:text-blue-400" : "text-gray-900 dark:text-white group-hover:text-[#007dff] dark:group-hover:text-blue-400"}`}>
                   {item.question}
                 </span>
                 <motion.span
-                  className={`shrink-0 flex h-6 w-6 items-center justify-center rounded-full transition-colors duration-200 ${isOpen ? "bg-blue-700 text-white" : "bg-gray-100 dark:bg-slate-800 text-gray-500 dark:text-gray-400 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/30 group-hover:text-blue-700 dark:group-hover:text-blue-400"}`}
+                  className={`shrink-0 flex h-6 w-6 items-center justify-center rounded-full transition-colors duration-200 ${isOpen ? "bg-[#007dff] text-white" : "bg-gray-100 dark:bg-slate-800 text-gray-500 dark:text-gray-400 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/30 group-hover:text-[#007dff] dark:group-hover:text-blue-400"}`}
                   animate={{ rotate: isOpen ? 45 : 0 }}
                   transition={{ type: "spring", stiffness: 300, damping: 22 }}
                   aria-hidden="true"

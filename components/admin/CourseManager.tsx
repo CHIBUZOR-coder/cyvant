@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import type { Course } from "@/types";
@@ -156,7 +156,7 @@ export default function CourseManager({ initialCourses }: { initialCourses: Cour
   }
 
   const inputCls =
-    "w-full rounded-md bg-gray-900 border border-white/10 px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500";
+    "w-full rounded-md bg-gray-900 border border-white/10 px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#007dff]";
   const labelCls = "block text-xs text-gray-400 mb-1";
   const tiers = [1, 2, 3] as const;
 
@@ -169,7 +169,7 @@ export default function CourseManager({ initialCourses }: { initialCourses: Cour
         </p>
         <button
           onClick={() => { showForm && !editingId ? (setShowForm(false), resetForm()) : openCreate(); }}
-          className="cursor-pointer rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 transition-colors"
+          className="cursor-pointer rounded-lg bg-[#007dff] px-4 py-2 text-sm font-semibold text-white hover:bg-[#0066d9] transition-colors"
         >
           {showForm && !editingId ? "Cancel" : "+ Add Course"}
         </button>
@@ -310,7 +310,7 @@ export default function CourseManager({ initialCourses }: { initialCourses: Cour
 
           <div>
             <label className={labelCls}>Advanced Elective (optional add-on)</label>
-            <input value={form.advancedElective} onChange={(e) => set("advancedElective", e.target.value)} placeholder="e.g. Cloud Security — ..." className={inputCls} />
+            <input value={form.advancedElective} onChange={(e) => set("advancedElective", e.target.value)} placeholder="e.g. Cloud Security: Shared Responsibility Model, Cloud IAM..." className={inputCls} />
           </div>
 
           <div>
@@ -346,7 +346,7 @@ export default function CourseManager({ initialCourses }: { initialCourses: Cour
             <button
               type="submit"
               disabled={submitting}
-              className="cursor-pointer rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-500 disabled:opacity-50 transition-colors"
+              className="cursor-pointer rounded-lg bg-[#007dff] px-5 py-2 text-sm font-semibold text-white hover:bg-[#0066d9] disabled:opacity-50 transition-colors"
             >
               {submitting ? "Saving…" : editingId ? "Save Changes" : "Save Course"}
             </button>
@@ -389,7 +389,7 @@ export default function CourseManager({ initialCourses }: { initialCourses: Cour
                   <div className="flex items-center gap-2 shrink-0">
                     <button
                       onClick={() => openEdit(course)}
-                      className="cursor-pointer rounded-md border border-blue-500/30 px-3 py-1.5 text-xs font-medium text-blue-400 hover:bg-blue-500/10 transition-colors"
+                      className="cursor-pointer rounded-md border border-blue-500/30 px-3 py-1.5 text-xs font-medium text-blue-400 hover:bg-[#0066d9]/10 transition-colors"
                     >
                       Edit
                     </button>

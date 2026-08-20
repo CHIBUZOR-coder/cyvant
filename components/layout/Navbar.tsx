@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import ThemeToggle from "@/components/ui/ThemeToggle";
@@ -56,8 +57,15 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-slate-950 shadow-sm dark:shadow-none">
       <div className="mx-auto flex h-14 sm:h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
-        <Link href="/" className="flex items-center font-bold text-lg sm:text-xl tracking-tight">
-          <span className="text-slate-900 dark:text-white">CY</span><span className="text-blue-700">VANT</span>
+        <Link href="/" className="flex items-center">
+          <Image
+            src="/images/cyvant-logo-transparent.png"
+            alt="CYVANT"
+            width={998}
+            height={262}
+            className="h-8 w-auto"
+            priority
+          />
         </Link>
 
         {/* Desktop nav */}
@@ -70,7 +78,7 @@ export default function Navbar() {
                 href={href}
                 className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
                   active
-                    ? "text-blue-700 bg-blue-50 dark:text-blue-400 dark:bg-blue-900/20"
+                    ? "text-[#007dff] bg-blue-50 dark:text-blue-400 dark:bg-blue-900/20"
                     : "text-slate-600 dark:text-gray-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800"
                 }`}
                 aria-current={active ? "page" : undefined}
@@ -87,14 +95,14 @@ export default function Navbar() {
           {/* Secondary CTA */}
           <Link
             href="/contact"
-            className="hidden sm:inline-flex rounded-lg border border-gray-200 dark:border-gray-700 px-4 py-2 text-sm font-medium text-slate-600 dark:text-gray-300 hover:border-blue-300 hover:text-blue-700 dark:hover:border-blue-500 dark:hover:text-blue-400 transition-colors"
+            className="hidden sm:inline-flex rounded-lg border border-gray-200 dark:border-gray-700 px-4 py-2 text-sm font-medium text-slate-600 dark:text-gray-300 hover:border-blue-300 hover:text-[#007dff] dark:hover:border-blue-500 dark:hover:text-blue-400 transition-colors"
           >
             Book a Call
           </Link>
           {/* Primary CTA */}
           <Link
             href="/#courses"
-            className="rounded-lg bg-blue-700 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-800 transition-colors shadow-sm"
+            className="rounded-lg bg-[#007dff] px-4 py-2 text-sm font-semibold text-white hover:bg-[#0066d9] transition-colors shadow-sm"
           >
             Explore Courses
           </Link>
@@ -135,7 +143,7 @@ export default function Navbar() {
                 href={href}
                 className={`block py-2.5 px-3 rounded-md text-sm font-medium transition-colors ${
                   active
-                    ? "text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20"
+                    ? "text-[#007dff] dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20"
                     : "text-slate-600 dark:text-gray-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800"
                 }`}
                 aria-current={active ? "page" : undefined}
@@ -148,7 +156,7 @@ export default function Navbar() {
           <div className="mt-3 pt-3 border-t border-gray-100 dark:border-gray-800">
             <Link
               href="/contact"
-              className="block w-full rounded-lg border border-gray-200 dark:border-gray-700 px-4 py-2.5 text-center text-sm font-medium text-slate-600 dark:text-gray-300 hover:border-blue-300 hover:text-blue-700 dark:hover:border-blue-500 dark:hover:text-blue-400 transition-colors"
+              className="block w-full rounded-lg border border-gray-200 dark:border-gray-700 px-4 py-2.5 text-center text-sm font-medium text-slate-600 dark:text-gray-300 hover:border-blue-300 hover:text-[#007dff] dark:hover:border-blue-500 dark:hover:text-blue-400 transition-colors"
               onClick={() => setMenuOpen(false)}
             >
               Book a Call

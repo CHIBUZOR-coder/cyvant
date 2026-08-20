@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
@@ -50,7 +50,7 @@ export default function AdminLoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors"
+              className="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#007dff] transition-colors"
               placeholder="admin@cyvant.org"
             />
           </div>
@@ -64,7 +64,7 @@ export default function AdminLoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors"
+              className="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#007dff] transition-colors"
               placeholder="••••••••"
             />
           </div>
@@ -78,7 +78,7 @@ export default function AdminLoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="cursor-pointer w-full rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-50 px-4 py-2.5 text-sm font-semibold text-white transition-colors"
+            className="cursor-pointer w-full rounded-lg bg-[#007dff] hover:bg-[#007dff] disabled:opacity-50 px-4 py-2.5 text-sm font-semibold text-white transition-colors"
           >
             {loading ? "Signing in…" : "Sign in"}
           </button>

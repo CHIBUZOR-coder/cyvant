@@ -44,7 +44,7 @@ export const testimonials: Testimonial[] = [
     company: "Freelance",
     outcome: "Now earning as a freelance penetration tester after completing the Advanced track",
     quote:
-      "The real lab environments are what set CYVANT apart. By the time I finished, I had a portfolio of real findings — not just theory.",
+      "The real lab environments are what set CYVANT apart. By the time I finished, I had a portfolio of real findings, not just theory.",
     permissionOnFile: true,
   },
   {
@@ -67,7 +67,7 @@ export const testimonials: Testimonial[] = [
     company: "MTN Nigeria",
     outcome: "Promoted to Network Security Engineer after completing the Infrastructure Defense track",
     quote:
-      "I was already in IT support but CYVANT unlocked the security layer. The instructors go deep — not just slides.",
+      "I was already in IT support but CYVANT unlocked the security layer. The instructors go deep, not just slides.",
     permissionOnFile: true,
   },
 ];

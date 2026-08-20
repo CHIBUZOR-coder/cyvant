@@ -7,7 +7,7 @@ import DarkSection from "@/components/ui/DarkSection";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Book a discovery call or send us a message — CYVANT team responds within 24 hours.",
+  description: "Book a discovery call or send us a message. CYVANT team responds within 24 hours.",
 };
 
 export default function ContactPage() {

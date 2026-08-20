@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import { useState } from "react";
@@ -118,7 +118,7 @@ export default function WebinarCard({ webinar, index = 0 }: { webinar: WebinarDa
             ) : webinar.registrationOpen ? (
               <button
                 onClick={() => setOpen(true)}
-                className="cursor-pointer w-full rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
+                className="cursor-pointer w-full rounded-xl bg-[#007dff] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#007dff] transition-colors"
               >
                 Register Now →
               </button>

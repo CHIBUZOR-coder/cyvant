@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -111,7 +111,7 @@ export default function StudentDetail({ id }: { id: string }) {
                   value={form.cohort}
                   onChange={(e) => setForm({ ...form, cohort: e.target.value })}
                   placeholder="e.g. Q3 2025"
-                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-[#007dff]"
                 />
               </div>
               <div>
@@ -120,7 +120,7 @@ export default function StudentDetail({ id }: { id: string }) {
                   type="date"
                   value={form.startDate}
                   onChange={(e) => setForm({ ...form, startDate: e.target.value })}
-                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#007dff]"
                 />
               </div>
             </div>
@@ -131,7 +131,7 @@ export default function StudentDetail({ id }: { id: string }) {
                 <select
                   value={form.paymentStatus}
                   onChange={(e) => setForm({ ...form, paymentStatus: e.target.value })}
-                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#007dff]"
                 >
                   <option value="pending">Pending</option>
                   <option value="partial">Partial</option>
@@ -145,7 +145,7 @@ export default function StudentDetail({ id }: { id: string }) {
                   value={form.amountPaid}
                   onChange={(e) => setForm({ ...form, amountPaid: e.target.value })}
                   placeholder="0"
-                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-[#007dff]"
                 />
               </div>
             </div>
@@ -157,14 +157,14 @@ export default function StudentDetail({ id }: { id: string }) {
                 onChange={(e) => setForm({ ...form, notes: e.target.value })}
                 rows={3}
                 placeholder="Any notes about this student..."
-                className="w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-600 resize-none"
+                className="w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-[#007dff] resize-none"
               />
             </div>
 
             <button
               onClick={save}
               disabled={saving}
-              className="cursor-pointer rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-700 disabled:opacity-50 transition-colors"
+              className="cursor-pointer rounded-lg bg-[#007dff] px-5 py-2 text-sm font-semibold text-white hover:bg-[#007dff] disabled:opacity-50 transition-colors"
             >
               {saving ? "Saving..." : "Save Changes"}
             </button>

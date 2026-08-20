@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -31,15 +31,15 @@ export default function ServiceCard({ id, number, title, description, cta, icon 
         <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-slate-900 dark:bg-slate-800 border border-transparent transition-all duration-300 group-hover:border-blue-300/70 group-hover:shadow-[0_0_12px_rgba(96,165,250,0.55)]">
           {icon}
         </div>
-        <p className="text-xs font-bold text-blue-700 dark:text-blue-400 tracking-widest">{number}</p>
+        <p className="text-xs font-bold text-[#007dff] dark:text-blue-400 tracking-widest">{number}</p>
       </div>
       <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">{title}</h2>
       <p className="text-sm text-gray-600 dark:text-gray-400 leading-7 flex-1">{description}</p>
       <div className="mt-6">
         <Link
           href={`/contact?service=${id}`}
-          className="inline-flex items-center gap-2 rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-800 transition-colors"
-          aria-label={`${cta} — ${title}`}
+          className="inline-flex items-center gap-2 rounded-lg bg-[#007dff] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#0066d9] transition-colors"
+          aria-label={`${cta}: ${title}`}
         >
           {cta} →
         </Link>

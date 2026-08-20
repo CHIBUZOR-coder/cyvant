@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useRef, useState, useEffect } from "react";
 import type { Webinar } from "@prisma/client";
@@ -150,7 +150,7 @@ export default function WebinarManager({ initialWebinars }: { initialWebinars: W
 
         <button
           onClick={() => { setShowForm((v) => !v); resetForm(); }}
-          className="cursor-pointer rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 transition-colors"
+          className="cursor-pointer rounded-lg bg-[#007dff] px-4 py-2 text-sm font-semibold text-white hover:bg-[#0066d9] transition-colors"
         >
           {showForm ? "Cancel" : "+ Schedule Webinar"}
         </button>
@@ -166,29 +166,29 @@ export default function WebinarManager({ initialWebinars }: { initialWebinars: W
             <div>
               <label className="block text-xs text-gray-400 mb-1">Title *</label>
               <input value={title} onChange={(e) => setTitle(e.target.value)} required
-                className="w-full rounded-md bg-gray-900 border border-white/10 px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500" />
+                className="w-full rounded-md bg-gray-900 border border-white/10 px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#007dff]" />
             </div>
             <div>
               <label className="block text-xs text-gray-400 mb-1">Subtitle</label>
               <input value={subtitle} onChange={(e) => setSubtitle(e.target.value)}
-                className="w-full rounded-md bg-gray-900 border border-white/10 px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500" />
+                className="w-full rounded-md bg-gray-900 border border-white/10 px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#007dff]" />
             </div>
             <div>
               <label className="block text-xs text-gray-400 mb-1">Date *</label>
               <input type="datetime-local" value={date} onChange={(e) => setDate(e.target.value)} required
-                className="w-full rounded-md bg-gray-900 border border-white/10 px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500" />
+                className="w-full rounded-md bg-gray-900 border border-white/10 px-3 py-2 text-sm text-white focus:outline-none focus:border-[#007dff]" />
             </div>
             <div>
               <label className="block text-xs text-gray-400 mb-1">Display time (e.g. 6:00 PM WAT) *</label>
               <input value={time} onChange={(e) => setTime(e.target.value)} required placeholder="6:00 PM WAT"
-                className="w-full rounded-md bg-gray-900 border border-white/10 px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500" />
+                className="w-full rounded-md bg-gray-900 border border-white/10 px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#007dff]" />
             </div>
           </div>
 
           <div>
             <label className="block text-xs text-gray-400 mb-1">Description</label>
             <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={3}
-              className="w-full rounded-md bg-gray-900 border border-white/10 px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 resize-none" />
+              className="w-full rounded-md bg-gray-900 border border-white/10 px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#007dff] resize-none" />
           </div>
 
           {/* Flier image */}
@@ -216,7 +216,7 @@ export default function WebinarManager({ initialWebinars }: { initialWebinars: W
           <div>
             <label className="block text-xs text-gray-400 mb-1">Qualifying question</label>
             <input value={qualifyingQuestion} onChange={(e) => setQualifyingQuestion(e.target.value)}
-              className="w-full rounded-md bg-gray-900 border border-white/10 px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500" />
+              className="w-full rounded-md bg-gray-900 border border-white/10 px-3 py-2 text-sm text-white focus:outline-none focus:border-[#007dff]" />
           </div>
 
           <label className="flex items-center gap-2 text-sm text-gray-300 cursor-pointer">
@@ -229,7 +229,7 @@ export default function WebinarManager({ initialWebinars }: { initialWebinars: W
             <button type="button" onClick={() => { setShowForm(false); resetForm(); }}
               className="cursor-pointer px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors">Cancel</button>
             <button type="submit" disabled={submitting}
-              className="cursor-pointer rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-500 disabled:opacity-50 transition-colors">
+              className="cursor-pointer rounded-lg bg-[#007dff] px-5 py-2 text-sm font-semibold text-white hover:bg-[#0066d9] disabled:opacity-50 transition-colors">
               {submitting ? "Saving…" : "Save Webinar"}
             </button>
           </div>

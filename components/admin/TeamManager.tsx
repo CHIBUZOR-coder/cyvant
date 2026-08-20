@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 
@@ -69,7 +69,7 @@ export default function TeamManager() {
         <p className="text-sm text-gray-400">{users.length} member{users.length !== 1 ? "s" : ""}</p>
         <button
           onClick={openModal}
-          className="cursor-pointer rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
+          className="cursor-pointer rounded-lg bg-[#007dff] px-4 py-2 text-sm font-semibold text-white hover:bg-[#007dff] transition-colors"
         >
           + Add Team Member
         </button>
@@ -149,7 +149,7 @@ export default function TeamManager() {
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                   placeholder="Jane Doe"
-                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-[#007dff]"
                 />
               </div>
 
@@ -161,7 +161,7 @@ export default function TeamManager() {
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
                   placeholder="jane@cyvant.com"
-                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-[#007dff]"
                 />
               </div>
 
@@ -173,7 +173,7 @@ export default function TeamManager() {
                   value={form.password}
                   onChange={(e) => setForm({ ...form, password: e.target.value })}
                   placeholder="Min. 8 characters"
-                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-[#007dff]"
                 />
               </div>
 
@@ -182,7 +182,7 @@ export default function TeamManager() {
                 <select
                   value={form.role}
                   onChange={(e) => setForm({ ...form, role: e.target.value })}
-                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#007dff]"
                 >
                   <option value="marketer">Marketer: view leads and students</option>
                   <option value="admin">Admin: full access</option>
@@ -200,7 +200,7 @@ export default function TeamManager() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="cursor-pointer flex-1 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                  className="cursor-pointer flex-1 rounded-lg bg-[#007dff] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#007dff] disabled:opacity-50 transition-colors"
                 >
                   {submitting ? "Adding..." : "Add Member"}
                 </button>

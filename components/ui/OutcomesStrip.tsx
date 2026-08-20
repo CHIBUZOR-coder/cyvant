@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import type { GraduateOutcome } from "@/types";
@@ -37,7 +37,7 @@ export default function OutcomesStrip({ outcomes }: Props) {
               transition={{ duration: 0.35, delay: index * 0.07 }}
             >
               <p className="font-semibold text-gray-900 dark:text-white text-sm">{outcome.name}</p>
-              <p className="text-blue-700 dark:text-blue-400 text-xs mt-1">{outcome.role}</p>
+              <p className="text-[#007dff] dark:text-blue-400 text-xs mt-1">{outcome.role}</p>
               <p className="text-gray-500 dark:text-gray-400 text-xs">{outcome.company}</p>
             </motion.li>
           ))}

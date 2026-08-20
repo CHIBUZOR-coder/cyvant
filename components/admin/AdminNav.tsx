@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -71,7 +71,7 @@ export default function AdminNav() {
       {/* ── Mobile top bar ── */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-40 h-14 bg-gray-900 border-b border-white/5 flex items-center justify-between px-4">
         <Link href="/admin/leads" className="font-bold text-white text-base">
-          CY<span className="text-blue-500">VANT</span>
+          CY<span className="text-[#007dff]">VANT</span>
           <span className="text-xs font-normal text-gray-500 ml-2">Admin</span>
         </Link>
         <button

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { SERVICE_ICON_OPTIONS, SERVICE_ICONS } from "@/lib/service-icons";
@@ -130,7 +130,7 @@ export default function ServiceManager({ initialServices }: { initialServices: S
     }
   }
 
-  const inputCls = "w-full rounded-md bg-gray-900 border border-white/10 px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500";
+  const inputCls = "w-full rounded-md bg-gray-900 border border-white/10 px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#007dff]";
   const labelCls = "block text-xs text-gray-400 mb-1";
 
   return (
@@ -140,7 +140,7 @@ export default function ServiceManager({ initialServices }: { initialServices: S
         <p className="text-sm text-gray-400">{services.length} service{services.length !== 1 ? "s" : ""}</p>
         <button
           onClick={() => { showForm && !editingId ? (setShowForm(false), resetForm()) : openCreate(); }}
-          className="cursor-pointer rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 transition-colors"
+          className="cursor-pointer rounded-lg bg-[#007dff] px-4 py-2 text-sm font-semibold text-white hover:bg-[#0066d9] transition-colors"
         >
           {showForm && !editingId ? "Cancel" : "+ Add Service"}
         </button>
@@ -217,7 +217,7 @@ export default function ServiceManager({ initialServices }: { initialServices: S
               Cancel
             </button>
             <button type="submit" disabled={submitting}
-              className="cursor-pointer rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-500 disabled:opacity-50 transition-colors">
+              className="cursor-pointer rounded-lg bg-[#007dff] px-5 py-2 text-sm font-semibold text-white hover:bg-[#0066d9] disabled:opacity-50 transition-colors">
               {submitting ? "Saving…" : editingId ? "Save Changes" : "Save Service"}
             </button>
           </div>
@@ -256,7 +256,7 @@ export default function ServiceManager({ initialServices }: { initialServices: S
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
                   <button onClick={() => openEdit(service)}
-                    className="cursor-pointer rounded-md border border-blue-500/30 px-3 py-1.5 text-xs font-medium text-blue-400 hover:bg-blue-500/10 transition-colors">
+                    className="cursor-pointer rounded-md border border-blue-500/30 px-3 py-1.5 text-xs font-medium text-blue-400 hover:bg-[#0066d9]/10 transition-colors">
                     Edit
                   </button>
                   <button onClick={() => handleDelete(service.id)} disabled={deleting === service.id}
