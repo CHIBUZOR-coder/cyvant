@@ -233,7 +233,7 @@ export default function ServiceManager({ initialServices }: { initialServices: S
         <div className="rounded-xl border border-white/10 bg-gray-900 divide-y divide-white/5 overflow-hidden">
           {services
             .slice()
-            .sort((a, b) => a.order - b.order || a.createdAt?.localeCompare?.(b.createdAt ?? "") || 0)
+            .sort((a, b) => a.order - b.order)
             .map((service) => (
               <div
                 key={service.id}
