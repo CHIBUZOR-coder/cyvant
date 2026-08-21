@@ -29,9 +29,9 @@ const column = {
 
 function AnimatedLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
-    <Link href={href} className="group relative inline-block text-sm text-[#007dff] hover:text-white transition-colors duration-200">
+    <Link href={href} className="group relative inline-block text-sm text-white hover:text-[#007dff] transition-colors duration-200">
       {children}
-      <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-white transition-all duration-300 group-hover:w-full" />
+      <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-[#007dff] transition-all duration-300 group-hover:w-full" />
     </Link>
   );
 }
