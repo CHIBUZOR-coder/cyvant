@@ -1,3 +1,5 @@
+﻿export const dynamic = "force-dynamic";
+
 import { NextRequest, NextResponse } from "next/server";
 import { isValidEmail, validateContactFields } from "@/lib/validation";
 import { upsertLead, addLeadNote } from "@/lib/leads";
