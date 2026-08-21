@@ -1,4 +1,6 @@
-﻿import Link from "next/link";
+﻿export const dynamic = "force-dynamic";
+
+import Link from "next/link";
 import Image from "next/image";
 import HeroSection from "@/components/ui/HeroSection";
 import TrustedBy from "@/components/ui/TrustedBy";

@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import type { Metadata } from "next";
 import FadeIn from "@/components/ui/FadeIn";
 import DarkSection from "@/components/ui/DarkSection";
