@@ -39,13 +39,25 @@ function mapCourse(c: PrismaCourse): Course {
   };
 }
 
+function courseOrder(c: { isMostPopular: boolean; path: string | null; startingPrice: number }): number {
+  if (c.isMostPopular) return 0;
+  if (c.path === "A") return 1;
+  if (c.path === "B") return 2;
+  if (c.path === "C") return 3;
+  return 10 + c.startingPrice / 100000;
+}
+
 async function getCourses(): Promise<Course[]> {
   try {
     const rows = await db.course.findMany({
       where: { published: true },
-      orderBy: [{ tier: "asc" }, { startingPrice: "asc" }],
     });
-    return rows.map(mapCourse);
+    return [...rows]
+      .sort((a, b) => {
+        if (a.tier !== b.tier) return a.tier - b.tier;
+        return courseOrder(a) - courseOrder(b);
+      })
+      .map(mapCourse);
   } catch {
     return [];
   }

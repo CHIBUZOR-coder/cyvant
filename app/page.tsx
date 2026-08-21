@@ -205,14 +205,21 @@ export default async function HomePage() {
     }).catch(() => []),
     db.course.findMany({
       where: { published: true },
-      orderBy: [{ tier: "asc" }, { startingPrice: "asc" }],
     }).catch(() => []),
     db.service.findMany({
       where: { published: true },
       orderBy: [{ order: "asc" }, { createdAt: "asc" }],
     }).catch(() => []),
   ]);
-  const courses = courseRows.map(mapCourse);
+  const pinnedOrder = (c: (typeof courseRows)[0]): number => {
+    if (c.isStartHere) return 0;
+    if (c.isMostPopular) return 1;
+    if (c.tier === 3 && c.path === "A") return 2;
+    return 100 + c.tier * 10 + c.startingPrice / 100000;
+  };
+  const courses = [...courseRows]
+    .sort((a, b) => pinnedOrder(a) - pinnedOrder(b))
+    .map(mapCourse);
   const webinarRows = [...upcomingWebinars, ...pastWebinars];
 
   return (
