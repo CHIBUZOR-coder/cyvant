@@ -17,6 +17,7 @@ function mapCourse(c: PrismaCourse): Course {
   return {
     id: c.id,
     slug: c.slug,
+    coverImage: c.coverImage ?? undefined,
     title: c.title,
     academy: c.academy as Course["academy"],
     tier: c.tier as 1 | 2 | 3,
