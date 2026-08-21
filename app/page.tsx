@@ -459,7 +459,7 @@ export default async function HomePage() {
 
         <div className="mx-auto max-w-7xl px-4 py-20 lg:px-8">
           <div className="mb-10">
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#007dff] dark:text-blue-400 mb-2">Academy 1</p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-[#007dff] dark:text-blue-400 mb-2">Academy</p>
             <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Cybersecurity Academy</h3>
             <p className="mt-2 text-gray-500 dark:text-gray-400">From awareness to hands on defence.</p>
           </div>
