@@ -231,6 +231,16 @@ const SERVICES = [
   },
 ];
 
+const PARTNERS = [
+  {
+    name: "Digitek Network",
+    logoUrl: "/images/DigitekNetworkLogo.webp",
+    website: null,
+    order: 0,
+    published: true,
+  },
+];
+
 async function main() {
   // ── Seed test lead + student ──
   const lead = await db.lead.upsert({
@@ -296,6 +306,16 @@ async function main() {
     });
   }
   console.log(`Seeded ${SERVICES.length} services.`);
+
+  // ── Seed partners ──
+  for (const p of PARTNERS) {
+    await db.partner.upsert({
+      where: { id: `seed-${p.name.toLowerCase().replace(/\s+/g, "-")}` },
+      update: { name: p.name, logoUrl: p.logoUrl, website: p.website, order: p.order },
+      create: { id: `seed-${p.name.toLowerCase().replace(/\s+/g, "-")}`, ...p },
+    });
+  }
+  console.log(`Seeded ${PARTNERS.length} partner(s).`);
 }
 
 main()

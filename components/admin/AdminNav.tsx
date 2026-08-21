@@ -11,6 +11,7 @@ const BASE_LINKS = [
   { href: "/admin/webinars", label: "Webinars" },
   { href: "/admin/courses",  label: "Courses" },
   { href: "/admin/services", label: "Services" },
+  { href: "/admin/partners", label: "Partners" },
 ];
 
 const ADMIN_LINKS = [
