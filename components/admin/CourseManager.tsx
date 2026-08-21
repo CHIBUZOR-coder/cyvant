@@ -1,12 +1,14 @@
 ﻿"use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
+import Image from "next/image";
 import type { Course } from "@/types";
 
 const TIER_LABELS: Record<number, string> = { 1: "Tier 1", 2: "Tier 2", 3: "Tier 3" };
 
 const EMPTY_FORM = {
   title: "",
+  coverImage: "",
   tier: "1",
   path: "",
   level: "Beginner",
@@ -32,6 +34,7 @@ function parseLines(text: string): string[] {
 function courseToForm(c: Course): FormState {
   return {
     title: c.title,
+    coverImage: c.coverImage ?? "",
     tier: String(c.tier),
     path: c.path ?? "",
     level: c.level,
@@ -55,8 +58,30 @@ export default function CourseManager({ initialCourses }: { initialCourses: Cour
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState<FormState>(EMPTY_FORM);
   const [submitting, setSubmitting] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [deleting, setDeleting] = useState<string | null>(null);
   const [error, setError] = useState("");
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      fd.append("folder", "courses");
+      const res = await fetch("/api/upload", { method: "POST", body: fd });
+      if (!res.ok) throw new Error((await res.json()).error ?? "Upload failed.");
+      const data = await res.json();
+      set("coverImage", data.url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Upload failed.");
+    } finally {
+      setUploading(false);
+      if (fileRef.current) fileRef.current.value = "";
+    }
+  }
 
   function set(key: keyof FormState, value: string | boolean) {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -83,6 +108,7 @@ export default function CourseManager({ initialCourses }: { initialCourses: Cour
   function buildBody() {
     return {
       title: form.title.trim(),
+      coverImage: form.coverImage.trim() || undefined,
       tier: Number(form.tier),
       path: form.path || undefined,
       level: form.level,
@@ -204,6 +230,32 @@ export default function CourseManager({ initialCourses }: { initialCourses: Cour
                 placeholder="e.g. Cyber Security Fundamentals"
                 className={inputCls}
               />
+            </div>
+
+            <div className="sm:col-span-2">
+              <label className={labelCls}>Cover Image</label>
+              <div className="flex gap-2">
+                <input
+                  value={form.coverImage}
+                  onChange={(e) => set("coverImage", e.target.value)}
+                  placeholder="https://... or upload below"
+                  className={inputCls}
+                />
+                <button
+                  type="button"
+                  onClick={() => fileRef.current?.click()}
+                  disabled={uploading}
+                  className="cursor-pointer shrink-0 rounded-md border border-white/10 bg-gray-700 px-3 py-2 text-xs text-gray-300 hover:bg-gray-600 disabled:opacity-50 transition-colors"
+                >
+                  {uploading ? "Uploading…" : "Upload"}
+                </button>
+                <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
+              </div>
+              {form.coverImage && (
+                <div className="mt-2 relative h-24 w-full overflow-hidden rounded-md border border-white/10">
+                  <Image src={form.coverImage} alt="Cover preview" fill className="object-cover" />
+                </div>
+              )}
             </div>
 
             <div>

@@ -121,7 +121,7 @@ export default function HeroSection() {
       <div aria-hidden className="pointer-events-none absolute bottom-0 right-1/4 -z-10 h-72 w-72 rounded-full bg-violet-700/15 blur-3xl" />
 
       <div className="relative z-10 mx-auto max-w-7xl w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.7fr_1fr] gap-6 md:gap-10 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[2.3fr_1fr] gap-6 md:gap-10 lg:gap-16 items-center">
 
           {/* ── Left: cycling text ───────────────────────────────── */}
           <div>
@@ -129,7 +129,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease }}
-              className="text-sm sm:text-base text-gray-400 mb-3 font-medium"
+              className="text-lg sm:text-xl md:text-2xl text-gray-400 mb-3 font-medium"
             >
               Join{" "}
               <span className="text-blue-400 font-bold tracking-wide">CYVANT</span>{" "}
@@ -145,7 +145,7 @@ export default function HeroSection() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -40 }}
                   transition={{ duration: 0.5, ease }}
-                  className="absolute text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-blue-400"
+                  className="absolute text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold leading-tight text-blue-400"
                 >
                   {TAGLINES[tagIdx][0]}
                   <br />
@@ -202,7 +202,7 @@ export default function HeroSection() {
             transition={{ duration: 0.7, ease, delay: 0.15 }}
             className="relative w-full"
           >
-            <div className="relative h-56 sm:h-64 md:h-80 lg:h-104.5 rounded-2xl overflow-hidden border border-white/10">
+            <div className="relative h-40 sm:h-48 md:h-64 lg:h-80 rounded-2xl overflow-hidden border border-white/10">
               <div
                 aria-hidden
                 className="absolute inset-0"

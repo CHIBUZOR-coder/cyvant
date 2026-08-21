@@ -23,6 +23,7 @@ function mapCourse(c: PrismaCourse): Course {
     isStartHere: c.isStartHere,
     isMostPopular: c.isMostPopular,
     featured: c.featured,
+    coverImage: c.coverImage ?? undefined,
     description: c.description ?? undefined,
     prerequisites: (c.prerequisites as string[]) ?? [],
     whatYouLearn: (c.whatYouLearn as string[]) ?? [],
@@ -69,6 +70,7 @@ export async function PATCH(
       where: { id },
       data: {
         ...(body.title !== undefined && { title: body.title }),
+        ...(body.coverImage !== undefined && { coverImage: body.coverImage || null }),
         ...(body.academy !== undefined && { academy: body.academy }),
         ...(body.tier !== undefined && { tier: Number(body.tier) }),
         ...(body.path !== undefined && { path: body.path || null }),

@@ -58,6 +58,7 @@ export interface Course {
   isMostPopular?: boolean;
   featured?: boolean;
   slug: string;
+  coverImage?: string;
   description?: string;
   prerequisites?: string[];
   whatYouLearn?: string[];

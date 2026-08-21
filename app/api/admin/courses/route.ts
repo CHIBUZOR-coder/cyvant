@@ -31,6 +31,7 @@ function mapCourse(c: PrismaCourse): Course {
     isStartHere: c.isStartHere,
     isMostPopular: c.isMostPopular,
     featured: c.featured,
+    coverImage: c.coverImage ?? undefined,
     description: c.description ?? undefined,
     prerequisites: (c.prerequisites as string[]) ?? [],
     whatYouLearn: (c.whatYouLearn as string[]) ?? [],
@@ -61,6 +62,7 @@ export async function POST(req: NextRequest) {
 
     const {
       title,
+      coverImage,
       tier,
       path,
       level,
@@ -91,6 +93,7 @@ export async function POST(req: NextRequest) {
       data: {
         slug,
         title,
+        coverImage: coverImage || null,
         academy,
         tier: Number(tier),
         path: path || null,

@@ -47,7 +47,7 @@ const FOUNDERS = [
   {
     initials: "ET",
     name: "Emmanuel Tavershima",
-    role: "CO-FOUNDER | NETWORK SECURITY ENGINEER",
+    role: "FOUNDER | NETWORK SECURITY ENGINEER",
     bio: "[PLACEHOLDER: Emmanuel's background, credentials, and why he founded CYVANT.]",
     linkedin: "https://linkedin.com/in/[PLACEHOLDER]",
     github: "https://github.com/[PLACEHOLDER]",

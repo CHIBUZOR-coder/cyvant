@@ -36,6 +36,7 @@ function mapCourse(c: PrismaCourse): Course {
     isStartHere: c.isStartHere,
     isMostPopular: c.isMostPopular,
     featured: c.featured,
+    coverImage: c.coverImage ?? undefined,
     description: c.description ?? undefined,
     prerequisites: (c.prerequisites as string[]) ?? [],
     whatYouLearn: (c.whatYouLearn as string[]) ?? [],
@@ -88,7 +89,7 @@ const FOUNDERS = [
     initials: "ET",
     photo: "/images/emmanuel.png",
     name: "Emmanuel Tavershima",
-    role: "CO-FOUNDER & CEO",
+    role: "FOUNDER & CEO",
     bio: "I'm building CYVANT around a simple belief: Africa doesn't lack talent; it lacks enough pathways that turn potential into opportunity. As Co-Founder & CEO, I design practical learning systems that move people beyond consuming knowledge into building, solving, demonstrating, and becoming industry-ready. My work sits at the intersection of technology, education, and operations, building programmes, communities, and partnerships that turn learning into practical capability and real-world opportunity.",
     linkedin: "https://www.linkedin.com/in/emmanuel-tavershima/",
     github: "",
@@ -386,9 +387,10 @@ export default async function HomePage() {
                   <ul className="space-y-4">
                     {WHY_CYVANT.map(({ text, icon }) => (
                       <li key={text} className="flex items-center gap-3">
-                        <AboutCheckIcon />
+                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/5">
+                          {icon}
+                        </div>
                         <span className="text-gray-200 font-medium">{text}</span>
-                        {icon}
                       </li>
                     ))}
                   </ul>

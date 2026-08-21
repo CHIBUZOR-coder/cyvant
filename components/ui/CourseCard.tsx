@@ -1,9 +1,11 @@
 ﻿"use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useEffect, useCallback } from "react";
 import type { Course } from "@/types";
+
 
 const LEVEL_STYLES: Record<Course["level"], string> = {
   Beginner:     "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30",
@@ -73,21 +75,20 @@ export default function CourseCard({ course, index = 0 }: { course: Course; inde
         transition={{ duration: 0.4, delay: index * 0.08 }}
         whileHover={{ y: -4 }}
       >
-        {/* Tier colour bar */}
-        <div className={`h-1 w-full ${tierStyle.bar}`} />
+        {/* Cover image */}
+        {course.coverImage ? (
+          <div className="relative h-44 w-full overflow-hidden">
+            <Image src={course.coverImage} alt={course.title} fill className="object-cover" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
+            <div className="absolute inset-0 bg-linear-to-t from-black/50 via-black/10 to-transparent" />
+            <div className={`absolute bottom-0 left-0 right-0 h-1 ${tierStyle.bar}`} />
+            {course.isStartHere && <span className="absolute top-3 left-3 rounded-full bg-[#007dff] px-2.5 py-0.5 text-xs font-bold text-white shadow">Start Here</span>}
+            {course.isMostPopular && <span className="absolute top-3 left-3 rounded-full bg-amber-500 px-2.5 py-0.5 text-xs font-bold text-white shadow">Most Popular</span>}
+          </div>
+        ) : (
+          <div className={`h-1 w-full ${tierStyle.bar}`} />
+        )}
 
-        <div className="p-6 flex flex-col flex-1">
-        {/* Floating badges */}
-        {course.isStartHere && (
-          <span className="absolute top-4 right-4 rounded-full bg-[#007dff] px-2.5 py-0.5 text-xs font-bold text-white shadow">
-            Start Here
-          </span>
-        )}
-        {course.isMostPopular && (
-          <span className="absolute top-4 right-4 rounded-full bg-amber-500 px-2.5 py-0.5 text-xs font-bold text-white shadow">
-            Most Popular
-          </span>
-        )}
+        <div className="p-5 flex flex-col flex-1">
 
         {/* Tier + level row */}
         <div className="flex items-center gap-2 flex-wrap">

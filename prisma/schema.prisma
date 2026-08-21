@@ -143,6 +143,7 @@ model Partner {
 model Course {
   id                    String   @id @default(cuid())
   slug                  String   @unique
+  coverImage            String?
   title                 String
   academy               String   @default("cybersecurity")
   tier                  Int

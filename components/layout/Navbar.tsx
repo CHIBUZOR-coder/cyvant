@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 
 const NAV_LINKS = [
@@ -69,7 +70,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
+        <nav className="hidden lg:flex items-center gap-1" aria-label="Main navigation">
           {NAV_LINKS.filter(({ href }) => href !== "/contact").map(({ href, label, sectionId }) => {
             const active = isLinkActive(href, sectionId);
             return (
@@ -110,7 +111,7 @@ export default function Navbar() {
           {/* Hamburger */}
           <button
             type="button"
-            className="cursor-pointer md:hidden rounded-md p-2 text-slate-500 dark:text-gray-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors"
+            className="cursor-pointer lg:hidden rounded-md p-2 text-slate-500 dark:text-gray-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((prev) => !prev)}
@@ -129,11 +130,17 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile menu */}
-      {menuOpen && (
+      {/* Mobile menu — always mounted, height animates so navbar pushes content down */}
+      <motion.div
+        className="lg:hidden overflow-hidden"
+        animate={{ height: menuOpen ? "auto" : 0 }}
+        initial={{ height: 0 }}
+        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+      >
         <nav
-          className="md:hidden border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-slate-950 px-4 pb-4 pt-2"
+          className="border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-slate-950 px-4 pb-4 pt-2"
           aria-label="Mobile navigation"
+          aria-hidden={!menuOpen}
         >
           {NAV_LINKS.map(({ href, label, sectionId }) => {
             const active = isLinkActive(href, sectionId);
@@ -141,6 +148,7 @@ export default function Navbar() {
               <Link
                 key={href}
                 href={href}
+                tabIndex={menuOpen ? 0 : -1}
                 className={`block py-2.5 px-3 rounded-md text-sm font-medium transition-colors ${
                   active
                     ? "text-[#007dff] dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20"
@@ -156,6 +164,7 @@ export default function Navbar() {
           <div className="mt-3 pt-3 border-t border-gray-100 dark:border-gray-800">
             <Link
               href="/contact"
+              tabIndex={menuOpen ? 0 : -1}
               className="block w-full rounded-lg border border-gray-200 dark:border-gray-700 px-4 py-2.5 text-center text-sm font-medium text-slate-600 dark:text-gray-300 hover:border-blue-300 hover:text-[#007dff] dark:hover:border-blue-500 dark:hover:text-blue-400 transition-colors"
               onClick={() => setMenuOpen(false)}
             >
@@ -163,7 +172,7 @@ export default function Navbar() {
             </Link>
           </div>
         </nav>
-      )}
+      </motion.div>
     </header>
   );
 }
