@@ -61,7 +61,7 @@ export default function Footer() {
                 <span className="text-white">CY</span><span className="text-blue-400">VANT</span>
               </Link>
             </motion.div>
-            <p className="mt-4 text-sm leading-6">
+            <p className="mt-4 text-sm leading-6 text-white">
               AI and cybersecurity education built for Africa, ready for the world.
             </p>
             <p className="mt-6 text-xs text-white">
