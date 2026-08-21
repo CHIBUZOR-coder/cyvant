@@ -29,16 +29,16 @@ const column = {
 
 function AnimatedLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
-    <Link href={href} className="group relative inline-block text-sm text-gray-400 hover:text-white transition-colors duration-200">
+    <Link href={href} className="group relative inline-block text-sm text-[#007dff] hover:text-white transition-colors duration-200">
       {children}
-      <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-blue-400 transition-all duration-300 group-hover:w-full" />
+      <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-white transition-all duration-300 group-hover:w-full" />
     </Link>
   );
 }
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-gray-950 text-gray-400">
+    <footer className="relative overflow-hidden bg-gray-950 text-[#007dff]">
       <ParticleCanvas />
 
       {/* Top divider glow */}
@@ -64,7 +64,7 @@ export default function Footer() {
             <p className="mt-4 text-sm leading-6">
               AI and cybersecurity education built for Africa, ready for the world.
             </p>
-            <p className="mt-6 text-xs text-gray-600">
+            <p className="mt-6 text-xs text-blue-400/60">
               © {new Date().getFullYear()} CYVANT. All rights reserved.
             </p>
           </motion.div>
@@ -77,7 +77,7 @@ export default function Footer() {
             viewport={{ once: true }}
             variants={column}
           >
-            <p className="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-5">
+            <p className="text-xs font-semibold uppercase tracking-widest text-white mb-5">
               Navigate
             </p>
             <ul className="space-y-3">
@@ -97,7 +97,7 @@ export default function Footer() {
             viewport={{ once: true }}
             variants={column}
           >
-            <p className="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-5">
+            <p className="text-xs font-semibold uppercase tracking-widest text-white mb-5">
               Get in Touch
             </p>
             <ul className="space-y-3">
@@ -122,7 +122,7 @@ export default function Footer() {
                 </motion.div>
               </li>
             </ul>
-            <p className="mt-8 text-xs text-gray-600 leading-5">
+            <p className="mt-8 text-xs text-blue-400/60 leading-5">
               Data handled in accordance with the Nigerian Data Protection Regulation (NDPR).
             </p>
           </motion.div>
