@@ -64,7 +64,7 @@ export default function Footer() {
             <p className="mt-4 text-sm leading-6">
               AI and cybersecurity education built for Africa, ready for the world.
             </p>
-            <p className="mt-6 text-xs text-blue-400/60">
+            <p className="mt-6 text-xs text-white">
               © {new Date().getFullYear()} CYVANT. All rights reserved.
             </p>
           </motion.div>
@@ -122,7 +122,7 @@ export default function Footer() {
                 </motion.div>
               </li>
             </ul>
-            <p className="mt-8 text-xs text-blue-400/60 leading-5">
+            <p className="mt-8 text-xs text-white leading-5">
               Data handled in accordance with the Nigerian Data Protection Regulation (NDPR).
             </p>
           </motion.div>
