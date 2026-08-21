@@ -41,8 +41,8 @@ function mapCourse(c: PrismaCourse): Course {
 
 function courseOrder(c: { isMostPopular: boolean; path: string | null; startingPrice: number }): number {
   if (c.isMostPopular) return 0;
-  if (c.path === "A") return 1;
-  if (c.path === "B") return 2;
+  if (c.path === "B") return 1;
+  if (c.path === "A") return 2;
   if (c.path === "C") return 3;
   return 10 + c.startingPrice / 100000;
 }

@@ -214,7 +214,7 @@ export default async function HomePage() {
   const pinnedOrder = (c: (typeof courseRows)[0]): number => {
     if (c.isStartHere) return 0;
     if (c.isMostPopular) return 1;
-    if (c.tier === 3 && c.path === "A") return 2;
+    if (c.tier === 3 && c.path === "B") return 2;
     return 100 + c.tier * 10 + c.startingPrice / 100000;
   };
   const courses = [...courseRows]
