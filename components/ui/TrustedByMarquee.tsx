@@ -36,40 +36,56 @@ function LogoCard({ partner }: { partner: PartnerItem }) {
   return inner;
 }
 
+const SCROLL_THRESHOLD = 5;
+
 export default function TrustedByMarquee({ partners }: { partners: PartnerItem[] }) {
   if (partners.length === 0) return null;
 
-  // Pad to at least 6 so the marquee looks natural with few orgs
-  const minCount = 6;
-  const repeats = Math.ceil(minCount / partners.length);
-  const padded = Array.from({ length: repeats }, () => partners).flat();
-  // Duplicate for seamless loop (animate -50%)
-  const items = [...padded, ...padded];
+  const useMarquee = partners.length > SCROLL_THRESHOLD;
 
-  const duration = Math.max(20, partners.length * 6);
+  const header = (
+    <div className="mx-auto max-w-7xl px-6 lg:px-8 mb-12 text-center">
+      <motion.h2
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.55, ease }}
+        className="text-2xl sm:text-3xl font-bold text-white"
+      >
+        Trusted by leading organisations
+      </motion.h2>
+      <motion.p
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.55, ease, delay: 0.1 }}
+        className="mt-3 text-gray-400 text-sm"
+      >
+        Companies that trust CYVANT to build their cyber-aware teams
+      </motion.p>
+    </div>
+  );
+
+  if (!useMarquee) {
+    return (
+      <section className="bg-slate-950 py-20 border-t border-white/5">
+        {header}
+        <div className="flex flex-wrap justify-center gap-4 px-6">
+          {partners.map((partner) => (
+            <LogoCard key={partner.id} partner={partner} />
+          ))}
+        </div>
+      </section>
+    );
+  }
+
+  // Duplicate for seamless loop (animate -50%)
+  const items = [...partners, ...partners];
+  const duration = Math.max(25, partners.length * 6);
 
   return (
     <section className="bg-slate-950 py-20 overflow-hidden border-t border-white/5">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8 mb-12 text-center">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.55, ease }}
-          className="text-2xl sm:text-3xl font-bold text-white"
-        >
-          Trusted by leading organisations
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.55, ease, delay: 0.1 }}
-          className="mt-3 text-gray-400 text-sm"
-        >
-          Companies that trust CYVANT to build their cyber-aware teams
-        </motion.p>
-      </div>
+      {header}
 
       <div className="relative">
         <div aria-hidden className="pointer-events-none absolute left-0 top-0 z-10 h-full w-24 bg-linear-to-r from-slate-950 to-transparent" />
