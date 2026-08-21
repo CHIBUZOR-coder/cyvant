@@ -522,7 +522,7 @@ export default async function HomePage() {
                 <p className="text-white font-semibold text-lg">Coming soon</p>
                 <p className="text-gray-400 mt-2 text-sm">Stay tuned for our next live session.</p>
                 <Link
-                  href="/webinars"
+                  href="/webinars#notify"
                   className="mt-5 inline-block rounded-lg bg-[#007dff] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#0066d9] transition-colors"
                 >
                   Get notified

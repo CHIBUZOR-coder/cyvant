@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { isValidEmail, validateContactFields } from "@/lib/validation";
 import { upsertLead, addLeadNote } from "@/lib/leads";
 import { sendConfirmation, notifyMarketer } from "@/lib/email";
+import { db } from "@/lib/db";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -35,6 +36,14 @@ export async function POST(req: NextRequest) {
     ].filter(Boolean).join(" | ");
 
     await addLeadNote(lead.id, noteText);
+
+    if (webinarId) {
+      await db.webinarRegistration.upsert({
+        where: { webinarId_email: { webinarId, email } },
+        update: { name, phone: phone ?? null, qualifyingAnswer },
+        create: { webinarId, name, email, phone: phone ?? null, qualifyingAnswer },
+      });
+    }
   } catch (err) {
     console.error("[api/forms/webinar]", err);
     return NextResponse.json({ error: "Server error. Please try again." }, { status: 500 });

@@ -1,7 +1,16 @@
-﻿"use client";
+"use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import type { Webinar } from "@prisma/client";
+
+interface Registration {
+  id: string;
+  name: string;
+  email: string;
+  phone: string | null;
+  qualifyingAnswer: string | null;
+  createdAt: string;
+}
 
 function badge(date: Date) {
   return date >= new Date()
@@ -12,6 +21,12 @@ function badge(date: Date) {
 function formatDate(date: Date) {
   return new Date(date).toLocaleDateString("en-NG", {
     day: "numeric", month: "short", year: "numeric",
+  });
+}
+
+function formatDateTime(iso: string) {
+  return new Date(iso).toLocaleDateString("en-NG", {
+    day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit",
   });
 }
 
@@ -26,12 +41,84 @@ export default function WebinarManager({ initialWebinars }: { initialWebinars: W
   const [notifying, setNotifying] = useState(false);
   const [notifyResult, setNotifyResult] = useState<{ ok: boolean; msg: string } | null>(null);
 
+  // Per-webinar registrant state
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [registrants, setRegistrants] = useState<Record<string, Registration[]>>({});
+  const [loadingRegs, setLoadingRegs] = useState<string | null>(null);
+  const [reminding, setReminding] = useState<string | null>(null);
+  const [remindResult, setRemindResult] = useState<Record<string, { ok: boolean; msg: string }>>({});
+  const [regCounts, setRegCounts] = useState<Record<string, number>>({});
+
   useEffect(() => {
     fetch("/api/admin/webinars/notify-all")
       .then((r) => r.json())
       .then((d) => setNotifyCount(d.count ?? 0))
       .catch(() => setNotifyCount(0));
   }, []);
+
+  // Fetch registration counts for all webinars on mount
+  useEffect(() => {
+    async function loadCounts() {
+      const counts: Record<string, number> = {};
+      await Promise.allSettled(
+        webinars.map(async (w) => {
+          const res = await fetch(`/api/admin/webinars/${w.id}/registrations`);
+          if (res.ok) {
+            const data: Registration[] = await res.json();
+            counts[w.id] = data.length;
+          }
+        })
+      );
+      setRegCounts(counts);
+    }
+    if (webinars.length > 0) loadCounts();
+  }, [webinars]);
+
+  const fetchRegistrants = useCallback(async (webinarId: string) => {
+    if (registrants[webinarId]) return;
+    setLoadingRegs(webinarId);
+    try {
+      const res = await fetch(`/api/admin/webinars/${webinarId}/registrations`);
+      if (res.ok) {
+        const data: Registration[] = await res.json();
+        setRegistrants((prev) => ({ ...prev, [webinarId]: data }));
+        setRegCounts((prev) => ({ ...prev, [webinarId]: data.length }));
+      }
+    } finally {
+      setLoadingRegs(null);
+    }
+  }, [registrants]);
+
+  function toggleExpand(webinarId: string) {
+    if (expandedId === webinarId) {
+      setExpandedId(null);
+    } else {
+      setExpandedId(webinarId);
+      fetchRegistrants(webinarId);
+    }
+  }
+
+  async function handleRemind(webinarId: string) {
+    setReminding(webinarId);
+    setRemindResult((prev) => { const n = { ...prev }; delete n[webinarId]; return n; });
+    try {
+      const res = await fetch(`/api/admin/webinars/${webinarId}/remind`, { method: "POST" });
+      const data = await res.json();
+      setRemindResult((prev) => ({
+        ...prev,
+        [webinarId]: {
+          ok: res.ok,
+          msg: res.ok
+            ? `Reminder sent to ${data.sent} registrant${data.sent !== 1 ? "s" : ""}.${data.failed ? ` (${data.failed} failed)` : ""}`
+            : "Failed to send reminders.",
+        },
+      }));
+    } catch {
+      setRemindResult((prev) => ({ ...prev, [webinarId]: { ok: false, msg: "Failed to send reminders." } }));
+    } finally {
+      setReminding(null);
+    }
+  }
 
   async function handleNotifyAll() {
     if (!notifyCount) return;
@@ -101,6 +188,7 @@ export default function WebinarManager({ initialWebinars }: { initialWebinars: W
       if (!res.ok) throw new Error((await res.json()).error ?? "Failed");
       const created: Webinar = await res.json();
       setWebinars((prev) => [created, ...prev]);
+      setRegCounts((prev) => ({ ...prev, [created.id]: 0 }));
       resetForm();
       setShowForm(false);
     } catch (err) {
@@ -191,7 +279,6 @@ export default function WebinarManager({ initialWebinars }: { initialWebinars: W
               className="w-full rounded-md bg-gray-900 border border-white/10 px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#007dff] resize-none" />
           </div>
 
-          {/* Flier image */}
           <div>
             <label className="block text-xs text-gray-400 mb-1">Webinar flier / banner image</label>
             <div className="flex items-center gap-4">
@@ -245,26 +332,109 @@ export default function WebinarManager({ initialWebinars }: { initialWebinars: W
         <div className="rounded-xl border border-white/10 bg-gray-900 divide-y divide-white/5 overflow-hidden">
           {webinars.map((w) => {
             const { label, cls } = badge(w.date);
+            const count = regCounts[w.id] ?? 0;
+            const isExpanded = expandedId === w.id;
+            const wRegistrants = registrants[w.id] ?? [];
+            const remind = remindResult[w.id];
+
             return (
-              <div key={w.id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 sm:px-6 py-4">
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <p className="text-white font-semibold truncate">{w.title}</p>
-                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${cls}`}>{label}</span>
-                    {!w.registrationOpen && (
-                      <span className="text-xs px-2 py-0.5 rounded-full font-medium bg-yellow-500/20 text-yellow-300">Reg. closed</span>
+              <div key={w.id}>
+                {/* Main row */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 sm:px-6 py-4">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <p className="text-white font-semibold truncate">{w.title}</p>
+                      <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${cls}`}>{label}</span>
+                      {!w.registrationOpen && (
+                        <span className="text-xs px-2 py-0.5 rounded-full font-medium bg-yellow-500/20 text-yellow-300">Reg. closed</span>
+                      )}
+                    </div>
+                    <p className="text-gray-400 text-sm mt-0.5">{formatDate(w.date)} · {w.time}</p>
+                    {w.subtitle && <p className="text-gray-500 text-xs mt-0.5 truncate">{w.subtitle}</p>}
+                  </div>
+
+                  <div className="flex items-center gap-2 flex-wrap shrink-0">
+                    {/* Registrants toggle */}
+                    <button
+                      onClick={() => toggleExpand(w.id)}
+                      className="cursor-pointer inline-flex items-center gap-1.5 rounded-md border border-white/10 px-3 py-1.5 text-xs font-medium text-gray-300 hover:bg-white/5 transition-colors"
+                    >
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a4 4 0 00-5.916-3.506M9 20H4v-2a4 4 0 015.916-3.506M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                      </svg>
+                      {count} registrant{count !== 1 ? "s" : ""}
+                      <svg className={`w-3 h-3 transition-transform ${isExpanded ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+
+                    {/* Send Reminder */}
+                    <button
+                      onClick={() => handleRemind(w.id)}
+                      disabled={reminding === w.id || count === 0}
+                      className="cursor-pointer inline-flex items-center gap-1.5 rounded-md border border-blue-500/30 px-3 py-1.5 text-xs font-medium text-blue-400 hover:bg-blue-500/10 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                    >
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                      {reminding === w.id ? "Sending…" : "Send Reminder"}
+                    </button>
+
+                    {/* Delete */}
+                    <button
+                      onClick={() => handleDelete(w.id)}
+                      disabled={deleting === w.id}
+                      className="cursor-pointer rounded-md border border-red-500/30 px-3 py-1.5 text-xs font-medium text-red-400 hover:bg-red-500/10 disabled:opacity-50 transition-colors"
+                    >
+                      {deleting === w.id ? "Deleting…" : "Delete"}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Remind result feedback */}
+                {remind && (
+                  <div className={`px-4 sm:px-6 pb-3 text-xs ${remind.ok ? "text-green-400" : "text-red-400"}`}>
+                    {remind.msg}
+                  </div>
+                )}
+
+                {/* Expanded registrant list */}
+                {isExpanded && (
+                  <div className="border-t border-white/5 bg-gray-950/50 px-4 sm:px-6 py-4">
+                    {loadingRegs === w.id ? (
+                      <p className="text-gray-500 text-sm">Loading registrants…</p>
+                    ) : wRegistrants.length === 0 ? (
+                      <p className="text-gray-500 text-sm">No registrations yet.</p>
+                    ) : (
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-sm">
+                          <thead>
+                            <tr className="text-left text-xs text-gray-500 border-b border-white/5">
+                              <th className="pb-2 pr-4 font-medium">Name</th>
+                              <th className="pb-2 pr-4 font-medium">Email</th>
+                              <th className="pb-2 pr-4 font-medium hidden sm:table-cell">Phone</th>
+                              <th className="pb-2 pr-4 font-medium hidden md:table-cell">Answer</th>
+                              <th className="pb-2 font-medium hidden lg:table-cell">Registered</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-white/5">
+                            {wRegistrants.map((r) => (
+                              <tr key={r.id} className="text-gray-300">
+                                <td className="py-2.5 pr-4 font-medium text-white">{r.name}</td>
+                                <td className="py-2.5 pr-4">
+                                  <a href={`mailto:${r.email}`} className="text-blue-400 hover:underline">{r.email}</a>
+                                </td>
+                                <td className="py-2.5 pr-4 hidden sm:table-cell text-gray-400">{r.phone ?? "—"}</td>
+                                <td className="py-2.5 pr-4 hidden md:table-cell text-gray-400 max-w-xs truncate" title={r.qualifyingAnswer ?? ""}>{r.qualifyingAnswer ?? "—"}</td>
+                                <td className="py-2.5 hidden lg:table-cell text-gray-500 text-xs">{formatDateTime(r.createdAt)}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
                     )}
                   </div>
-                  <p className="text-gray-400 text-sm mt-0.5">{formatDate(w.date)} · {w.time}</p>
-                  {w.subtitle && <p className="text-gray-500 text-xs mt-0.5 truncate">{w.subtitle}</p>}
-                </div>
-                <button
-                  onClick={() => handleDelete(w.id)}
-                  disabled={deleting === w.id}
-                  className="cursor-pointer shrink-0 rounded-md border border-red-500/30 px-3 py-1.5 text-xs font-medium text-red-400 hover:bg-red-500/10 disabled:opacity-50 transition-colors"
-                >
-                  {deleting === w.id ? "Deleting…" : "Delete"}
-                </button>
+                )}
               </div>
             );
           })}
