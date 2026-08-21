@@ -151,7 +151,7 @@ const COURSES = [
     duration: "16 Weeks",
     format: "Online, cohort based",
     startingPrice: 920000,
-    coverImage: "https://images.unsplash.com/photo-1644031262416-e3342d223668?w=700&q=80",
+    coverImage: "https://images.pexels.com/photos/19805877/pexels-photo-19805877.jpeg?auto=compress&cs=tinysrgb&w=700",
     description:
       "Learn to think like an attacker, legally and methodically, to find and report vulnerabilities before someone else exploits them.",
     prerequisites: ["CompTIA Security+ or equivalent skill level"],
