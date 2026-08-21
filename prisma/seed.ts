@@ -15,7 +15,7 @@ const COURSES = [
     startingPrice: 200000,
     isStartHere: true,
     featured: true,
-    coverImage: "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=700&q=80",
+    coverImage: "https://images.unsplash.com/photo-v6yJuavoADs?w=700&q=80",
     description:
       "The perfect starting point. Learn the core concepts of information security, threats, vulnerabilities, and defenses.",
     prerequisites: ["No prior experience required"],
@@ -35,7 +35,7 @@ const COURSES = [
     startingPrice: 680000,
     isMostPopular: true,
     featured: true,
-    coverImage: "https://images.unsplash.com/photo-1573164713988-8665fc963095?w=700&q=80",
+    coverImage: "https://images.unsplash.com/photo-cg33TwmxY-0?w=700&q=80",
     description:
       "Build toward one of the most recognised entry level certifications in the industry.",
     prerequisites: ["Cyber Security Fundamentals"],
@@ -54,7 +54,7 @@ const COURSES = [
     duration: "8 Weeks",
     format: "Online, cohort based",
     startingPrice: 400000,
-    coverImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=700&q=80",
+    coverImage: "https://images.unsplash.com/photo-u57Bv92h5uw?w=700&q=80",
     description:
       "Understand how data moves and how attackers intercept, disrupt, or exploit it.",
     prerequisites: ["Cyber Security Fundamentals"],
@@ -71,7 +71,7 @@ const COURSES = [
     duration: "4 Weeks",
     format: "Online, cohort based",
     startingPrice: 250000,
-    coverImage: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?w=700&q=80",
+    coverImage: "https://images.unsplash.com/photo-Km4XPksw1Z8?w=700&q=80",
     description:
       "Get comfortable operating in the environment most security tools and servers actually run on.",
     prerequisites: ["Cyber Security Fundamentals"],
@@ -88,7 +88,7 @@ const COURSES = [
     duration: "8 Weeks",
     format: "Online, cohort based",
     startingPrice: 400000,
-    coverImage: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=700&q=80",
+    coverImage: "https://images.unsplash.com/photo-R6jtbcCKqYY?w=700&q=80",
     description:
       "Learn how most enterprise networks manage identity, access, and authentication, and where that system is commonly attacked.",
     prerequisites: ["Cyber Security Fundamentals (Linux Administration recommended alongside)"],
@@ -110,7 +110,7 @@ const COURSES = [
     duration: "4 Weeks",
     format: "Online, cohort based",
     startingPrice: 250000,
-    coverImage: "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=700&q=80",
+    coverImage: "https://images.unsplash.com/photo-I_YQhs1frU4?w=700&q=80",
     description:
       "Learn the fundamentals of watching a live environment for suspicious activity, the entry point into monitoring focused security work.",
     prerequisites: ["Network Security recommended"],
@@ -127,7 +127,7 @@ const COURSES = [
     duration: "4 Weeks",
     format: "Online, cohort based",
     startingPrice: 250000,
-    coverImage: "https://images.unsplash.com/photo-1573164713988-8665fc963095?w=700&q=80",
+    coverImage: "https://images.unsplash.com/photo-YBfqnCzp834?w=700&q=80",
     description:
       "Learn to systematically identify, score, and report security weaknesses before they're exploited.",
     prerequisites: ["Network Security recommended"],
@@ -151,7 +151,7 @@ const COURSES = [
     duration: "16 Weeks",
     format: "Online, cohort based",
     startingPrice: 920000,
-    coverImage: "https://images.unsplash.com/photo-1709099317886-13dff6d5982d?w=700&q=80",
+    coverImage: "https://images.unsplash.com/photo-EHi536WasP4?w=700&q=80",
     description:
       "Learn to think like an attacker, legally and methodically, to find and report vulnerabilities before someone else exploits them.",
     prerequisites: ["CompTIA Security+ or equivalent skill level"],
@@ -171,7 +171,7 @@ const COURSES = [
     duration: "16 Weeks",
     format: "Online, cohort based",
     startingPrice: 850000,
-    coverImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=700&q=80",
+    coverImage: "https://images.unsplash.com/photo-GwYUE5PcGYU?w=700&q=80",
     description:
       "Step into the role of a Security Operations Center analyst, monitoring, detecting, and responding to real time threats.",
     prerequisites: ["CompTIA Security+ or equivalent skill level"],
@@ -191,7 +191,7 @@ const COURSES = [
     duration: "16 Weeks",
     format: "Online, cohort based",
     startingPrice: 900000,
-    coverImage: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=700&q=80",
+    coverImage: "https://images.unsplash.com/photo-FnNGR3XfblA?w=700&q=80",
     description:
       "For those drawn to the policy and risk side of security, where technical understanding meets business and regulatory decision making.",
     prerequisites: ["CompTIA Security+ or equivalent skill level"],
