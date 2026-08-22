@@ -24,7 +24,7 @@ export const courses: Course[] = [
   {
     id: "comptia-security-plus",
     tier: 2,
-    title: "CompTIA Security+",
+    title: "Cyvant Comptia Sec+ Bootcamp",
     academy: "cybersecurity",
     level: "Intermediate",
     duration: "12 Weeks",
