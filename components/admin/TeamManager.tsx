@@ -83,35 +83,37 @@ export default function TeamManager() {
       {loading ? (
         <p className="text-gray-500 text-sm py-10 text-center">Loading...</p>
       ) : (
-        <div className="rounded-xl border border-gray-700 overflow-x-auto">
-          <table className="w-full text-sm text-left min-w-120">
-            <thead className="bg-gray-800 text-gray-400 text-xs uppercase tracking-wider">
-              <tr>
-                <th className="px-4 py-3">Name</th>
-                <th className="px-4 py-3">Email</th>
-                <th className="px-4 py-3">Role</th>
-                <th className="px-4 py-3">Joined</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-700/50">
-              {users.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE).map((u) => (
-                <tr key={u.id} className="bg-gray-900">
-                  <td className="px-4 py-3 font-medium text-white">{u.name}</td>
-                  <td className="px-4 py-3 text-gray-400">{u.email}</td>
-                  <td className="px-4 py-3">
-                    <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${ROLE_STYLES[u.role] ?? ""}`}>
-                      {u.role}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-gray-500 text-xs">
-                    {new Date(u.createdAt).toLocaleDateString("en-NG", { day: "numeric", month: "short", year: "numeric" })}
-                  </td>
+        <>
+          <div className="rounded-xl border border-gray-700 overflow-x-auto">
+            <table className="w-full text-sm text-left min-w-120">
+              <thead className="bg-gray-800 text-gray-400 text-xs uppercase tracking-wider">
+                <tr>
+                  <th className="px-4 py-3">Name</th>
+                  <th className="px-4 py-3">Email</th>
+                  <th className="px-4 py-3">Role</th>
+                  <th className="px-4 py-3">Joined</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <Pagination page={page} total={users.length} onChange={setPage} />
+              </thead>
+              <tbody className="divide-y divide-gray-700/50">
+                {users.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE).map((u) => (
+                  <tr key={u.id} className="bg-gray-900">
+                    <td className="px-4 py-3 font-medium text-white">{u.name}</td>
+                    <td className="px-4 py-3 text-gray-400">{u.email}</td>
+                    <td className="px-4 py-3">
+                      <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${ROLE_STYLES[u.role] ?? ""}`}>
+                        {u.role}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-gray-500 text-xs">
+                      {new Date(u.createdAt).toLocaleDateString("en-NG", { day: "numeric", month: "short", year: "numeric" })}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <Pagination page={page} total={users.length} onChange={setPage} />
+        </>
       )}
 
       {/* Modal */}
