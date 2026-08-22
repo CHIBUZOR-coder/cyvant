@@ -90,7 +90,7 @@ const FOUNDERS = [
     photo: "/images/emmanuel.png",
     name: "Emmanuel Tavershima",
     role: "FOUNDER & CEO",
-    bio: "I'm building CYVANT around a simple belief: Africa doesn't lack talent; it lacks enough pathways that turn potential into opportunity. As Co-Founder & CEO, I design practical learning systems that move people beyond consuming knowledge into building, solving, demonstrating, and becoming industry-ready. My work sits at the intersection of technology, education, and operations, building programmes, communities, and partnerships that turn learning into practical capability and real-world opportunity.",
+    bio: "I'm building CYVANT around a simple belief: Africa doesn't lack talent; it lacks enough pathways that turn potential into opportunity. As Founder & CEO, I design practical learning systems that move people beyond consuming knowledge into building, solving, demonstrating, and becoming industry-ready. My work sits at the intersection of technology, education, and operations, building programmes, communities, and partnerships that turn learning into practical capability and real-world opportunity.",
     linkedin: "https://www.linkedin.com/in/emmanuel-tavershima/",
     github: "",
   },
