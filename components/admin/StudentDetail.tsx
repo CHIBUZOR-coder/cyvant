@@ -186,7 +186,7 @@ export default function StudentDetail({ id }: { id: string }) {
               </div>
             </div>
             <Link
-              href={`/admin/leads/${student.lead.id}`}
+              href={`/cyvant-hq/leads/${student.lead.id}`}
               className="block mt-3 text-xs text-blue-400 hover:text-blue-300"
             >
               View original lead →

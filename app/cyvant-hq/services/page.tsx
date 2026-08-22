@@ -10,7 +10,7 @@ export const metadata = { title: "Services: CYVANT Admin" };
 
 export default async function AdminServicesPage() {
   const session = await getServerSession(authOptions);
-  if (!session) redirect("/admin/login");
+  if (!session) redirect("/cyvant-hq/login");
 
   const services = await db.service.findMany({
     orderBy: [{ order: "asc" }, { createdAt: "asc" }],

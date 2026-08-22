@@ -6,16 +6,16 @@ import { useState } from "react";
 import { useSession, signOut } from "next-auth/react";
 
 const BASE_LINKS = [
-  { href: "/admin/leads",    label: "Leads" },
-  { href: "/admin/students", label: "Students" },
-  { href: "/admin/webinars", label: "Webinars" },
-  { href: "/admin/courses",  label: "Courses" },
-  { href: "/admin/services", label: "Services" },
-  { href: "/admin/partners", label: "Partners" },
+  { href: "/cyvant-hq/leads",    label: "Leads" },
+  { href: "/cyvant-hq/students", label: "Students" },
+  { href: "/cyvant-hq/webinars", label: "Webinars" },
+  { href: "/cyvant-hq/courses",  label: "Courses" },
+  { href: "/cyvant-hq/services", label: "Services" },
+  { href: "/cyvant-hq/partners", label: "Partners" },
 ];
 
 const ADMIN_LINKS = [
-  { href: "/admin/team", label: "Team" },
+  { href: "/cyvant-hq/team", label: "Team" },
 ];
 
 export default function AdminNav() {
@@ -59,7 +59,7 @@ export default function AdminNav() {
         ← Home
       </Link>
       <button
-        onClick={() => signOut({ callbackUrl: "/admin/login" })}
+        onClick={() => signOut({ callbackUrl: "/cyvant-hq/login" })}
         className="cursor-pointer w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-400 hover:bg-gray-800 hover:text-white transition-colors"
       >
         Sign out
@@ -71,7 +71,7 @@ export default function AdminNav() {
     <>
       {/* ── Mobile top bar ── */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-40 h-14 bg-gray-900 border-b border-white/5 flex items-center justify-between px-4">
-        <Link href="/admin/leads" className="font-bold text-white text-base">
+        <Link href="/cyvant-hq/leads" className="font-bold text-white text-base">
           CY<span className="text-[#007dff]">VANT</span>
           <span className="text-xs font-normal text-gray-500 ml-2">Admin</span>
         </Link>

@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminWebinarsPage() {
   const session = await getServerSession(authOptions);
-  if (!session) redirect("/admin/login");
+  if (!session) redirect("/cyvant-hq/login");
 
   const webinars = await db.webinar.findMany({ orderBy: { date: "desc" } });
 

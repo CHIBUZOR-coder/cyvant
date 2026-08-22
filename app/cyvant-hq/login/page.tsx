@@ -30,7 +30,7 @@ export default function AdminLoginPage() {
     if (result?.error) {
       setError("Invalid email or password.");
     } else {
-      router.push("/admin/leads");
+      router.push("/cyvant-hq/leads");
     }
   }
 
@@ -106,7 +106,7 @@ export default function AdminLoginPage() {
           </button>
 
           <Link
-            href="/admin/forgot-password"
+            href="/cyvant-hq/forgot-password"
             className="block text-center text-sm text-gray-500 hover:text-gray-300 transition-colors"
           >
             Forgot password?

@@ -38,7 +38,7 @@ function mapCourse(c: PrismaCourse): Course {
 
 export default async function CoursesAdminPage() {
   const session = await getServerSession(authOptions);
-  if (!session) redirect("/admin/login");
+  if (!session) redirect("/cyvant-hq/login");
 
   const rows = await db.course.findMany({
     orderBy: [{ tier: "asc" }, { startingPrice: "asc" }],

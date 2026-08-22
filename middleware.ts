@@ -2,10 +2,10 @@ import { withAuth } from "next-auth/middleware";
 
 export default withAuth({
   pages: {
-    signIn: "/admin/login",
+    signIn: "/cyvant-hq/login",
   },
 });
 
 export const config = {
-  matcher: ["/admin/((?!login|forgot-password|reset-password).*)"],
+  matcher: ["/cyvant-hq/((?!login|forgot-password|reset-password).*)"],
 };

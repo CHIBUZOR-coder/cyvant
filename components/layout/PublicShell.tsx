@@ -9,7 +9,7 @@ import WebinarBanner from "@/components/ui/WebinarBanner";
 export default function PublicShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
-  if (pathname.startsWith("/admin")) {
+  if (pathname.startsWith("/cyvant-hq")) {
     return <>{children}</>;
   }
 

@@ -10,7 +10,7 @@ export const metadata = { title: "Partners: CYVANT Admin" };
 
 export default async function AdminPartnersPage() {
   const session = await getServerSession(authOptions);
-  if (!session) redirect("/admin/login");
+  if (!session) redirect("/cyvant-hq/login");
 
   const partners = await db.partner.findMany({ orderBy: { order: "asc" } });
 

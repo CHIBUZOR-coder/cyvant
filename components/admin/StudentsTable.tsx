@@ -118,7 +118,7 @@ export default function StudentsTable() {
                   </td>
                   <td className="px-4 py-3">
                     <Link
-                      href={`/admin/students/${s.id}`}
+                      href={`/cyvant-hq/students/${s.id}`}
                       className="text-blue-400 hover:text-blue-300 text-xs font-medium"
                     >
                       View →

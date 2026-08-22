@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
   });
 
   const origin = req.headers.get("origin") ?? process.env.NEXTAUTH_URL ?? "";
-  const resetUrl = `${origin}/admin/reset-password?token=${token.token}`;
+  const resetUrl = `${origin}/cyvant-hq/reset-password?token=${token.token}`;
 
   try {
     await sendPasswordReset({ to: admin.email, name: admin.name, resetUrl });

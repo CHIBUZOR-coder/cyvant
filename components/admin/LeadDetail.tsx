@@ -79,7 +79,7 @@ export default function LeadDetail({ id }: { id: string }) {
   async function handleDelete() {
     setDeleting(true);
     await fetch(`/api/admin/leads/${id}`, { method: "DELETE" });
-    router.push("/admin/leads");
+    router.push("/cyvant-hq/leads");
   }
 
   async function handleAddNote(e: React.FormEvent) {
@@ -102,7 +102,7 @@ export default function LeadDetail({ id }: { id: string }) {
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-4xl">
-      <Link href="/admin/leads" className="text-sm text-gray-400 hover:text-white transition-colors mb-6 inline-flex items-center gap-1.5">
+      <Link href="/cyvant-hq/leads" className="text-sm text-gray-400 hover:text-white transition-colors mb-6 inline-flex items-center gap-1.5">
         ← All leads
       </Link>
 
@@ -189,7 +189,7 @@ export default function LeadDetail({ id }: { id: string }) {
               <p className="font-semibold mb-1">Converted to student</p>
               <p className="text-emerald-500/80 text-xs mb-3">This lead is no longer active. Manage their enrollment and payment from the student profile.</p>
               <Link
-                href={`/admin/students/${lead.student.id}`}
+                href={`/cyvant-hq/students/${lead.student.id}`}
                 className="inline-block rounded-lg bg-emerald-600/20 border border-emerald-500/30 px-4 py-2 text-xs font-semibold text-emerald-400 hover:bg-emerald-600/30 transition-colors"
               >
                 View Student Profile →

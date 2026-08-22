@@ -52,7 +52,7 @@ export default function ResetPasswordPage() {
     }
 
     setStatus("done");
-    setTimeout(() => router.push("/admin/login"), 2500);
+    setTimeout(() => router.push("/cyvant-hq/login"), 2500);
   }
 
   if (status === "done") {
@@ -169,7 +169,7 @@ export default function ResetPasswordPage() {
           </button>
 
           <Link
-            href="/admin/login"
+            href="/cyvant-hq/login"
             className="block text-center text-sm text-gray-500 hover:text-gray-300 transition-colors"
           >
             Back to sign in

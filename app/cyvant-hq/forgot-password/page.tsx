@@ -49,7 +49,7 @@ export default function ForgotPasswordPage() {
             <p className="text-gray-400 text-sm">
               If an account exists for <span className="text-white">{email}</span>, you'll receive a reset link shortly.
             </p>
-            <Link href="/admin/login" className="block text-sm text-blue-400 hover:text-blue-300 transition-colors mt-2">
+            <Link href="/cyvant-hq/login" className="block text-sm text-blue-400 hover:text-blue-300 transition-colors mt-2">
               Back to sign in
             </Link>
           </div>
@@ -90,7 +90,7 @@ export default function ForgotPasswordPage() {
             </button>
 
             <Link
-              href="/admin/login"
+              href="/cyvant-hq/login"
               className="block text-center text-sm text-gray-500 hover:text-gray-300 transition-colors"
             >
               Back to sign in

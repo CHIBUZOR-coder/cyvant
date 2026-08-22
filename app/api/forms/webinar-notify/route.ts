@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
         <tr><td style="padding:6px 12px 6px 0;color:#6b7280">Source</td><td style="padding:6px 0">Webinar Notify</td></tr>
       </table>
       <p style="margin-top:16px;font-size:13px;color:#6b7280">
-        Go to <a href="${siteUrl}/admin/leads" style="color:#6d28d9">Admin → Leads</a> to see all interested leads and notify them when a webinar is ready.
+        Go to <a href="${siteUrl}/cyvant-hq/leads" style="color:#6d28d9">Admin → Leads</a> to see all interested leads and notify them when a webinar is ready.
       </p>`,
       email,
     ),

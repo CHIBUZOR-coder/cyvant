@@ -10,7 +10,7 @@ export default async function TeamPage() {
   const session = await getServerSession(authOptions);
   const role = (session?.user as { role?: string })?.role;
 
-  if (role !== "admin") redirect("/admin/leads");
+  if (role !== "admin") redirect("/cyvant-hq/leads");
 
   return (
     <div className="p-4 sm:p-6 lg:p-8">

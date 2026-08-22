@@ -8,7 +8,7 @@ export default async function StudentProfilePage({ params }: { params: Promise<{
   const { id } = await params;
   return (
     <div className="p-4 sm:p-6 lg:p-8">
-      <Link href="/admin/students" className="text-sm text-gray-500 hover:text-gray-300 mb-6 inline-block">
+      <Link href="/cyvant-hq/students" className="text-sm text-gray-500 hover:text-gray-300 mb-6 inline-block">
         ← Back to Students
       </Link>
       <StudentDetail id={id} />

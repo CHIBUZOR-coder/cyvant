@@ -65,7 +65,33 @@
       "Bash(Remove-Item -Recurse -Force \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant\\\\app\\\\api\\\\admin\\\\fix-course-text\")",
       "Bash(python -c \"import fitz; print\\('pymupdf ok'\\)\")",
       "Bash(python -m pip install pymupdf --quiet)",
-      "Bash(python -c ' *)"
+      "Bash(python -c ' *)",
+      "Bash(git ls-remote *)",
+      "Bash(git remote *)",
+      "Bash(git push *)",
+      "Bash(git config *)",
+      "Bash(git commit *)",
+      "Bash(git add *)",
+      "Bash(Select-String -Pattern \"Digitek\")",
+      "Bash(Copy-Item \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant\\\\DigitekNetworkLogo.webp\" \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant\\\\public\\\\images\\\\DigitekNetworkLogo.webp\")",
+      "Bash(cp \"/c/Users/HomePC/Desktop/cyvant/DigitekNetworkLogo.webp\" \"/c/Users/HomePC/Desktop/cyvant/public/images/DigitekNetworkLogo.webp\")",
+      "Bash(mkdir -p \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant\\\\app\\\\api\\\\admin\\\\partners\\\\[id]\")",
+      "Bash(taskkill /F /IM node.exe)",
+      "WebFetch(domain:www.pexels.com)",
+      "Bash(mkdir \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant\\\\app\\\\api\\\\admin\\\\webinars\\\\[id]\\\\registrations\")",
+      "Bash(mkdir \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant\\\\app\\\\api\\\\admin\\\\webinars\\\\[id]\\\\remind\")",
+      "Bash(Copy-Item \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant\\\\public\\\\images\\\\cyvant-logo-transparent.png\" \"c:\\\\Users\\\\HomePC\\\\Desktop\\\\cyvant\\\\app\\\\icon.png\")",
+      "Bash(git pull *)",
+      "Bash(git stash *)",
+      "Bash(git cherry-pick *)",
+      "Bash(git fetch *)",
+      "Bash(findstr admin *)",
+      "Bash(git mv *)",
+      "Bash(git rm *)",
+      "Bash(rm -rf app/admin)",
+      "Bash(xargs sed -i -e 's|redirect\\(\"/admin/|redirect\\(\"/cyvant-hq/|g' -e 's|router\\\\.push\\(\"/admin/|router.push\\(\"/cyvant-hq/|g' -e 's|href=\"/admin/|href=\"/cyvant-hq/|g' -e 's|href={`/admin/|href={`/cyvant-hq/|g' -e 's|callbackUrl: \"/admin/|callbackUrl: \"/cyvant-hq/|g')",
+      "Bash(sed -i -e 's|/admin/leads|/cyvant-hq/leads|g' app/api/forms/webinar-notify/route.ts)",
+      "Bash(sed -i -e 's|/admin/reset-password|/cyvant-hq/reset-password|g' app/api/admin/forgot-password/route.ts)"
     ],
     "additionalDirectories": [
       "C:\\Users\\HomePC\\.claude\\projects\\c--Users-HomePC-Desktop-cyvant",
@@ -75,7 +101,9 @@
       "c:\\Users\\HomePC\\Desktop\\cyvant\\app\\api\\admin\\webinars",
       "c:\\Users\\HomePC\\Desktop\\cyvant\\app\\api\\admin\\courses",
       "c:\\Users\\HomePC\\Desktop\\cyvant\\app\\api\\admin\\courses\\[id]",
-      "c:\\Users\\HomePC\\Desktop\\cyvant\\app\\api\\admin\\services"
+      "c:\\Users\\HomePC\\Desktop\\cyvant\\app\\api\\admin\\services",
+      "C:\\Users\\HomePC\\Desktop\\cyvant",
+      "c:\\Users\\HomePC\\Desktop\\cyvant\\app\\api\\admin\\partners"
     ]
   }
 }

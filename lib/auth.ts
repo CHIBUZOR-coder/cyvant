@@ -5,7 +5,7 @@ import { db } from "@/lib/db";
 
 export const authOptions: NextAuthOptions = {
   session: { strategy: "jwt", maxAge: 8 * 60 * 60 },
-  pages: { signIn: "/admin/login" },
+  pages: { signIn: "/cyvant-hq/login" },
   providers: [
     CredentialsProvider({
       name: "credentials",

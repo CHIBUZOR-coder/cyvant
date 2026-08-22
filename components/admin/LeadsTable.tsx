@@ -129,7 +129,7 @@ export default function LeadsTable() {
               leads.map((lead) => (
                 <tr key={lead.id} className="bg-gray-900/50 hover:bg-gray-800/60 transition-colors">
                   <td className="px-5 py-4">
-                    <Link href={`/admin/leads/${lead.id}`} className="hover:text-blue-400 transition-colors">
+                    <Link href={`/cyvant-hq/leads/${lead.id}`} className="hover:text-blue-400 transition-colors">
                       <p className="font-medium text-white">{lead.name}</p>
                       <p className="text-xs text-gray-500 mt-0.5">{lead.email}</p>
                       {lead.phone && <p className="text-xs text-gray-500">{lead.phone}</p>}
