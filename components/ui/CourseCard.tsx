@@ -85,7 +85,19 @@ export default function CourseCard({ course, index = 0 }: { course: Course; inde
             {course.isMostPopular && <span className="absolute top-3 left-3 rounded-full bg-amber-500 px-2.5 py-0.5 text-xs font-bold text-white shadow">Most Popular</span>}
           </div>
         ) : (
-          <div className={`h-1 w-full ${tierStyle.bar}`} />
+          <>
+            <div className={`h-1 w-full ${tierStyle.bar}`} />
+            {course.isStartHere && (
+              <div className="px-5 pt-3">
+                <span className="rounded-full bg-[#007dff] px-2.5 py-0.5 text-xs font-bold text-white shadow">Start Here</span>
+              </div>
+            )}
+            {course.isMostPopular && (
+              <div className="px-5 pt-3">
+                <span className="rounded-full bg-amber-500 px-2.5 py-0.5 text-xs font-bold text-white shadow">Most Popular</span>
+              </div>
+            )}
+          </>
         )}
 
         <div className="p-5 flex flex-col flex-1">

@@ -22,7 +22,7 @@ describe("HeroSection", () => {
     const cta = screen.getByRole("link", { name: /Kickstart Your Career/i });
     expect(cta).toBeInTheDocument();
     expect(cta).toHaveAttribute("href", "/courses");
-    expect(cta).toHaveClass("bg-blue-600");
+    expect(cta).toHaveClass("bg-[#007dff]");
   });
 
   it("renders the starting price signal", () => {
@@ -32,6 +32,6 @@ describe("HeroSection", () => {
   it("renders the secondary CTA as a subordinate link", () => {
     const secondary = screen.getByRole("link", { name: /Contact Us/i });
     expect(secondary).toBeInTheDocument();
-    expect(secondary).not.toHaveClass("bg-blue-600");
+    expect(secondary).not.toHaveClass("bg-[#007dff]");
   });
 });
