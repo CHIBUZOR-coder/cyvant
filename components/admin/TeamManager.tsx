@@ -67,7 +67,6 @@ export default function TeamManager() {
 
   return (
     <>
-      {submitting && <CyvantSpinner />}
       {/* Header row */}
       <div className="flex items-center justify-between mb-6">
         <p className="text-sm text-gray-400">{users.length} member{users.length !== 1 ? "s" : ""}</p>
@@ -216,6 +215,7 @@ export default function TeamManager() {
           </div>
         </div>
       )}
+      {submitting && <CyvantSpinner />}
     </>
   );
 }
