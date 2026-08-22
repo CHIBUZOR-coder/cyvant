@@ -98,29 +98,29 @@ export default function AdminNav() {
       {open && (
         <div className="md:hidden fixed inset-0 z-50 flex">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setOpen(false)} />
-          <div className="relative w-64 bg-gray-900 border-r border-white/5 flex flex-col h-full">
-            <div className="px-6 py-5 border-b border-white/5">
+          <div className="relative w-64 bg-gray-900 border-r border-white/5 flex flex-col h-full overflow-hidden">
+            <div className="px-6 py-5 border-b border-white/5 shrink-0">
               <p className="text-white font-bold text-lg">CYVANT</p>
               <p className="text-xs text-gray-500 mt-0.5">Admin Portal</p>
             </div>
-            <nav className="flex-1 px-3 py-4 space-y-1">
+            <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
               {links.map(({ href, label }) => navLink(href, label))}
             </nav>
-            {userBlock}
+            <div className="shrink-0">{userBlock}</div>
           </div>
         </div>
       )}
 
       {/* ── Desktop sidebar ── */}
-      <aside className="hidden md:flex w-56 shrink-0 bg-gray-900 border-r border-white/5 flex-col h-screen sticky top-0">
-        <div className="px-6 py-6 border-b border-white/5">
+      <aside className="hidden md:flex w-56 shrink-0 bg-gray-900 border-r border-white/5 flex-col h-screen sticky top-0 overflow-hidden">
+        <div className="px-6 py-6 border-b border-white/5 shrink-0">
           <p className="text-white font-bold text-lg">CYVANT</p>
           <p className="text-xs text-gray-500 mt-0.5">Admin Portal</p>
         </div>
-        <nav className="flex-1 px-3 py-4 space-y-1">
+        <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
           {links.map(({ href, label }) => navLink(href, label))}
         </nav>
-        {userBlock}
+        <div className="shrink-0">{userBlock}</div>
       </aside>
     </>
   );
