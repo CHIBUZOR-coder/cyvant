@@ -4,7 +4,7 @@ const db = new PrismaClient();
 
 const IMAGES: Record<string, string> = {
   "cybersecurity-fundamentals":             "https://images.unsplash.com/photo-1528901166007-3784c7dd3653?w=700&q=80",
-  "comptia-security-plus":                  "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=700&q=80",
+  "comptia-security-plus":                  "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=700&q=80",
   "network-security":                       "https://images.pexels.com/photos/1181323/pexels-photo-1181323.jpeg?auto=compress&cs=tinysrgb&w=700",
   "linux-administration":                   "https://images.pexels.com/photos/19805876/pexels-photo-19805876.jpeg?auto=compress&cs=tinysrgb&w=700",
   "active-directory":                       "https://images.pexels.com/photos/1181335/pexels-photo-1181335.jpeg?auto=compress&cs=tinysrgb&w=700",
