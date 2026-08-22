@@ -70,4 +70,5 @@ The PRD requires a second Academy (AI/Data track). No AI courses exist yet in `d
 - [x] Favicon replaced — removed default Vercel logo; browser tab now shows a dark rounded square with CY in white and V in Cyvant blue (app/icon.svg)
 - [x] CourseCard badges (Start Here, Most Popular) now render even when no cover image is set — previously only appeared over the image
 - [x] Test suite updated and passing — 207 tests, 30 suites, 0 failing; fixed HeroSection class assertion (bg-[#007dff]) and CourseCard/CoursesPage badge tests
-- [x] Admin route renamed from /admin to /cyvant-hq to prevent path enumeration — middleware, auth config, all nav links, redirects, email templates, and PublicShell updated; /api/admin routes unchanged
+- [x] Admin route renamed from /admin to /cyvant-hq to prevent path enumeration — middleware, auth config, all nav links, redirects, email templates, and PublicShell updated
+- [x] API route renamed from /api/admin to /api/cyvant-hq — all 20 route handlers moved, every fetch() call in components/pages and all test imports updated; 207 tests still passing

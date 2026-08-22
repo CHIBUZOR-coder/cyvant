@@ -144,7 +144,7 @@ export default function CourseManager({ initialCourses }: { initialCourses: Cour
 
       if (editingId) {
         // Update existing course
-        const res = await fetch(`/api/admin/courses/${editingId}`, {
+        const res = await fetch(`/api/cyvant-hq/courses/${editingId}`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body),
@@ -154,7 +154,7 @@ export default function CourseManager({ initialCourses }: { initialCourses: Cour
         setCourses((prev) => prev.map((c) => (c.id === editingId ? updated : c)));
       } else {
         // Create new course
-        const res = await fetch("/api/admin/courses", {
+        const res = await fetch("/api/cyvant-hq/courses", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body),
@@ -177,7 +177,7 @@ export default function CourseManager({ initialCourses }: { initialCourses: Cour
     if (!confirm("Delete this course? This cannot be undone.")) return;
     setDeleting(id);
     try {
-      await fetch(`/api/admin/courses/${id}`, { method: "DELETE" });
+      await fetch(`/api/cyvant-hq/courses/${id}`, { method: "DELETE" });
       setCourses((prev) => prev.filter((c) => c.id !== id));
     } finally {
       setDeleting(null);

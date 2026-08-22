@@ -34,8 +34,8 @@ jest.mock("@/lib/email", () => ({
 
 // ── Imports after mocks ──────────────────────────────────────────────────────
 
-import { GET } from "@/app/api/admin/students/route";
-import { GET as getStudentById, PATCH } from "@/app/api/admin/students/[id]/route";
+import { GET } from "@/app/api/cyvant-hq/students/route";
+import { GET as getStudentById, PATCH } from "@/app/api/cyvant-hq/students/[id]/route";
 import { db } from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { sendConfirmation } from "@/lib/email";
@@ -74,12 +74,12 @@ function makeReq(method: string, url: string, body?: object): NextRequest {
   });
 }
 
-// ── GET /api/admin/students ──────────────────────────────────────────────────
+// ── GET /api/cyvant-hq/students ──────────────────────────────────────────────────
 
-describe("GET /api/admin/students", () => {
+describe("GET /api/cyvant-hq/students", () => {
   it("returns 401 when unauthenticated", async () => {
     (getServerSession as jest.Mock).mockResolvedValueOnce(null);
-    const res = await GET(makeReq("GET", "http://localhost/api/admin/students"));
+    const res = await GET(makeReq("GET", "http://localhost/api/cyvant-hq/students"));
     expect(res.status).toBe(401);
   });
 
@@ -88,7 +88,7 @@ describe("GET /api/admin/students", () => {
     (db.student.findMany as jest.Mock).mockResolvedValueOnce([STUDENT]);
     (db.student.count as jest.Mock).mockResolvedValueOnce(1);
 
-    const res = await GET(makeReq("GET", "http://localhost/api/admin/students"));
+    const res = await GET(makeReq("GET", "http://localhost/api/cyvant-hq/students"));
     expect(res.status).toBe(200);
     const data = await res.json();
     expect(data.data).toHaveLength(1);
@@ -102,7 +102,7 @@ describe("GET /api/admin/students", () => {
     (db.student.count as jest.Mock).mockResolvedValueOnce(1);
 
     const res = await GET(
-      makeReq("GET", "http://localhost/api/admin/students?paymentStatus=pending")
+      makeReq("GET", "http://localhost/api/cyvant-hq/students?paymentStatus=pending")
     );
     expect(res.status).toBe(200);
     expect(db.student.findMany).toHaveBeenCalledWith(
@@ -117,7 +117,7 @@ describe("GET /api/admin/students", () => {
     (db.student.findMany as jest.Mock).mockResolvedValueOnce([STUDENT]);
     (db.student.count as jest.Mock).mockResolvedValueOnce(1);
 
-    const res = await GET(makeReq("GET", "http://localhost/api/admin/students?q=chibuzor"));
+    const res = await GET(makeReq("GET", "http://localhost/api/cyvant-hq/students?q=chibuzor"));
     expect(res.status).toBe(200);
     expect(db.student.findMany).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -131,19 +131,19 @@ describe("GET /api/admin/students", () => {
     (db.student.findMany as jest.Mock).mockResolvedValueOnce([]);
     (db.student.count as jest.Mock).mockResolvedValueOnce(0);
 
-    const res = await GET(makeReq("GET", "http://localhost/api/admin/students?q=nobody"));
+    const res = await GET(makeReq("GET", "http://localhost/api/cyvant-hq/students?q=nobody"));
     const data = await res.json();
     expect(data.data).toEqual([]);
   });
 });
 
-// ── GET /api/admin/students/[id] ─────────────────────────────────────────────
+// ── GET /api/cyvant-hq/students/[id] ─────────────────────────────────────────────
 
-describe("GET /api/admin/students/[id]", () => {
+describe("GET /api/cyvant-hq/students/[id]", () => {
   it("returns 401 when unauthenticated", async () => {
     (getServerSession as jest.Mock).mockResolvedValueOnce(null);
     const res = await getStudentById(
-      makeReq("GET", "http://localhost/api/admin/students/student-chibuzor"),
+      makeReq("GET", "http://localhost/api/cyvant-hq/students/student-chibuzor"),
       { params: Promise.resolve({ id: "student-chibuzor" }) }
     );
     expect(res.status).toBe(401);
@@ -154,7 +154,7 @@ describe("GET /api/admin/students/[id]", () => {
     (db.student.findUnique as jest.Mock).mockResolvedValueOnce(null);
 
     const res = await getStudentById(
-      makeReq("GET", "http://localhost/api/admin/students/nonexistent"),
+      makeReq("GET", "http://localhost/api/cyvant-hq/students/nonexistent"),
       { params: Promise.resolve({ id: "nonexistent" }) }
     );
     expect(res.status).toBe(404);
@@ -168,7 +168,7 @@ describe("GET /api/admin/students/[id]", () => {
     });
 
     const res = await getStudentById(
-      makeReq("GET", "http://localhost/api/admin/students/student-chibuzor"),
+      makeReq("GET", "http://localhost/api/cyvant-hq/students/student-chibuzor"),
       { params: Promise.resolve({ id: "student-chibuzor" }) }
     );
     expect(res.status).toBe(200);
@@ -177,13 +177,13 @@ describe("GET /api/admin/students/[id]", () => {
   });
 });
 
-// ── PATCH /api/admin/students/[id] ───────────────────────────────────────────
+// ── PATCH /api/cyvant-hq/students/[id] ───────────────────────────────────────────
 
-describe("PATCH /api/admin/students/[id] — update record", () => {
+describe("PATCH /api/cyvant-hq/students/[id] — update record", () => {
   it("returns 401 when unauthenticated", async () => {
     (getServerSession as jest.Mock).mockResolvedValueOnce(null);
     const res = await PATCH(
-      makeReq("PATCH", "http://localhost/api/admin/students/student-chibuzor", {
+      makeReq("PATCH", "http://localhost/api/cyvant-hq/students/student-chibuzor", {
         paymentStatus: "paid",
       }),
       { params: Promise.resolve({ id: "student-chibuzor" }) }
@@ -196,7 +196,7 @@ describe("PATCH /api/admin/students/[id] — update record", () => {
     (db.student.findUnique as jest.Mock).mockResolvedValueOnce({ paymentStatus: "pending" });
 
     const res = await PATCH(
-      makeReq("PATCH", "http://localhost/api/admin/students/student-chibuzor", {
+      makeReq("PATCH", "http://localhost/api/cyvant-hq/students/student-chibuzor", {
         paymentStatus: "overdue",
       }),
       { params: Promise.resolve({ id: "student-chibuzor" }) }
@@ -211,7 +211,7 @@ describe("PATCH /api/admin/students/[id] — update record", () => {
     (db.student.update as jest.Mock).mockResolvedValueOnce(updated);
 
     const res = await PATCH(
-      makeReq("PATCH", "http://localhost/api/admin/students/student-chibuzor", {
+      makeReq("PATCH", "http://localhost/api/cyvant-hq/students/student-chibuzor", {
         cohort: "Jan 2026",
         notes: "Joining from Port Harcourt",
       }),
@@ -229,7 +229,7 @@ describe("PATCH /api/admin/students/[id] — update record", () => {
     (db.student.update as jest.Mock).mockResolvedValueOnce(paid);
 
     const res = await PATCH(
-      makeReq("PATCH", "http://localhost/api/admin/students/student-chibuzor", {
+      makeReq("PATCH", "http://localhost/api/cyvant-hq/students/student-chibuzor", {
         paymentStatus: "paid",
         amountPaid: 200000,
       }),
@@ -248,7 +248,7 @@ describe("PATCH /api/admin/students/[id] — update record", () => {
     (db.student.update as jest.Mock).mockResolvedValueOnce(paid);
 
     await PATCH(
-      makeReq("PATCH", "http://localhost/api/admin/students/student-chibuzor", {
+      makeReq("PATCH", "http://localhost/api/cyvant-hq/students/student-chibuzor", {
         paymentStatus: "paid",
         amountPaid: 200000,
       }),
@@ -268,7 +268,7 @@ describe("PATCH /api/admin/students/[id] — update record", () => {
     (db.student.update as jest.Mock).mockResolvedValueOnce(paid);
 
     await PATCH(
-      makeReq("PATCH", "http://localhost/api/admin/students/student-chibuzor", {
+      makeReq("PATCH", "http://localhost/api/cyvant-hq/students/student-chibuzor", {
         paymentStatus: "paid",
         amountPaid: 200000,
       }),

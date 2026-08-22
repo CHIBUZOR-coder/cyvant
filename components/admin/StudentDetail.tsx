@@ -48,7 +48,7 @@ export default function StudentDetail({ id }: { id: string }) {
   });
 
   useEffect(() => {
-    fetch(`/api/admin/students/${id}`)
+    fetch(`/api/cyvant-hq/students/${id}`)
       .then((r) => r.json())
       .then((data: Student) => {
         setStudent(data);
@@ -64,7 +64,7 @@ export default function StudentDetail({ id }: { id: string }) {
 
   const save = async () => {
     setSaving(true);
-    await fetch(`/api/admin/students/${id}`, {
+    await fetch(`/api/cyvant-hq/students/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

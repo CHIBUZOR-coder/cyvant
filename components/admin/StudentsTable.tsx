@@ -38,7 +38,7 @@ export default function StudentsTable() {
     if (q) params.set("q", q);
     if (paymentFilter) params.set("paymentStatus", paymentFilter);
     params.set("page", String(page));
-    const res = await fetch(`/api/admin/students?${params}`);
+    const res = await fetch(`/api/cyvant-hq/students?${params}`);
     const json = await res.json();
     setStudents(json.data);
     setTotal(json.total);

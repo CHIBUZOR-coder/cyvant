@@ -14,7 +14,7 @@ export default function ForgotPasswordPage() {
     setError("");
     setStatus("loading");
 
-    const res = await fetch("/api/admin/forgot-password", {
+    const res = await fetch("/api/cyvant-hq/forgot-password", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email }),

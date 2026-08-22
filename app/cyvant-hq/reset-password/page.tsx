@@ -37,7 +37,7 @@ export default function ResetPasswordPage() {
 
     setStatus("loading");
 
-    const res = await fetch("/api/admin/reset-password", {
+    const res = await fetch("/api/cyvant-hq/reset-password", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token, password }),

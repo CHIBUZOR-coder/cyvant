@@ -30,7 +30,7 @@ export default function TeamManager() {
 
   async function loadUsers() {
     setLoading(true);
-    const res = await fetch("/api/admin/users");
+    const res = await fetch("/api/cyvant-hq/users");
     const data = await res.json();
     setUsers(data);
     setLoading(false);
@@ -49,7 +49,7 @@ export default function TeamManager() {
     setError("");
     setSubmitting(true);
 
-    const res = await fetch("/api/admin/users", {
+    const res = await fetch("/api/cyvant-hq/users", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),

@@ -54,7 +54,7 @@ export default function LeadDetail({ id }: { id: string }) {
   const router = useRouter();
 
   const fetchLead = useCallback(async () => {
-    const res = await fetch(`/api/admin/leads/${id}`);
+    const res = await fetch(`/api/cyvant-hq/leads/${id}`);
     const data = await res.json();
     setLead(data);
     setLoading(false);
@@ -66,7 +66,7 @@ export default function LeadDetail({ id }: { id: string }) {
     if (!lead) return;
     setStatusSaving(true);
     setSavingStatus(status);
-    await fetch(`/api/admin/leads/${id}`, {
+    await fetch(`/api/cyvant-hq/leads/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status }),
@@ -78,7 +78,7 @@ export default function LeadDetail({ id }: { id: string }) {
 
   async function handleDelete() {
     setDeleting(true);
-    await fetch(`/api/admin/leads/${id}`, { method: "DELETE" });
+    await fetch(`/api/cyvant-hq/leads/${id}`, { method: "DELETE" });
     router.push("/cyvant-hq/leads");
   }
 
@@ -86,7 +86,7 @@ export default function LeadDetail({ id }: { id: string }) {
     e.preventDefault();
     if (!noteContent.trim()) return;
     setSaving(true);
-    const res = await fetch(`/api/admin/leads/${id}/notes`, {
+    const res = await fetch(`/api/cyvant-hq/leads/${id}/notes`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ content: noteContent, type: noteType }),

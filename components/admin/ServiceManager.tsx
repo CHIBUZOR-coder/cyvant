@@ -94,7 +94,7 @@ export default function ServiceManager({ initialServices }: { initialServices: S
       };
 
       if (editingId) {
-        const res = await fetch(`/api/admin/services/${editingId}`, {
+        const res = await fetch(`/api/cyvant-hq/services/${editingId}`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body),
@@ -103,7 +103,7 @@ export default function ServiceManager({ initialServices }: { initialServices: S
         const updated: Service = await res.json();
         setServices((prev) => prev.map((s) => (s.id === editingId ? updated : s)));
       } else {
-        const res = await fetch("/api/admin/services", {
+        const res = await fetch("/api/cyvant-hq/services", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body),
@@ -125,7 +125,7 @@ export default function ServiceManager({ initialServices }: { initialServices: S
   async function handleDelete(id: string) {
     setDeleting(id);
     try {
-      await fetch(`/api/admin/services/${id}`, { method: "DELETE" });
+      await fetch(`/api/cyvant-hq/services/${id}`, { method: "DELETE" });
       setServices((prev) => prev.filter((s) => s.id !== id));
       if (editingId === id) { setShowForm(false); resetForm(); }
     } finally {

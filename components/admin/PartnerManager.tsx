@@ -104,7 +104,7 @@ export default function PartnerManager({ initialPartners }: { initialPartners: P
       };
 
       if (editingId) {
-        const res = await fetch(`/api/admin/partners/${editingId}`, {
+        const res = await fetch(`/api/cyvant-hq/partners/${editingId}`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body),
@@ -113,7 +113,7 @@ export default function PartnerManager({ initialPartners }: { initialPartners: P
         const updated: Partner = await res.json();
         setPartners((prev) => prev.map((p) => (p.id === editingId ? updated : p)));
       } else {
-        const res = await fetch("/api/admin/partners", {
+        const res = await fetch("/api/cyvant-hq/partners", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body),
@@ -135,7 +135,7 @@ export default function PartnerManager({ initialPartners }: { initialPartners: P
   async function handleDelete(id: string) {
     setDeleting(id);
     try {
-      await fetch(`/api/admin/partners/${id}`, { method: "DELETE" });
+      await fetch(`/api/cyvant-hq/partners/${id}`, { method: "DELETE" });
       setPartners((prev) => prev.filter((p) => p.id !== id));
       if (editingId === id) { setShowForm(false); resetForm(); }
     } finally {

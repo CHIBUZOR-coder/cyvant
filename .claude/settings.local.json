@@ -91,7 +91,8 @@
       "Bash(rm -rf app/admin)",
       "Bash(xargs sed -i -e 's|redirect\\(\"/admin/|redirect\\(\"/cyvant-hq/|g' -e 's|router\\\\.push\\(\"/admin/|router.push\\(\"/cyvant-hq/|g' -e 's|href=\"/admin/|href=\"/cyvant-hq/|g' -e 's|href={`/admin/|href={`/cyvant-hq/|g' -e 's|callbackUrl: \"/admin/|callbackUrl: \"/cyvant-hq/|g')",
       "Bash(sed -i -e 's|/admin/leads|/cyvant-hq/leads|g' app/api/forms/webinar-notify/route.ts)",
-      "Bash(sed -i -e 's|/admin/reset-password|/cyvant-hq/reset-password|g' app/api/admin/forgot-password/route.ts)"
+      "Bash(sed -i -e 's|/admin/reset-password|/cyvant-hq/reset-password|g' app/api/admin/forgot-password/route.ts)",
+      "Bash(xargs sed -i 's|/api/admin/|/api/cyvant-hq/|g')"
     ],
     "additionalDirectories": [
       "C:\\Users\\HomePC\\.claude\\projects\\c--Users-HomePC-Desktop-cyvant",

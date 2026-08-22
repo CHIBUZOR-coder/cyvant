@@ -35,8 +35,8 @@ jest.mock("@/lib/auth", () => ({
 
 // ── Imports after mocks ──────────────────────────────────────────────────────
 
-import { GET, POST } from "@/app/api/admin/courses/route";
-import { PATCH, DELETE } from "@/app/api/admin/courses/[id]/route";
+import { GET, POST } from "@/app/api/cyvant-hq/courses/route";
+import { PATCH, DELETE } from "@/app/api/cyvant-hq/courses/[id]/route";
 import { db } from "@/lib/db";
 import { getServerSession } from "next-auth";
 
@@ -78,12 +78,12 @@ function makeReq(method: string, url: string, body?: object): NextRequest {
   });
 }
 
-// ── GET /api/admin/courses ───────────────────────────────────────────────────
+// ── GET /api/cyvant-hq/courses ───────────────────────────────────────────────────
 
-describe("GET /api/admin/courses", () => {
+describe("GET /api/cyvant-hq/courses", () => {
   it("returns 401 when unauthenticated", async () => {
     (getServerSession as jest.Mock).mockResolvedValueOnce(null);
-    const res = await GET(makeReq("GET", "http://localhost/api/admin/courses"));
+    const res = await GET(makeReq("GET", "http://localhost/api/cyvant-hq/courses"));
     expect(res.status).toBe(401);
   });
 
@@ -91,7 +91,7 @@ describe("GET /api/admin/courses", () => {
     (getServerSession as jest.Mock).mockResolvedValueOnce(SESSION);
     (db.course.findMany as jest.Mock).mockResolvedValueOnce([COURSE_ROW]);
 
-    const res = await GET(makeReq("GET", "http://localhost/api/admin/courses"));
+    const res = await GET(makeReq("GET", "http://localhost/api/cyvant-hq/courses"));
     expect(res.status).toBe(200);
     const data = await res.json();
     expect(data).toHaveLength(1);
@@ -103,19 +103,19 @@ describe("GET /api/admin/courses", () => {
     (getServerSession as jest.Mock).mockResolvedValueOnce(SESSION);
     (db.course.findMany as jest.Mock).mockResolvedValueOnce([]);
 
-    const res = await GET(makeReq("GET", "http://localhost/api/admin/courses"));
+    const res = await GET(makeReq("GET", "http://localhost/api/cyvant-hq/courses"));
     const data = await res.json();
     expect(data).toEqual([]);
   });
 });
 
-// ── POST /api/admin/courses ──────────────────────────────────────────────────
+// ── POST /api/cyvant-hq/courses ──────────────────────────────────────────────────
 
-describe("POST /api/admin/courses", () => {
+describe("POST /api/cyvant-hq/courses", () => {
   it("returns 401 when unauthenticated", async () => {
     (getServerSession as jest.Mock).mockResolvedValueOnce(null);
     const res = await POST(
-      makeReq("POST", "http://localhost/api/admin/courses", {
+      makeReq("POST", "http://localhost/api/cyvant-hq/courses", {
         title: "Test", tier: 1, level: "Beginner", duration: "4 Weeks",
       })
     );
@@ -125,7 +125,7 @@ describe("POST /api/admin/courses", () => {
   it("returns 400 when required fields are missing", async () => {
     (getServerSession as jest.Mock).mockResolvedValueOnce(SESSION);
     const res = await POST(
-      makeReq("POST", "http://localhost/api/admin/courses", { title: "Test only" })
+      makeReq("POST", "http://localhost/api/cyvant-hq/courses", { title: "Test only" })
     );
     expect(res.status).toBe(400);
     const data = await res.json();
@@ -137,7 +137,7 @@ describe("POST /api/admin/courses", () => {
     (db.course.create as jest.Mock).mockResolvedValueOnce(COURSE_ROW);
 
     const res = await POST(
-      makeReq("POST", "http://localhost/api/admin/courses", {
+      makeReq("POST", "http://localhost/api/cyvant-hq/courses", {
         title: "Cyber Security Fundamentals",
         tier: 1,
         level: "Beginner",
@@ -157,7 +157,7 @@ describe("POST /api/admin/courses", () => {
     (db.course.create as jest.Mock).mockResolvedValueOnce(COURSE_ROW);
 
     await POST(
-      makeReq("POST", "http://localhost/api/admin/courses", {
+      makeReq("POST", "http://localhost/api/cyvant-hq/courses", {
         title: "Test Course",
         tier: 1,
         level: "Beginner",
@@ -175,13 +175,13 @@ describe("POST /api/admin/courses", () => {
   });
 });
 
-// ── PATCH /api/admin/courses/[id] ────────────────────────────────────────────
+// ── PATCH /api/cyvant-hq/courses/[id] ────────────────────────────────────────────
 
-describe("PATCH /api/admin/courses/[id]", () => {
+describe("PATCH /api/cyvant-hq/courses/[id]", () => {
   it("returns 401 when unauthenticated", async () => {
     (getServerSession as jest.Mock).mockResolvedValueOnce(null);
     const res = await PATCH(
-      makeReq("PATCH", "http://localhost/api/admin/courses/course-abc", { title: "New" }),
+      makeReq("PATCH", "http://localhost/api/cyvant-hq/courses/course-abc", { title: "New" }),
       { params: Promise.resolve({ id: "course-abc" }) }
     );
     expect(res.status).toBe(401);
@@ -193,7 +193,7 @@ describe("PATCH /api/admin/courses/[id]", () => {
     (db.course.update as jest.Mock).mockResolvedValueOnce(updated);
 
     const res = await PATCH(
-      makeReq("PATCH", "http://localhost/api/admin/courses/course-abc", {
+      makeReq("PATCH", "http://localhost/api/cyvant-hq/courses/course-abc", {
         title: "Updated Title",
       }),
       { params: Promise.resolve({ id: "course-abc" }) }
@@ -208,7 +208,7 @@ describe("PATCH /api/admin/courses/[id]", () => {
     (db.course.update as jest.Mock).mockResolvedValueOnce(COURSE_ROW);
 
     await PATCH(
-      makeReq("PATCH", "http://localhost/api/admin/courses/course-abc", { tier: "2" }),
+      makeReq("PATCH", "http://localhost/api/cyvant-hq/courses/course-abc", { tier: "2" }),
       { params: Promise.resolve({ id: "course-abc" }) }
     );
     expect(db.course.update).toHaveBeenCalledWith(
@@ -223,7 +223,7 @@ describe("PATCH /api/admin/courses/[id]", () => {
     (db.course.update as jest.Mock).mockResolvedValueOnce(COURSE_ROW);
 
     await PATCH(
-      makeReq("PATCH", "http://localhost/api/admin/courses/course-abc", { path: "" }),
+      makeReq("PATCH", "http://localhost/api/cyvant-hq/courses/course-abc", { path: "" }),
       { params: Promise.resolve({ id: "course-abc" }) }
     );
     expect(db.course.update).toHaveBeenCalledWith(
@@ -234,13 +234,13 @@ describe("PATCH /api/admin/courses/[id]", () => {
   });
 });
 
-// ── DELETE /api/admin/courses/[id] ───────────────────────────────────────────
+// ── DELETE /api/cyvant-hq/courses/[id] ───────────────────────────────────────────
 
-describe("DELETE /api/admin/courses/[id]", () => {
+describe("DELETE /api/cyvant-hq/courses/[id]", () => {
   it("returns 401 when unauthenticated", async () => {
     (getServerSession as jest.Mock).mockResolvedValueOnce(null);
     const res = await DELETE(
-      makeReq("DELETE", "http://localhost/api/admin/courses/course-abc"),
+      makeReq("DELETE", "http://localhost/api/cyvant-hq/courses/course-abc"),
       { params: Promise.resolve({ id: "course-abc" }) }
     );
     expect(res.status).toBe(401);
@@ -251,7 +251,7 @@ describe("DELETE /api/admin/courses/[id]", () => {
     (db.course.delete as jest.Mock).mockResolvedValueOnce(COURSE_ROW);
 
     const res = await DELETE(
-      makeReq("DELETE", "http://localhost/api/admin/courses/course-abc"),
+      makeReq("DELETE", "http://localhost/api/cyvant-hq/courses/course-abc"),
       { params: Promise.resolve({ id: "course-abc" }) }
     );
     expect(res.status).toBe(200);
@@ -264,7 +264,7 @@ describe("DELETE /api/admin/courses/[id]", () => {
     (db.course.delete as jest.Mock).mockResolvedValueOnce(COURSE_ROW);
 
     await DELETE(
-      makeReq("DELETE", "http://localhost/api/admin/courses/course-abc"),
+      makeReq("DELETE", "http://localhost/api/cyvant-hq/courses/course-abc"),
       { params: Promise.resolve({ id: "course-abc" }) }
     );
     expect(db.course.delete).toHaveBeenCalledWith({ where: { id: "course-abc" } });

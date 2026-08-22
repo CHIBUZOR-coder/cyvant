@@ -18,7 +18,7 @@ jest.mock("@/lib/db", () => ({
 
 import { getServerSession } from "next-auth";
 import { db } from "@/lib/db";
-import { GET, POST } from "@/app/api/admin/users/route";
+import { GET, POST } from "@/app/api/cyvant-hq/users/route";
 
 const adminSession = { user: { name: "Admin", email: "admin@cyvant.com", role: "admin" } };
 const marketerSession = { user: { name: "Mark", email: "mark@cyvant.com", role: "marketer" } };
@@ -35,9 +35,9 @@ beforeEach(() => {
   (getServerSession as jest.Mock).mockResolvedValue(adminSession);
 });
 
-// ─── GET /api/admin/users ─────────────────────────────────────────────────
+// ─── GET /api/cyvant-hq/users ─────────────────────────────────────────────────
 
-describe("GET /api/admin/users", () => {
+describe("GET /api/cyvant-hq/users", () => {
   it("returns 403 when not authenticated", async () => {
     (getServerSession as jest.Mock).mockResolvedValue(null);
     const res = await GET();
@@ -61,33 +61,33 @@ describe("GET /api/admin/users", () => {
   });
 });
 
-// ─── POST /api/admin/users ────────────────────────────────────────────────
+// ─── POST /api/cyvant-hq/users ────────────────────────────────────────────────
 
-describe("POST /api/admin/users", () => {
+describe("POST /api/cyvant-hq/users", () => {
   it("returns 403 for non-admin", async () => {
     (getServerSession as jest.Mock).mockResolvedValue(marketerSession);
-    const res = await POST(makeReq("http://localhost/api/admin/users", "POST", {
+    const res = await POST(makeReq("http://localhost/api/cyvant-hq/users", "POST", {
       name: "New", email: "new@test.com", password: "password123", role: "marketer",
     }));
     expect(res.status).toBe(403);
   });
 
   it("returns 400 when name is missing", async () => {
-    const res = await POST(makeReq("http://localhost/api/admin/users", "POST", {
+    const res = await POST(makeReq("http://localhost/api/cyvant-hq/users", "POST", {
       name: "", email: "new@test.com", password: "password123", role: "marketer",
     }));
     expect(res.status).toBe(400);
   });
 
   it("returns 400 when password is too short", async () => {
-    const res = await POST(makeReq("http://localhost/api/admin/users", "POST", {
+    const res = await POST(makeReq("http://localhost/api/cyvant-hq/users", "POST", {
       name: "New User", email: "new@test.com", password: "short", role: "marketer",
     }));
     expect(res.status).toBe(400);
   });
 
   it("returns 400 for invalid role", async () => {
-    const res = await POST(makeReq("http://localhost/api/admin/users", "POST", {
+    const res = await POST(makeReq("http://localhost/api/cyvant-hq/users", "POST", {
       name: "New User", email: "new@test.com", password: "password123", role: "superuser",
     }));
     expect(res.status).toBe(400);
@@ -95,7 +95,7 @@ describe("POST /api/admin/users", () => {
 
   it("returns 409 when email already exists", async () => {
     (db.adminUser.findUnique as jest.Mock).mockResolvedValue({ id: "existing" });
-    const res = await POST(makeReq("http://localhost/api/admin/users", "POST", {
+    const res = await POST(makeReq("http://localhost/api/cyvant-hq/users", "POST", {
       name: "Dupe", email: "dupe@test.com", password: "password123", role: "marketer",
     }));
     expect(res.status).toBe(409);
@@ -106,7 +106,7 @@ describe("POST /api/admin/users", () => {
     const created = { id: "u2", name: "Jane", email: "jane@test.com", role: "marketer", createdAt: "2025-01-01T00:00:00.000Z" };
     (db.adminUser.create as jest.Mock).mockResolvedValue(created);
 
-    const res = await POST(makeReq("http://localhost/api/admin/users", "POST", {
+    const res = await POST(makeReq("http://localhost/api/cyvant-hq/users", "POST", {
       name: "Jane", email: "jane@test.com", password: "password123", role: "marketer",
     }));
     const data = await res.json();
@@ -119,7 +119,7 @@ describe("POST /api/admin/users", () => {
     (db.adminUser.findUnique as jest.Mock).mockResolvedValue(null);
     (db.adminUser.create as jest.Mock).mockResolvedValue({ id: "u3", name: "X", email: "x@test.com", role: "marketer", createdAt: "2025-01-01T00:00:00.000Z" });
 
-    await POST(makeReq("http://localhost/api/admin/users", "POST", {
+    await POST(makeReq("http://localhost/api/cyvant-hq/users", "POST", {
       name: "X", email: "x@test.com", password: "plaintext1", role: "marketer",
     }));
 

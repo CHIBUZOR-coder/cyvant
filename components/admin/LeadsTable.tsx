@@ -50,7 +50,7 @@ export default function LeadsTable() {
     if (source) params.set("source", source);
     if (status) params.set("status", status);
     params.set("page", String(page));
-    const res = await fetch(`/api/admin/leads?${params}`);
+    const res = await fetch(`/api/cyvant-hq/leads?${params}`);
     const json = await res.json();
     setLeads(json.data);
     setTotal(json.total);

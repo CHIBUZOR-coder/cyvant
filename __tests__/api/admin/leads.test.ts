@@ -25,9 +25,9 @@ jest.mock("@/lib/db", () => ({
 
 import { getServerSession } from "next-auth";
 import { db } from "@/lib/db";
-import { GET } from "@/app/api/admin/leads/route";
-import { GET as GET_ID, PATCH } from "@/app/api/admin/leads/[id]/route";
-import { POST as POST_NOTE } from "@/app/api/admin/leads/[id]/notes/route";
+import { GET } from "@/app/api/cyvant-hq/leads/route";
+import { GET as GET_ID, PATCH } from "@/app/api/cyvant-hq/leads/[id]/route";
+import { POST as POST_NOTE } from "@/app/api/cyvant-hq/leads/[id]/notes/route";
 
 const mockSession = { user: { name: "Admin", email: "admin@cyvant.com", role: "admin" } };
 
@@ -43,12 +43,12 @@ beforeEach(() => {
   (getServerSession as jest.Mock).mockResolvedValue(mockSession);
 });
 
-// ─── GET /api/admin/leads ─────────────────────────────────────────────────
+// ─── GET /api/cyvant-hq/leads ─────────────────────────────────────────────────
 
-describe("GET /api/admin/leads", () => {
+describe("GET /api/cyvant-hq/leads", () => {
   it("returns 401 when not authenticated", async () => {
     (getServerSession as jest.Mock).mockResolvedValue(null);
-    const res = await GET(makeReq("http://localhost/api/admin/leads"));
+    const res = await GET(makeReq("http://localhost/api/cyvant-hq/leads"));
     expect(res.status).toBe(401);
   });
 
@@ -57,7 +57,7 @@ describe("GET /api/admin/leads", () => {
     (db.lead.findMany as jest.Mock).mockResolvedValue(leads);
     (db.lead.count as jest.Mock).mockResolvedValue(1);
 
-    const res = await GET(makeReq("http://localhost/api/admin/leads"));
+    const res = await GET(makeReq("http://localhost/api/cyvant-hq/leads"));
     const data = await res.json();
 
     expect(res.status).toBe(200);
@@ -67,19 +67,19 @@ describe("GET /api/admin/leads", () => {
   it("passes search params to db query", async () => {
     (db.lead.findMany as jest.Mock).mockResolvedValue([]);
     (db.lead.count as jest.Mock).mockResolvedValue(0);
-    await GET(makeReq("http://localhost/api/admin/leads?status=enrolled&q=john"));
+    await GET(makeReq("http://localhost/api/cyvant-hq/leads?status=enrolled&q=john"));
     expect(db.lead.findMany).toHaveBeenCalledWith(
       expect.objectContaining({ where: expect.objectContaining({ status: "enrolled" }) })
     );
   });
 });
 
-// ─── GET /api/admin/leads/[id] ───────────────────────────────────────────
+// ─── GET /api/cyvant-hq/leads/[id] ───────────────────────────────────────────
 
-describe("GET /api/admin/leads/[id]", () => {
+describe("GET /api/cyvant-hq/leads/[id]", () => {
   it("returns 401 when not authenticated", async () => {
     (getServerSession as jest.Mock).mockResolvedValue(null);
-    const res = await GET_ID(makeReq("http://localhost/api/admin/leads/abc"), {
+    const res = await GET_ID(makeReq("http://localhost/api/cyvant-hq/leads/abc"), {
       params: Promise.resolve({ id: "abc" }),
     });
     expect(res.status).toBe(401);
@@ -87,7 +87,7 @@ describe("GET /api/admin/leads/[id]", () => {
 
   it("returns 404 for unknown lead", async () => {
     (db.lead.findUnique as jest.Mock).mockResolvedValue(null);
-    const res = await GET_ID(makeReq("http://localhost/api/admin/leads/abc"), {
+    const res = await GET_ID(makeReq("http://localhost/api/cyvant-hq/leads/abc"), {
       params: Promise.resolve({ id: "abc" }),
     });
     expect(res.status).toBe(404);
@@ -96,7 +96,7 @@ describe("GET /api/admin/leads/[id]", () => {
   it("returns lead data", async () => {
     const lead = { id: "abc", name: "John Doe", notes: [], student: null };
     (db.lead.findUnique as jest.Mock).mockResolvedValue(lead);
-    const res = await GET_ID(makeReq("http://localhost/api/admin/leads/abc"), {
+    const res = await GET_ID(makeReq("http://localhost/api/cyvant-hq/leads/abc"), {
       params: Promise.resolve({ id: "abc" }),
     });
     const data = await res.json();
@@ -105,11 +105,11 @@ describe("GET /api/admin/leads/[id]", () => {
   });
 });
 
-// ─── PATCH /api/admin/leads/[id] ────────────────────────────────────────
+// ─── PATCH /api/cyvant-hq/leads/[id] ────────────────────────────────────────
 
-describe("PATCH /api/admin/leads/[id]", () => {
+describe("PATCH /api/cyvant-hq/leads/[id]", () => {
   it("returns 400 for invalid status", async () => {
-    const res = await PATCH(makeReq("http://localhost/api/admin/leads/abc", "PATCH", { status: "invalid" }), {
+    const res = await PATCH(makeReq("http://localhost/api/cyvant-hq/leads/abc", "PATCH", { status: "invalid" }), {
       params: Promise.resolve({ id: "abc" }),
     });
     expect(res.status).toBe(400);
@@ -119,7 +119,7 @@ describe("PATCH /api/admin/leads/[id]", () => {
     const updatedLead = { id: "abc", status: "contacted", student: null };
     (db.lead.update as jest.Mock).mockResolvedValue(updatedLead);
 
-    const res = await PATCH(makeReq("http://localhost/api/admin/leads/abc", "PATCH", { status: "contacted" }), {
+    const res = await PATCH(makeReq("http://localhost/api/cyvant-hq/leads/abc", "PATCH", { status: "contacted" }), {
       params: Promise.resolve({ id: "abc" }),
     });
     const data = await res.json();
@@ -140,7 +140,7 @@ describe("PATCH /api/admin/leads/[id]", () => {
     (db.lead.update as jest.Mock).mockResolvedValue(lead);
     (db.student.create as jest.Mock).mockResolvedValue({ id: "stu-1" });
 
-    await PATCH(makeReq("http://localhost/api/admin/leads/abc", "PATCH", { status: "enrolled" }), {
+    await PATCH(makeReq("http://localhost/api/cyvant-hq/leads/abc", "PATCH", { status: "enrolled" }), {
       params: Promise.resolve({ id: "abc" }),
     });
 
@@ -155,7 +155,7 @@ describe("PATCH /api/admin/leads/[id]", () => {
     const lead = { id: "abc", name: "Jane", email: "jane@test.com", student: { id: "stu-1" } };
     (db.lead.update as jest.Mock).mockResolvedValue(lead);
 
-    await PATCH(makeReq("http://localhost/api/admin/leads/abc", "PATCH", { status: "enrolled" }), {
+    await PATCH(makeReq("http://localhost/api/cyvant-hq/leads/abc", "PATCH", { status: "enrolled" }), {
       params: Promise.resolve({ id: "abc" }),
     });
 
@@ -163,11 +163,11 @@ describe("PATCH /api/admin/leads/[id]", () => {
   });
 });
 
-// ─── POST /api/admin/leads/[id]/notes ────────────────────────────────────
+// ─── POST /api/cyvant-hq/leads/[id]/notes ────────────────────────────────────
 
-describe("POST /api/admin/leads/[id]/notes", () => {
+describe("POST /api/cyvant-hq/leads/[id]/notes", () => {
   it("returns 400 when content is empty", async () => {
-    const res = await POST_NOTE(makeReq("http://localhost/api/admin/leads/abc/notes", "POST", { content: "  " }), {
+    const res = await POST_NOTE(makeReq("http://localhost/api/cyvant-hq/leads/abc/notes", "POST", { content: "  " }), {
       params: Promise.resolve({ id: "abc" }),
     });
     expect(res.status).toBe(400);
@@ -178,7 +178,7 @@ describe("POST /api/admin/leads/[id]/notes", () => {
     (db.note.create as jest.Mock).mockResolvedValue(note);
 
     const res = await POST_NOTE(
-      makeReq("http://localhost/api/admin/leads/abc/notes", "POST", { content: "Called lead", type: "call" }),
+      makeReq("http://localhost/api/cyvant-hq/leads/abc/notes", "POST", { content: "Called lead", type: "call" }),
       { params: Promise.resolve({ id: "abc" }) }
     );
     const data = await res.json();

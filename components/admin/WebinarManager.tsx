@@ -55,7 +55,7 @@ export default function WebinarManager({ initialWebinars }: { initialWebinars: W
   const [regCounts, setRegCounts] = useState<Record<string, number>>({});
 
   useEffect(() => {
-    fetch("/api/admin/webinars/notify-all")
+    fetch("/api/cyvant-hq/webinars/notify-all")
       .then((r) => r.json())
       .then((d) => {
         setNotifyCount(d.count ?? 0);
@@ -70,7 +70,7 @@ export default function WebinarManager({ initialWebinars }: { initialWebinars: W
       const counts: Record<string, number> = {};
       await Promise.allSettled(
         webinars.map(async (w) => {
-          const res = await fetch(`/api/admin/webinars/${w.id}/registrations`);
+          const res = await fetch(`/api/cyvant-hq/webinars/${w.id}/registrations`);
           if (res.ok) {
             const data: Registration[] = await res.json();
             counts[w.id] = data.length;
@@ -86,7 +86,7 @@ export default function WebinarManager({ initialWebinars }: { initialWebinars: W
     if (registrants[webinarId]) return;
     setLoadingRegs(webinarId);
     try {
-      const res = await fetch(`/api/admin/webinars/${webinarId}/registrations`);
+      const res = await fetch(`/api/cyvant-hq/webinars/${webinarId}/registrations`);
       if (res.ok) {
         const data: Registration[] = await res.json();
         setRegistrants((prev) => ({ ...prev, [webinarId]: data }));
@@ -110,7 +110,7 @@ export default function WebinarManager({ initialWebinars }: { initialWebinars: W
     setReminding(webinarId);
     setRemindResult((prev) => { const n = { ...prev }; delete n[webinarId]; return n; });
     try {
-      const res = await fetch(`/api/admin/webinars/${webinarId}/remind`, { method: "POST" });
+      const res = await fetch(`/api/cyvant-hq/webinars/${webinarId}/remind`, { method: "POST" });
       const data = await res.json();
       setRemindResult((prev) => ({
         ...prev,
@@ -133,7 +133,7 @@ export default function WebinarManager({ initialWebinars }: { initialWebinars: W
     setNotifying(true);
     setNotifyResult(null);
     try {
-      const res = await fetch("/api/admin/webinars/notify-all", { method: "POST" });
+      const res = await fetch("/api/cyvant-hq/webinars/notify-all", { method: "POST" });
       const data = await res.json();
       setNotifyResult({ ok: true, msg: `Notified ${data.notified} lead${data.notified !== 1 ? "s" : ""}.${data.failed ? ` (${data.failed} failed)` : ""}` });
     } catch {
@@ -188,7 +188,7 @@ export default function WebinarManager({ initialWebinars }: { initialWebinars: W
     setError("");
     try {
       const thumbnailImage = await uploadFlier();
-      const res = await fetch("/api/admin/webinars", {
+      const res = await fetch("/api/cyvant-hq/webinars", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ title, subtitle, date, time, description, qualifyingQuestion, registrationOpen, thumbnailImage }),
@@ -210,7 +210,7 @@ export default function WebinarManager({ initialWebinars }: { initialWebinars: W
     if (!confirm("Delete this webinar? This cannot be undone.")) return;
     setDeleting(id);
     try {
-      await fetch(`/api/admin/webinars/${id}`, { method: "DELETE" });
+      await fetch(`/api/cyvant-hq/webinars/${id}`, { method: "DELETE" });
       setWebinars((prev) => prev.filter((w) => w.id !== id));
     } finally {
       setDeleting(null);

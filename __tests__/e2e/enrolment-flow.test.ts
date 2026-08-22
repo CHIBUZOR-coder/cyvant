@@ -51,11 +51,11 @@ jest.mock("next/cache", () => ({
 
 // ── Imports ──────────────────────────────────────────────────────────────────
 
-import { GET as getLeads } from "@/app/api/admin/leads/route";
-import { PATCH as patchLead } from "@/app/api/admin/leads/[id]/route";
-import { GET as getStudents } from "@/app/api/admin/students/route";
-import { PATCH as patchStudent } from "@/app/api/admin/students/[id]/route";
-import { GET as getCourses } from "@/app/api/admin/courses/route";
+import { GET as getLeads } from "@/app/api/cyvant-hq/leads/route";
+import { PATCH as patchLead } from "@/app/api/cyvant-hq/leads/[id]/route";
+import { GET as getStudents } from "@/app/api/cyvant-hq/students/route";
+import { PATCH as patchStudent } from "@/app/api/cyvant-hq/students/[id]/route";
+import { GET as getCourses } from "@/app/api/cyvant-hq/courses/route";
 import { db } from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { sendConfirmation } from "@/lib/email";
@@ -127,7 +127,7 @@ describe("Flow: lead marked enrolled → student auto-created → email sent", (
     (db.lead.findMany as jest.Mock).mockResolvedValueOnce([LEAD]);
     (db.lead.count as jest.Mock).mockResolvedValueOnce(1);
 
-    const res = await getLeads(req("GET", "http://localhost/api/admin/leads"));
+    const res = await getLeads(req("GET", "http://localhost/api/cyvant-hq/leads"));
     const data = await res.json();
 
     expect(res.status).toBe(200);
@@ -141,7 +141,7 @@ describe("Flow: lead marked enrolled → student auto-created → email sent", (
     (db.lead.update as jest.Mock).mockResolvedValueOnce(contacted);
 
     const res = await patchLead(
-      req("PATCH", `http://localhost/api/admin/leads/${LEAD_ID}`, { status: "contacted" }),
+      req("PATCH", `http://localhost/api/cyvant-hq/leads/${LEAD_ID}`, { status: "contacted" }),
       { params: Promise.resolve({ id: LEAD_ID }) }
     );
     const data = await res.json();
@@ -158,7 +158,7 @@ describe("Flow: lead marked enrolled → student auto-created → email sent", (
     (db.student.create as jest.Mock).mockResolvedValueOnce(STUDENT);
 
     const res = await patchLead(
-      req("PATCH", `http://localhost/api/admin/leads/${LEAD_ID}`, { status: "enrolled" }),
+      req("PATCH", `http://localhost/api/cyvant-hq/leads/${LEAD_ID}`, { status: "enrolled" }),
       { params: Promise.resolve({ id: LEAD_ID }) }
     );
     expect(res.status).toBe(200);
@@ -186,7 +186,7 @@ describe("Flow: lead marked enrolled → student auto-created → email sent", (
     (db.student.findMany as jest.Mock).mockResolvedValueOnce([STUDENT]);
     (db.student.count as jest.Mock).mockResolvedValueOnce(1);
 
-    const res = await getStudents(req("GET", "http://localhost/api/admin/students"));
+    const res = await getStudents(req("GET", "http://localhost/api/cyvant-hq/students"));
     const data = await res.json();
 
     expect(res.status).toBe(200);
@@ -209,7 +209,7 @@ describe("Flow: student payment — pending → partial → paid", () => {
     (db.student.update as jest.Mock).mockResolvedValueOnce(partial);
 
     const res = await patchStudent(
-      req("PATCH", `http://localhost/api/admin/students/${STUDENT_ID}`, {
+      req("PATCH", `http://localhost/api/cyvant-hq/students/${STUDENT_ID}`, {
         paymentStatus: "partial",
         amountPaid: 100000,
       }),
@@ -231,7 +231,7 @@ describe("Flow: student payment — pending → partial → paid", () => {
     (db.student.update as jest.Mock).mockResolvedValueOnce(paid);
 
     const res = await patchStudent(
-      req("PATCH", `http://localhost/api/admin/students/${STUDENT_ID}`, {
+      req("PATCH", `http://localhost/api/cyvant-hq/students/${STUDENT_ID}`, {
         paymentStatus: "paid",
         amountPaid: 200000,
       }),
@@ -258,7 +258,7 @@ describe("Flow: student payment — pending → partial → paid", () => {
     (db.student.update as jest.Mock).mockResolvedValueOnce(paid);
 
     await patchStudent(
-      req("PATCH", `http://localhost/api/admin/students/${STUDENT_ID}`, {
+      req("PATCH", `http://localhost/api/cyvant-hq/students/${STUDENT_ID}`, {
         paymentStatus: "paid",
       }),
       { params: Promise.resolve({ id: STUDENT_ID }) }
@@ -302,7 +302,7 @@ describe("Flow: admin views course catalog", () => {
       },
     ]);
 
-    const res = await getCourses(req("GET", "http://localhost/api/admin/courses"));
+    const res = await getCourses(req("GET", "http://localhost/api/cyvant-hq/courses"));
     const data = await res.json();
 
     expect(res.status).toBe(200);
