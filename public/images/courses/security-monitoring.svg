@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1020"/>
+      <stop offset="100%" stop-color="#0a1830"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#g)"/>
+  <!-- Monitor / dashboard frame -->
+  <rect x="210" y="75" width="380" height="210" rx="8" fill="#0d1b2a" stroke="#1e40af" stroke-width="1.5"/>
+  <!-- Chart lines -->
+  <polyline points="230,230 270,200 310,215 350,175 390,185 430,145 470,160 510,130 550,150 570,140" fill="none" stroke="#3b82f6" stroke-width="2.5"/>
+  <polyline points="230,250 270,245 310,248 350,240 390,242 430,235 470,238 510,230 550,232 570,228" fill="none" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.7"/>
+  <!-- Alert dot -->
+  <circle cx="430" cy="145" r="6" fill="#ef4444" opacity="0.9"/>
+  <circle cx="430" cy="145" r="12" fill="none" stroke="#ef4444" stroke-width="1" opacity="0.5"/>
+  <!-- Grid lines -->
+  <line x1="230" y1="260" x2="570" y2="260" stroke="#1e3a5f" stroke-width="1"/>
+  <line x1="230" y1="230" x2="570" y2="230" stroke="#1e3a5f" stroke-width="0.5" opacity="0.5"/>
+  <line x1="230" y1="200" x2="570" y2="200" stroke="#1e3a5f" stroke-width="0.5" opacity="0.5"/>
+  <line x1="230" y1="170" x2="570" y2="170" stroke="#1e3a5f" stroke-width="0.5" opacity="0.5"/>
+  <text x="400" y="328" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#ffffff" letter-spacing="1">Security Monitoring</text>
+  <text x="400" y="362" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#3b82f6" letter-spacing="2">DETECT. ANALYSE. RESPOND.</text>
+  <text x="400" y="400" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#1e3050">TIER 2 · INTERMEDIATE · 4 WEEKS</text>
+</svg>

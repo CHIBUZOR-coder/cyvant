@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0f1e"/>
+      <stop offset="100%" stop-color="#0d2137"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#g)"/>
+  <circle cx="400" cy="180" r="90" fill="none" stroke="#007dff" stroke-width="2" opacity="0.3"/>
+  <circle cx="400" cy="180" r="60" fill="none" stroke="#007dff" stroke-width="1.5" opacity="0.5"/>
+  <path d="M400 110 L400 250 M330 180 L470 180" stroke="#007dff" stroke-width="2" opacity="0.4"/>
+  <path d="M355 135 L445 135 L460 180 L445 225 L355 225 L340 180 Z" fill="none" stroke="#007dff" stroke-width="2.5" opacity="0.8"/>
+  <path d="M375 165 L395 185 L425 155" stroke="#00d4ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="400" y="310" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" font-weight="700" fill="#ffffff" letter-spacing="1">Cyber Security</text>
+  <text x="400" y="345" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#007dff" letter-spacing="2">FUNDAMENTALS</text>
+  <text x="400" y="390" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#4a6fa5">TIER 1 · BEGINNER · 6 WEEKS</text>
+</svg>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#1a1a1a"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#g)"/>
+  <!-- Terminal window -->
+  <rect x="250" y="75" width="300" height="195" rx="10" fill="#111" stroke="#333" stroke-width="2"/>
+  <rect x="250" y="75" width="300" height="30" rx="10" fill="#222"/>
+  <rect x="250" y="95" width="300" height="10" fill="#222"/>
+  <circle cx="275" cy="90" r="5" fill="#ff5f57"/>
+  <circle cx="293" cy="90" r="5" fill="#ffbd2e"/>
+  <circle cx="311" cy="90" r="5" fill="#28c940"/>
+  <!-- Terminal text -->
+  <text x="268" y="130" font-family="monospace" font-size="13" fill="#28c940">$ sudo chmod 755 /etc/cyvant</text>
+  <text x="268" y="152" font-family="monospace" font-size="13" fill="#28c940">$ ls -la /var/log/</text>
+  <text x="268" y="174" font-family="monospace" font-size="13" fill="#aaa">total 128</text>
+  <text x="268" y="196" font-family="monospace" font-size="13" fill="#aaa">drwxr-xr-x root root</text>
+  <text x="268" y="218" font-family="monospace" font-size="13" fill="#28c940">$ <tspan fill="#28c940" opacity="0.9">█</tspan></text>
+  <text x="400" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" font-weight="700" fill="#ffffff" letter-spacing="1">Linux Administration</text>
+  <text x="400" y="355" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#28c940" letter-spacing="2">MASTER THE COMMAND LINE</text>
+  <text x="400" y="395" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#2a3a2a">TIER 2 · INTERMEDIATE · 4 WEEKS</text>
+</svg>
