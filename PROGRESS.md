@@ -72,3 +72,9 @@ The PRD requires a second Academy (AI/Data track). No AI courses exist yet in `d
 - [x] Test suite updated and passing — 207 tests, 30 suites, 0 failing; fixed HeroSection class assertion (bg-[#007dff]) and CourseCard/CoursesPage badge tests
 - [x] Admin route renamed from /admin to /cyvant-hq to prevent path enumeration — middleware, auth config, all nav links, redirects, email templates, and PublicShell updated
 - [x] API route renamed from /api/admin to /api/cyvant-hq — all 20 route handlers moved, every fetch() call in components/pages and all test imports updated; 207 tests still passing
+- [x] Production login fix — added router.refresh() before router.push() so Next.js App Router flushes server-side session cache; login no longer reloads the form on correct credentials
+- [x] TeamManager submit spinner fix — moved CyvantSpinner after modal JSX so spinner (z-50) renders above the modal (also z-50) via DOM stacking order
+- [x] Admin sidebar scroll fix — nav section is overflow-y-auto so Sign Out button is always reachable on short viewports
+- [x] Emmanuel Tavershima title corrected — "Co-Founder" → "Founder" in the founder bio on app/page.tsx
+- [x] Course card images — 10 unique SVG illustrations created in public/images/courses/; DB updated via scripts/set-course-images.ts so every course has a distinct cover image (no two courses share the same image)
+- [x] Testimonial slide 2 replaced — original 503KB embedded stock photo with visible watermark replaced with a clean ~6.6KB SVG illustration (African cybersecurity professional at laptop, brand colors #007dff/#4ade80, CYVANT badge, no watermarks)
