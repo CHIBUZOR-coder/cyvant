@@ -3,6 +3,8 @@
 import { useState, useRef } from "react";
 import Image from "next/image";
 import type { Course } from "@/types";
+import CyvantSpinner from "@/components/ui/CyvantSpinner";
+import Pagination, { PAGE_SIZE } from "@/components/ui/Pagination";
 
 const TIER_LABELS: Record<number, string> = { 1: "Tier 1", 2: "Tier 2", 3: "Tier 3" };
 
@@ -54,6 +56,7 @@ function courseToForm(c: Course): FormState {
 
 export default function CourseManager({ initialCourses }: { initialCourses: Course[] }) {
   const [courses, setCourses] = useState<Course[]>(initialCourses);
+  const [tierPages, setTierPages] = useState<Record<number, number>>({ 1: 1, 2: 1, 3: 1 });
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState<FormState>(EMPTY_FORM);
@@ -188,6 +191,7 @@ export default function CourseManager({ initialCourses }: { initialCourses: Cour
 
   return (
     <div className="space-y-6">
+      {(uploading || submitting || !!deleting) && <CyvantSpinner />}
       {/* Header */}
       <div className="flex items-center justify-between">
         <p className="text-sm text-gray-400">
@@ -247,7 +251,7 @@ export default function CourseManager({ initialCourses }: { initialCourses: Cour
                   disabled={uploading}
                   className="cursor-pointer shrink-0 rounded-md border border-white/10 bg-gray-700 px-3 py-2 text-xs text-gray-300 hover:bg-gray-600 disabled:opacity-50 transition-colors"
                 >
-                  {uploading ? "Uploading…" : "Upload"}
+                  Upload
                 </button>
                 <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
               </div>
@@ -398,9 +402,9 @@ export default function CourseManager({ initialCourses }: { initialCourses: Cour
             <button
               type="submit"
               disabled={submitting}
-              className="cursor-pointer rounded-lg bg-[#007dff] px-5 py-2 text-sm font-semibold text-white hover:bg-[#0066d9] disabled:opacity-50 transition-colors"
+              className="cursor-pointer flex items-center justify-center rounded-lg bg-[#007dff] px-5 py-2 text-sm font-semibold text-white hover:bg-[#0066d9] disabled:opacity-50 transition-colors"
             >
-              {submitting ? "Saving…" : editingId ? "Save Changes" : "Save Course"}
+              {editingId ? "Save Changes" : "Save Course"}
             </button>
           </div>
         </form>
@@ -410,13 +414,15 @@ export default function CourseManager({ initialCourses }: { initialCourses: Cour
       {tiers.map((tier) => {
         const tierCourses = courses.filter((c) => c.tier === tier);
         if (tierCourses.length === 0) return null;
+        const tp = tierPages[tier] ?? 1;
+        const pagedCourses = tierCourses.slice((tp - 1) * PAGE_SIZE, tp * PAGE_SIZE);
         return (
           <div key={tier}>
             <h3 className="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-3">
               {TIER_LABELS[tier]}
             </h3>
             <div className="rounded-xl border border-white/10 bg-gray-900 divide-y divide-white/5 overflow-hidden">
-              {tierCourses.map((course) => (
+              {pagedCourses.map((course) => (
                 <div
                   key={course.id}
                   className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 sm:px-6 py-4 transition-colors ${editingId === course.id ? "bg-blue-500/5 border-l-2 border-blue-500" : ""}`}
@@ -450,12 +456,17 @@ export default function CourseManager({ initialCourses }: { initialCourses: Cour
                       disabled={deleting === course.id}
                       className="cursor-pointer rounded-md border border-red-500/30 px-3 py-1.5 text-xs font-medium text-red-400 hover:bg-red-500/10 disabled:opacity-50 transition-colors"
                     >
-                      {deleting === course.id ? "Deleting…" : "Delete"}
+                      Delete
                     </button>
                   </div>
                 </div>
               ))}
             </div>
+            <Pagination
+              page={tp}
+              total={tierCourses.length}
+              onChange={(p) => setTierPages((prev) => ({ ...prev, [tier]: p }))}
+            />
           </div>
         );
       })}

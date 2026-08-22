@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { SERVICE_ICON_OPTIONS, SERVICE_ICONS } from "@/lib/service-icons";
 import type { ServiceIconKey } from "@/lib/service-icons";
+import CyvantSpinner from "@/components/ui/CyvantSpinner";
+import Pagination, { PAGE_SIZE } from "@/components/ui/Pagination";
 
 interface Service {
   id: string;
@@ -42,6 +44,7 @@ function serviceToForm(s: Service): FormState {
 
 export default function ServiceManager({ initialServices }: { initialServices: Service[] }) {
   const [services, setServices] = useState<Service[]>(initialServices);
+  const [page, setPage] = useState(1);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState<FormState>(EMPTY_FORM);
@@ -133,8 +136,12 @@ export default function ServiceManager({ initialServices }: { initialServices: S
   const inputCls = "w-full rounded-md bg-gray-900 border border-white/10 px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#007dff]";
   const labelCls = "block text-xs text-gray-400 mb-1";
 
+  const sortedServices = [...services].sort((a, b) => a.order - b.order);
+  const pagedServices = sortedServices.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+
   return (
     <div className="space-y-6">
+      {(submitting || !!deleting) && <CyvantSpinner />}
       {/* Header */}
       <div className="flex items-center justify-between">
         <p className="text-sm text-gray-400">{services.length} service{services.length !== 1 ? "s" : ""}</p>
@@ -217,8 +224,8 @@ export default function ServiceManager({ initialServices }: { initialServices: S
               Cancel
             </button>
             <button type="submit" disabled={submitting}
-              className="cursor-pointer rounded-lg bg-[#007dff] px-5 py-2 text-sm font-semibold text-white hover:bg-[#0066d9] disabled:opacity-50 transition-colors">
-              {submitting ? "Saving…" : editingId ? "Save Changes" : "Save Service"}
+              className="cursor-pointer flex items-center justify-center rounded-lg bg-[#007dff] px-5 py-2 text-sm font-semibold text-white hover:bg-[#0066d9] disabled:opacity-50 transition-colors">
+              {editingId ? "Save Changes" : "Save Service"}
             </button>
           </div>
         </form>
@@ -230,11 +237,9 @@ export default function ServiceManager({ initialServices }: { initialServices: S
           <p className="text-gray-400">No services yet. Add one above.</p>
         </div>
       ) : (
+        <>
         <div className="rounded-xl border border-white/10 bg-gray-900 divide-y divide-white/5 overflow-hidden">
-          {services
-            .slice()
-            .sort((a, b) => a.order - b.order)
-            .map((service) => (
+          {pagedServices.map((service) => (
               <div
                 key={service.id}
                 className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 sm:px-6 py-4 transition-colors ${editingId === service.id ? "bg-blue-500/5 border-l-2 border-blue-500" : ""}`}
@@ -261,12 +266,14 @@ export default function ServiceManager({ initialServices }: { initialServices: S
                   </button>
                   <button onClick={() => handleDelete(service.id)} disabled={deleting === service.id}
                     className="cursor-pointer rounded-md border border-red-500/30 px-3 py-1.5 text-xs font-medium text-red-400 hover:bg-red-500/10 disabled:opacity-50 transition-colors">
-                    {deleting === service.id ? "Deleting…" : "Delete"}
+                    Delete
                   </button>
                 </div>
               </div>
-            ))}
+          ))}
         </div>
+        <Pagination page={page} total={sortedServices.length} onChange={setPage} />
+        </>
       )}
     </div>
   );

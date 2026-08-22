@@ -7,17 +7,17 @@ import { sendPasswordReset } from "@/lib/email";
 const ONE_HOUR = 60 * 60 * 1000;
 
 export async function POST(req: NextRequest) {
-  const { email } = await req.json();
+  const body = await req.json().catch(() => ({}));
+  const email = typeof body.email === "string" ? body.email.toLowerCase().trim() : "";
 
-  if (!email || typeof email !== "string") {
+  if (!email) {
     return NextResponse.json({ error: "Email required." }, { status: 400 });
   }
 
   const admin = await db.adminUser.findUnique({ where: { email } });
 
-  // Always return 200 — don't reveal whether the email exists
   if (!admin) {
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ error: "No admin account found for that email address." }, { status: 404 });
   }
 
   // Invalidate any existing tokens for this admin
@@ -33,9 +33,15 @@ export async function POST(req: NextRequest) {
   const origin = req.headers.get("origin") ?? process.env.NEXTAUTH_URL ?? "";
   const resetUrl = `${origin}/admin/reset-password?token=${token.token}`;
 
-  await sendPasswordReset({ to: admin.email, name: admin.name, resetUrl }).catch((err) => {
-    console.error("[forgot-password] email failed:", err);
-  });
+  try {
+    await sendPasswordReset({ to: admin.email, name: admin.name, resetUrl });
+    console.log("[forgot-password] email sent to:", admin.email);
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("[forgot-password] email failed:", msg);
+    // Return the error so you can see what Resend is rejecting
+    return NextResponse.json({ ok: false, error: msg }, { status: 500 });
+  }
 
   return NextResponse.json({ ok: true });
 }

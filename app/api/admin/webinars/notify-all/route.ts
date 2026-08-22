@@ -55,6 +55,10 @@ export async function GET() {
   const session = await getServerSession(authOptions);
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const count = await db.lead.count({ where: { leadSource: "webinar_notify" } });
-  return NextResponse.json({ count });
+  const leads = await db.lead.findMany({
+    where: { leadSource: "webinar_notify" },
+    select: { id: true, name: true, email: true, createdAt: true },
+    orderBy: { createdAt: "desc" },
+  });
+  return NextResponse.json({ count: leads.length, leads });
 }

@@ -1,6 +1,8 @@
 ﻿"use client";
 
 import { useState, useEffect } from "react";
+import CyvantSpinner from "@/components/ui/CyvantSpinner";
+import Pagination, { PAGE_SIZE } from "@/components/ui/Pagination";
 
 interface AdminUser {
   id: string;
@@ -19,6 +21,7 @@ const EMPTY_FORM = { name: "", email: "", password: "", role: "marketer" };
 
 export default function TeamManager() {
   const [users, setUsers] = useState<AdminUser[]>([]);
+  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [form, setForm] = useState(EMPTY_FORM);
@@ -64,6 +67,7 @@ export default function TeamManager() {
 
   return (
     <>
+      {submitting && <CyvantSpinner />}
       {/* Header row */}
       <div className="flex items-center justify-between mb-6">
         <p className="text-sm text-gray-400">{users.length} member{users.length !== 1 ? "s" : ""}</p>
@@ -90,7 +94,7 @@ export default function TeamManager() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-700/50">
-              {users.map((u) => (
+              {users.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE).map((u) => (
                 <tr key={u.id} className="bg-gray-900">
                   <td className="px-4 py-3 font-medium text-white">{u.name}</td>
                   <td className="px-4 py-3 text-gray-400">{u.email}</td>
@@ -107,6 +111,7 @@ export default function TeamManager() {
             </tbody>
           </table>
         </div>
+        <Pagination page={page} total={users.length} onChange={setPage} />
       )}
 
       {/* Modal */}
@@ -200,9 +205,9 @@ export default function TeamManager() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="cursor-pointer flex-1 rounded-lg bg-[#007dff] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#007dff] disabled:opacity-50 transition-colors"
+                  className="cursor-pointer flex-1 flex items-center justify-center rounded-lg bg-[#007dff] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#007dff] disabled:opacity-50 transition-colors"
                 >
-                  {submitting ? "Adding..." : "Add Member"}
+                  Add Member
                 </button>
               </div>
             </form>

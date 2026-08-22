@@ -4,6 +4,7 @@ import { useState } from "react";
 import FormField from "./FormField";
 import ConsentCheckbox from "./ConsentCheckbox";
 import { validateContactFields, type ValidationErrors } from "@/lib/validation";
+import CyvantSpinner from "@/components/ui/CyvantSpinner";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -46,6 +47,7 @@ export default function GeneralContactForm() {
 
   return (
     <form onSubmit={handleSubmit} noValidate className="space-y-5">
+      {status === "submitting" && <CyvantSpinner />}
       <FormField id="name" label="Full Name" value={name} onChange={setName} required error={errors.name} />
       <FormField id="email" label="Email" type="email" value={email} onChange={setEmail} required error={errors.email} />
       <FormField
@@ -62,9 +64,9 @@ export default function GeneralContactForm() {
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="w-full rounded-md bg-[#007dff] px-4 py-3 text-sm font-semibold text-white hover:bg-[#0066d9] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className="w-full flex items-center justify-center rounded-md bg-[#007dff] px-4 py-3 text-sm font-semibold text-white hover:bg-[#0066d9] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
       >
-        {status === "submitting" ? "Sending…" : "Send Message"}
+        Send Message
       </button>
       {status === "error" && (
         <p role="alert" className="text-sm text-red-600 text-center">

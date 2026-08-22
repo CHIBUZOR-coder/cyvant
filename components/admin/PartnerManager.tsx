@@ -2,6 +2,8 @@
 
 import { useState, useRef } from "react";
 import Image from "next/image";
+import CyvantSpinner from "@/components/ui/CyvantSpinner";
+import Pagination, { PAGE_SIZE } from "@/components/ui/Pagination";
 
 interface Partner {
   id: string;
@@ -34,6 +36,7 @@ function partnerToForm(p: Partner): FormState {
 
 export default function PartnerManager({ initialPartners }: { initialPartners: Partner[] }) {
   const [partners, setPartners] = useState<Partner[]>(initialPartners);
+  const [page, setPage] = useState(1);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState<FormState>(EMPTY_FORM);
@@ -143,8 +146,12 @@ export default function PartnerManager({ initialPartners }: { initialPartners: P
   const inputCls = "w-full rounded-md bg-gray-900 border border-white/10 px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#007dff]";
   const labelCls = "block text-xs text-gray-400 mb-1";
 
+  const sortedPartners = [...partners].sort((a, b) => a.order - b.order);
+  const pagedPartners = sortedPartners.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+
   return (
     <div className="space-y-6">
+      {(uploading || submitting || !!deleting) && <CyvantSpinner />}
       {/* Header */}
       <div className="flex items-center justify-between">
         <p className="text-sm text-gray-400">{partners.length} organisation{partners.length !== 1 ? "s" : ""}</p>
@@ -195,7 +202,7 @@ export default function PartnerManager({ initialPartners }: { initialPartners: P
                       disabled={uploading}
                       className="cursor-pointer rounded-md border border-white/10 px-3 py-1.5 text-xs text-gray-300 hover:text-white hover:border-white/30 transition-colors disabled:opacity-50"
                     >
-                      {uploading ? "Uploading…" : "Upload image"}
+                      Upload image
                     </button>
                     <span className="text-xs text-gray-500">PNG, JPG, WEBP — max 5 MB</span>
                   </div>
@@ -240,8 +247,8 @@ export default function PartnerManager({ initialPartners }: { initialPartners: P
               Cancel
             </button>
             <button type="submit" disabled={submitting || uploading}
-              className="cursor-pointer rounded-lg bg-[#007dff] px-5 py-2 text-sm font-semibold text-white hover:bg-[#0066d9] disabled:opacity-50 transition-colors">
-              {submitting ? "Saving…" : editingId ? "Save Changes" : "Add Organisation"}
+              className="cursor-pointer flex items-center justify-center rounded-lg bg-[#007dff] px-5 py-2 text-sm font-semibold text-white hover:bg-[#0066d9] disabled:opacity-50 transition-colors">
+              {editingId ? "Save Changes" : "Add Organisation"}
             </button>
           </div>
         </form>
@@ -253,11 +260,9 @@ export default function PartnerManager({ initialPartners }: { initialPartners: P
           <p className="text-gray-400">No organisations yet. Add one above.</p>
         </div>
       ) : (
+        <>
         <div className="rounded-xl border border-white/10 bg-gray-900 divide-y divide-white/5 overflow-hidden">
-          {partners
-            .slice()
-            .sort((a, b) => a.order - b.order)
-            .map((partner) => (
+          {pagedPartners.map((partner) => (
               <div
                 key={partner.id}
                 className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 sm:px-6 py-4 transition-colors ${editingId === partner.id ? "bg-blue-500/5 border-l-2 border-blue-500" : ""}`}
@@ -292,12 +297,14 @@ export default function PartnerManager({ initialPartners }: { initialPartners: P
                   </button>
                   <button onClick={() => handleDelete(partner.id)} disabled={deleting === partner.id}
                     className="cursor-pointer rounded-md border border-red-500/30 px-3 py-1.5 text-xs font-medium text-red-400 hover:bg-red-500/10 disabled:opacity-50 transition-colors">
-                    {deleting === partner.id ? "Deleting…" : "Delete"}
+                    Delete
                   </button>
                 </div>
               </div>
-            ))}
+          ))}
         </div>
+        <Pagination page={page} total={sortedPartners.length} onChange={setPage} />
+        </>
       )}
     </div>
   );

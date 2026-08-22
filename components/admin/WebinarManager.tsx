@@ -2,6 +2,8 @@
 
 import { useRef, useState, useEffect, useCallback } from "react";
 import type { Webinar } from "@prisma/client";
+import CyvantSpinner from "@/components/ui/CyvantSpinner";
+import Pagination, { PAGE_SIZE } from "@/components/ui/Pagination";
 
 interface Registration {
   id: string;
@@ -32,12 +34,15 @@ function formatDateTime(iso: string) {
 
 export default function WebinarManager({ initialWebinars }: { initialWebinars: Webinar[] }) {
   const [webinars, setWebinars] = useState<Webinar[]>(initialWebinars);
+  const [page, setPage] = useState(1);
   const [showForm, setShowForm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [deleting, setDeleting] = useState<string | null>(null);
   const [error, setError] = useState("");
 
   const [notifyCount, setNotifyCount] = useState<number | null>(null);
+  const [notifyLeads, setNotifyLeads] = useState<{ id: string; name: string; email: string; createdAt: string }[]>([]);
+  const [showNotifyLeads, setShowNotifyLeads] = useState(false);
   const [notifying, setNotifying] = useState(false);
   const [notifyResult, setNotifyResult] = useState<{ ok: boolean; msg: string } | null>(null);
 
@@ -52,7 +57,10 @@ export default function WebinarManager({ initialWebinars }: { initialWebinars: W
   useEffect(() => {
     fetch("/api/admin/webinars/notify-all")
       .then((r) => r.json())
-      .then((d) => setNotifyCount(d.count ?? 0))
+      .then((d) => {
+        setNotifyCount(d.count ?? 0);
+        setNotifyLeads(d.leads ?? []);
+      })
       .catch(() => setNotifyCount(0));
   }, []);
 
@@ -211,24 +219,35 @@ export default function WebinarManager({ initialWebinars }: { initialWebinars: W
 
   return (
     <div className="space-y-6">
+      {(submitting || !!deleting || notifying || !!reminding) && <CyvantSpinner />}
       {/* Top bar */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         {/* Notify All */}
         <div className="flex flex-col gap-1">
-          <button
-            onClick={handleNotifyAll}
-            disabled={notifying || !notifyCount}
-            className="cursor-pointer inline-flex items-center gap-2 rounded-lg border border-purple-500/40 bg-purple-500/10 px-4 py-2 text-sm font-semibold text-purple-300 hover:bg-purple-500/20 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-              <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 00-5-5.917V5a1 1 0 00-2 0v.083A6 6 0 006 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-            </svg>
-            {notifying
-              ? "Sending…"
-              : notifyCount === null
-              ? "Notify Interested Leads"
-              : `Notify ${notifyCount} Interested Lead${notifyCount !== 1 ? "s" : ""}`}
-          </button>
+          <div className="flex items-center gap-2 flex-wrap">
+            <button
+              onClick={handleNotifyAll}
+              disabled={notifying || !notifyCount}
+              className="cursor-pointer inline-flex items-center gap-2 rounded-lg border border-purple-500/40 bg-purple-500/10 px-4 py-2 text-sm font-semibold text-purple-300 hover:bg-purple-500/20 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 00-5-5.917V5a1 1 0 00-2 0v.083A6 6 0 006 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+              </svg>
+              {notifyCount === null
+                ? "Notify Interested Leads"
+                : `Notify ${notifyCount} Interested Lead${notifyCount !== 1 ? "s" : ""}`}
+            </button>
+            <button
+              onClick={() => setShowNotifyLeads((v) => !v)}
+              className="cursor-pointer inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-gray-800 px-3 py-2 text-xs font-medium text-gray-400 hover:text-white hover:border-white/20 transition-colors"
+            >
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+              {showNotifyLeads ? "Hide list" : "View list"}
+            </button>
+          </div>
           {notifyResult && (
             <p className={`text-xs px-1 ${notifyResult.ok ? "text-green-400" : "text-red-400"}`}>
               {notifyResult.msg}
@@ -243,6 +262,45 @@ export default function WebinarManager({ initialWebinars }: { initialWebinars: W
           {showForm ? "Cancel" : "+ Schedule Webinar"}
         </button>
       </div>
+
+      {/* Interested leads list */}
+      {showNotifyLeads && (
+        <div className="rounded-xl border border-purple-500/20 bg-gray-900 overflow-hidden">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-white/5">
+            <p className="text-sm font-semibold text-purple-300">
+              Interested Leads
+              <span className="ml-2 rounded-full bg-purple-500/20 px-2 py-0.5 text-xs font-bold">{notifyLeads.length}</span>
+            </p>
+            <p className="text-xs text-gray-500">These people asked to be notified when a webinar opens</p>
+          </div>
+          {notifyLeads.length === 0 ? (
+            <p className="px-4 py-8 text-center text-sm text-gray-500">No one has signed up to be notified yet.</p>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-white/5">
+                    <th className="px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">Name</th>
+                    <th className="px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">Email</th>
+                    <th className="px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">Signed Up</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5">
+                  {notifyLeads.map((lead) => (
+                    <tr key={lead.id} className="hover:bg-white/2 transition-colors">
+                      <td className="px-4 py-3 text-white font-medium">{lead.name}</td>
+                      <td className="px-4 py-3 text-gray-400">{lead.email}</td>
+                      <td className="px-4 py-3 text-gray-500 text-xs">
+                        {new Date(lead.createdAt).toLocaleDateString("en-NG", { day: "numeric", month: "short", year: "numeric" })}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Create form */}
       {showForm && (
@@ -316,8 +374,8 @@ export default function WebinarManager({ initialWebinars }: { initialWebinars: W
             <button type="button" onClick={() => { setShowForm(false); resetForm(); }}
               className="cursor-pointer px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors">Cancel</button>
             <button type="submit" disabled={submitting}
-              className="cursor-pointer rounded-lg bg-[#007dff] px-5 py-2 text-sm font-semibold text-white hover:bg-[#0066d9] disabled:opacity-50 transition-colors">
-              {submitting ? "Saving…" : "Save Webinar"}
+              className="cursor-pointer flex items-center justify-center rounded-lg bg-[#007dff] px-5 py-2 text-sm font-semibold text-white hover:bg-[#0066d9] disabled:opacity-50 transition-colors">
+              Save Webinar
             </button>
           </div>
         </form>
@@ -329,8 +387,9 @@ export default function WebinarManager({ initialWebinars }: { initialWebinars: W
           <p className="text-gray-400">No webinars scheduled yet.</p>
         </div>
       ) : (
+        <>
         <div className="rounded-xl border border-white/10 bg-gray-900 divide-y divide-white/5 overflow-hidden">
-          {webinars.map((w) => {
+          {webinars.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE).map((w) => {
             const { label, cls } = badge(w.date);
             const count = regCounts[w.id] ?? 0;
             const isExpanded = expandedId === w.id;
@@ -377,7 +436,7 @@ export default function WebinarManager({ initialWebinars }: { initialWebinars: W
                       <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
-                      {reminding === w.id ? "Sending…" : "Send Reminder"}
+                      Send Reminder
                     </button>
 
                     {/* Delete */}
@@ -386,7 +445,7 @@ export default function WebinarManager({ initialWebinars }: { initialWebinars: W
                       disabled={deleting === w.id}
                       className="cursor-pointer rounded-md border border-red-500/30 px-3 py-1.5 text-xs font-medium text-red-400 hover:bg-red-500/10 disabled:opacity-50 transition-colors"
                     >
-                      {deleting === w.id ? "Deleting…" : "Delete"}
+                      Delete
                     </button>
                   </div>
                 </div>
@@ -439,6 +498,8 @@ export default function WebinarManager({ initialWebinars }: { initialWebinars: W
             );
           })}
         </div>
+        <Pagination page={page} total={webinars.length} onChange={setPage} />
+        </>
       )}
     </div>
   );

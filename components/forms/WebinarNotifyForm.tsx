@@ -3,6 +3,7 @@
 import { useState } from "react";
 import FormField from "./FormField";
 import { validateContactFields, type ValidationErrors } from "@/lib/validation";
+import CyvantSpinner from "@/components/ui/CyvantSpinner";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -43,14 +44,15 @@ export default function WebinarNotifyForm() {
 
   return (
     <form onSubmit={handleSubmit} noValidate className="space-y-4">
+      {status === "submitting" && <CyvantSpinner />}
       <FormField id="notify-name" label="Full Name" value={name} onChange={setName} required error={errors.name} />
       <FormField id="notify-email" label="Email" type="email" value={email} onChange={setEmail} required error={errors.email} />
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="cursor-pointer w-full rounded-xl bg-[#007dff] px-4 py-3 text-sm font-semibold text-white hover:bg-[#0066d9] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className="cursor-pointer w-full flex items-center justify-center rounded-xl bg-[#007dff] px-4 py-3 text-sm font-semibold text-white hover:bg-[#0066d9] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
       >
-        {status === "submitting" ? "Saving…" : "Notify Me"}
+        Notify Me
       </button>
       {status === "error" && (
         <p role="alert" className="text-sm text-red-400 text-center">

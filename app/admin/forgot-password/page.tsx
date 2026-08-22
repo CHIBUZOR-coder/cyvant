@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import CyvantSpinner from "@/components/ui/CyvantSpinner";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -54,6 +55,7 @@ export default function ForgotPasswordPage() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="bg-gray-900 border border-white/5 rounded-2xl p-8 space-y-5">
+            {status === "loading" && <CyvantSpinner />}
             <div>
               <p className="text-white font-semibold text-lg mb-1">Forgot password?</p>
               <p className="text-gray-400 text-sm">Enter your email and we'll send you a reset link.</p>
@@ -82,9 +84,9 @@ export default function ForgotPasswordPage() {
             <button
               type="submit"
               disabled={status === "loading"}
-              className="cursor-pointer w-full rounded-lg bg-[#007dff] hover:bg-[#007dff] disabled:opacity-50 px-4 py-2.5 text-sm font-semibold text-white transition-colors"
+              className="cursor-pointer w-full flex items-center justify-center rounded-lg bg-[#007dff] hover:bg-[#007dff] disabled:opacity-50 px-4 py-2.5 text-sm font-semibold text-white transition-colors"
             >
-              {status === "loading" ? "Sending…" : "Send reset link"}
+              Send reset link
             </button>
 
             <Link

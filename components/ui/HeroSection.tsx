@@ -189,9 +189,11 @@ export default function HeroSection() {
               transition={{ duration: 0.6, delay: 0.5 }}
               className="mt-5 sm:mt-7 text-xs sm:text-sm text-gray-400 font-medium"
             >
-              Programs starting from{" "}
-              <span className="text-blue-400 font-semibold">₦100,000</span>
-              {" "}· Learn Locally. Compete Globally.
+              <span className="italic font-semibold">Programs starting from{" "}
+              <span className="text-blue-400 not-italic">₦100,000</span>
+              </span>
+              <br />
+              <span className="italic font-semibold">Learn Locally. Compete Globally.</span>
             </motion.p>
           </div>
 
