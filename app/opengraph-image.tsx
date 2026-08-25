@@ -15,7 +15,7 @@ export default function OgImage() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#0a0f1e",
+          background: "#ffffff",
         }}
       >
         {/* Logo mark */}
@@ -24,7 +24,7 @@ export default function OgImage() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            background: "#111827",
+            background: "#0a0f1e",
             borderRadius: 40,
             width: 280,
             height: 280,
@@ -64,7 +64,7 @@ export default function OgImage() {
               fontFamily: "sans-serif",
               fontWeight: 900,
               fontSize: 96,
-              color: "#ffffff",
+              color: "#0a0f1e",
               letterSpacing: -2,
               lineHeight: 1,
             }}
