@@ -19,6 +19,13 @@ export const metadata: Metadata = {
   description:
     "AI and cybersecurity education built for Africa, ready for the world. Start your journey with CYVANT.",
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  openGraph: {
+    images: [{ url: "/images/metalogo.jpeg" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/images/metalogo.jpeg"],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
