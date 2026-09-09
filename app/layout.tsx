@@ -13,8 +13,8 @@ const geistSans = Geist({
 
 export const metadata: Metadata = {
   title: {
-    default: "CYVANT: AI & Cybersecurity Education",
-    template: "%s | CYVANT",
+    default: "Cyber Security",
+    template: "%s | Cyber Security",
   },
   description:
     "AI and cybersecurity education built for Africa, ready for the world. Start your journey with CYVANT.",
